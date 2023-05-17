@@ -7,7 +7,13 @@ import {
   TextareaAutosize,
   Typography,
 } from "@mui/material";
+import { ethers } from "ethers";
 import React from "react";
+
+
+
+const RPC = process.env.NODE_PROVIDER_RPC;
+
 
 const CitizenRequestSol = () => {
   return (
@@ -108,7 +114,7 @@ const CitizenRequestSol = () => {
                   variant="contained"
                   sx={{ mt: 3, mb: 2, px: 5 }}
                 >
-                  Submit
+                  Apply
                 </Button>
               </Box>
           </Box>

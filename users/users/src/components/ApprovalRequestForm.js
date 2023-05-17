@@ -14,8 +14,11 @@ import {
     TextField,
     Typography,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
 import BuyingRecords from "../components/BuyingRecords";
+
+
+import React, { useEffect, useState } from "react";
+import citizenContract from "../artifacts/contracts/Citizens.sol/Citizens.json";
 
 
 const ApprovalRequestForm = () => {
@@ -35,35 +38,46 @@ const ApprovalRequestForm = () => {
               eth_accounts: {}
             }]
           });
-        // const actualData = {
-        //     province: data.get('province'),
-        //     distric: data.get('distric'),
-        //     society: data.get('society'),
-        //     block: data.get('block'),
-        //     propertyId: data.get('propertyId'),
-        //     ownerCNIC: data.get('ownerCNIC'),
-        //     sharesAmmount: data.get('sharesAmmount'),
-        //     reqNumber: data.get('reqNumber'),
-        //     agree: data.get('agree')
-        // }
-        // if (actualData.province && actualData.distric && actualData.society && actualData.block && actualData.propertyId && actualData.ownerCNIC && actualData.sharesAmmount && actualData.reqNumber && actualData.agree) {
-        //     setAlert({
-        //         status: true,
-        //         msg: "Your Request is now generated! Contact to the land Inspector",
-        //         type: "success"
-        //     });
+        const actualData = {
+            province: data.get('province'),
+            distric: data.get('distric'),
+            citzenName: data.get('citizenName'),
+            cnic: data.get('citizenCNIC'),
+            fatherName: data.get('fatherName'),
+            phone: data.get('phone'),
+            email: data.get('email'),
+            agree: data.get('agree')
+        }
 
-        // } else {
-        //     // setError({ status: true, msg: "All Fields are Required", type: 'error' })
-        //     setAlert({
-        //         status: true,
-        //         msg: "All Fields are required!",
-        //         type: "error"
-        //     });
-        // }
+
+        const contractAddress = actualData.distric;
+            console.log(contractAddress);
+            
+            let providerUrl = process.env.NODE_PROVIDER_RPC;
+
+
+        if (actualData.province && actualData.distric && actualData.citzenName && actualData.cnic && actualData.fatherName && actualData.phone && actualData.email && actualData.agree) {
+            
+            
+           
+            setAlert({
+                status: true,
+                msg: "Your Request is now generated! Contact to the land Inspector",
+                type: "success"
+            });
+
+        } else {
+            // setError({ status: true, msg: "All Fields are Required", type: 'error' })
+            setAlert({
+                status: true,
+                msg: "All Fields are required!",
+                type: "error"
+            });
+        }
+        
     };
 
-    const [distric, setDistric] = useState('lahore');
+    const [distric, setDistric] = useState("");
     const [province, setProvince] = useState('punjab');
     const [society, setSociety] = useState('none');
     const [block, setBlock] = useState('park-view');
@@ -191,7 +205,7 @@ const ApprovalRequestForm = () => {
                                                 name="distric"
                                                 onChange={handleChangeDistric}
                                             >
-                                                <MenuItem value="lahore">Lahore</MenuItem>
+                                                <MenuItem value="0x6D775f5A4008BaAEF0FdadC09dAEe96149aB301c">Lahore</MenuItem>
                                                 <MenuItem value="karachi">Karachi</MenuItem>
                                                 <MenuItem value="sialkot">Sialkot</MenuItem>
                                             </Select>
@@ -307,6 +321,3 @@ const ApprovalRequestForm = () => {
 };
 
 export default ApprovalRequestForm;
-
-
-

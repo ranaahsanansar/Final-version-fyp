@@ -14,7 +14,7 @@ export const profileSlice = createSlice({
         }
         
     }
-})
+});
 
 export const { setIsConnected } = profileSlice.actions
 

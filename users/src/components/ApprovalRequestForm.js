@@ -38,7 +38,7 @@ const ApprovalRequestForm = () => {
         //     params: [{
         //       eth_accounts: {}
         //     }]
-        //   });
+        //   }); 
         const actualData = {
             province: data.get('province'),
             distric: data.get('distric'),
@@ -190,7 +190,7 @@ const ApprovalRequestForm = () => {
                                 component="form"
                                 noValidate
                                 sx={{ mt: 1 }}
-                                id="buyProperty-form"
+                                id="approvalRequest-form"
                                 onSubmit={handleSubmit}
                             >
                                 <Grid container spacing={2}>

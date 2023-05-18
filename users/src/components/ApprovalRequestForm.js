@@ -66,7 +66,7 @@ const ApprovalRequestForm = () => {
 
             const signer = walletProvider.getSigner();
 
-            console.log(nodeProvider , walletProvider)
+            // console.log(nodeProvider , walletProvider)
 
             const getContractData = new ethers.Contract(
                 contractAddress,
@@ -84,10 +84,9 @@ const ApprovalRequestForm = () => {
             const dataResult = await sendTx.newCitizenRequest(actualData.cnic);
 
 
+
         if (actualData.province && actualData.distric && actualData.citzenName && actualData.cnic && actualData.fatherName && actualData.phone && actualData.email && actualData.agree) {
             
-            
-           
             setAlert({
                 status: true,
                 msg: "Your Request is now generated! Contact to the land Inspector",

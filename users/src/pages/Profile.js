@@ -74,6 +74,8 @@ const Profile = () => {
 
     console.log(dataResult);
 
+    setApprovStatus(dataResult);
+
 
 
     
@@ -214,17 +216,25 @@ const Profile = () => {
                         </Typography>
                         <br />
                         {isConnected ? (
-                          <Typography
-                          variant="h3"
-                          fontWeight="bold"
-                          fontSize="large"
-                          color='green'
-                          component={NavLink} to='/dashboard/approvalRequest' 
-                        >
-                          {approvStatus?  "Approved": "Pending" }
+                          
+                            approvStatus ? (<Typography
+                              variant="h3"
+                              fontWeight="bold"
+                              fontSize="large"
+                              color='green'
+                            >
+                              Approved
+                            </Typography>) : (<Typography
+                              variant="h3"
+                              fontWeight="bold"
+                              fontSize="large"
+                              color='green'
+                              component={NavLink} to='/dashboard/approvalRequest' 
+                            >
+                              Pending
+                            </Typography>)
                           
                           
-                        </Typography>
                         ) : (
                           <Typography variant="h3"
                           fontWeight="bold"

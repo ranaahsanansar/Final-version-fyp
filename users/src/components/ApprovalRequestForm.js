@@ -28,6 +28,13 @@ const ApprovalRequestForm = () => {
         msg: "",
         type: ""
     });
+
+    const [etherScanAlert, setEtherScanAlert] = useState({
+        status: false,
+        msg: "",
+        url: "",
+        type: ""
+      });
   const { ethereum } = window;
 
     const handleSubmit = async (e) => {
@@ -41,7 +48,6 @@ const ApprovalRequestForm = () => {
         //   }); 
         const actualData = {
             province: data.get('province'),
-            distric: data.get('distric'),
             citzenName: data.get('citizenName'),
             cnic: data.get('citizenCNIC'),
             fatherName: data.get('fatherName'),
@@ -51,7 +57,7 @@ const ApprovalRequestForm = () => {
         }
 
 
-        const contractAddress = actualData.distric;
+        const contractAddress = 
             console.log(contractAddress);
             
             let providerUrl = "https://eth-sepolia.g.alchemy.com/v2/g5_IZehi2__Fi9Jj5Pgs53cy_Shg9umf";
@@ -83,9 +89,21 @@ const ApprovalRequestForm = () => {
 
             const dataResult = await sendTx.newCitizenRequest(actualData.cnic);
 
+            let txHash = dataResult.hash
+    let scanUrl = "https://sepolia.etherscan.io/tx/" + txHash;
+
+            setEtherScanAlert(
+                {
+                  status: true,
+                  msg: "View Transaction on EtherScan",
+                  url: scanUrl,
+                  type: "success"
+                }
+              )
 
 
-        if (actualData.province && actualData.distric && actualData.citzenName && actualData.cnic && actualData.fatherName && actualData.phone && actualData.email && actualData.agree) {
+
+        if (actualData.province  && actualData.citzenName && actualData.cnic && actualData.fatherName && actualData.phone && actualData.email && actualData.agree) {
             
             setAlert({
                 status: true,
@@ -217,8 +235,8 @@ const ApprovalRequestForm = () => {
                                             </Select>
                                         </FormControl>
                                     </Grid>
-
-                                    <Grid item sm={12} xs={12} md={6} lg={6}>
+ 
+                                    {/* <Grid item sm={12} xs={12} md={6} lg={6}>
                                         <FormControl fullWidth>
                                             <InputLabel id="distric-label">Distric</InputLabel>
 
@@ -237,7 +255,7 @@ const ApprovalRequestForm = () => {
                                                 <MenuItem value="sialkot">Sialkot</MenuItem>
                                             </Select>
                                         </FormControl>
-                                    </Grid>
+                                    </Grid> */}
 
                                     <Grid item sm={12} xs={12} md={6} lg={6}>
                                         <TextField
@@ -337,6 +355,7 @@ const ApprovalRequestForm = () => {
                                     </Button>
                                 </Box>
                                 {alert.status ? <Alert severity={alert.type} sx={{ mt: 3 }}>{alert.msg}</Alert> : ''}
+                                {etherScanAlert.status ? <><Alert severity={etherScanAlert.type} sx={{ mt: 3 }}>{etherScanAlert.msg}<a href={etherScanAlert.url} target="_blank" > Click Me</a> </Alert>  </> : ''}
                             </Box>
                         </Box>
 

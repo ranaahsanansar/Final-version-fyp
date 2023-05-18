@@ -5,7 +5,7 @@ import {
   Divider,
   Grid,
   Stack,
-  Typography,
+  Typography, 
 } from "@mui/material";
 import React, { useState } from "react";
 import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
@@ -13,12 +13,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { setAddress } from "../features/connectWallet";
 import { setIsConnected } from "../features/profileSlice";
 import { NavLink } from "react-router-dom";
+import citizenContract from "../artifacts/contracts/Citizens.sol/Citizens.json";
+import { ethers } from "ethers";
+import {nodeProviderUrl} from "../dataVariables";
+import { citizenContractAddress } from "../dataVariables";
 
 const Profile = () => {
 
   const { ethereum } = window;
   const dispatch = useDispatch();
   // const [walletConnection, setWalletConnection] = useState(false);
+
+
 
 
 
@@ -31,6 +37,7 @@ const Profile = () => {
 
   const currentAddress = useSelector((state)=> state.connectWallet.address)
   const isConnected = useSelector((state)=> state.connectWallet.address)
+  const [approvStatus , setApprovStatus] = useState(false);
 
   const handleConnectWallet = async () => {
     await ethereum.request({
@@ -50,6 +57,24 @@ const Profile = () => {
       dispatch(setAddress({ address: accounts[0] }));
     dispatch(setIsConnected());
     }
+
+
+    let contractAddress = citizenContractAddress;
+
+    const nodeProvider = new ethers.providers.JsonRpcProvider(
+      nodeProviderUrl
+    )
+    const getContractData = new ethers.Contract(
+      contractAddress,
+      citizenContract.abi,
+      nodeProvider
+    )
+
+    const dataResult = await getContractData.getCitizenIsApproved(9999);
+
+    console.log(dataResult);
+
+
 
     
   }
@@ -196,7 +221,7 @@ const Profile = () => {
                           color='green'
                           component={NavLink} to='/dashboard/approvalRequest' 
                         >
-                          Approved
+                          {approvStatus?  "Approved": "Pending" }
                           
                           
                         </Typography>

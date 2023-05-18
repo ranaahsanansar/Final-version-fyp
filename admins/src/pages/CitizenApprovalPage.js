@@ -325,9 +325,9 @@ const CitizenApprovalPage = () => {
 
                     <Divider />
 
-                    <Box zIndex={100} >
+                    <Box>
                       <Typography fontWeight="bold" color="black" fontSize="16px">
-                        Message for Applicant
+                        Any Message for Applicant
                       </Typography>
                       <TextareaAutosize
                         aria-label="message"

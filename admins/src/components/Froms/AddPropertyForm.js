@@ -15,45 +15,116 @@ import {
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 
+
+import landInspectorContract from '../../artifacts/contracts/LandInspector.sol/LandInspector.json';
+import { ethers } from "ethers";
+import nodeProviderUrl from "../../dataVariables";
+
+
 const AddPropertyForm = () => {
-  
+
+
+  const [etherScanAlert, setEtherScanAlert] = useState({
+    status: false,
+    msg: "",
+    url: "",
+    type: ""
+  });
+
+  const [lockContractAddress, setLockContractAddress] = useState("");
+
   const [alert, setAlert] = useState({
     status: false,
     msg: "",
     type: ""
   });
 
-  useEffect(()=>{
-    if(alert.status === true){
-        setTimeout(() => {
-      
-      setAlert({
-        status: false,
-        msg: "",
-        type: ""
-      })
-    }, 5000);
-    } 
-    
+  useEffect(() => {
+    if (alert.status === true) {
+      setTimeout(() => {
+
+        setAlert({
+          status: false,
+          msg: "",
+          type: ""
+        })
+      }, 5000);
+    }
+
+    if (etherScanAlert.status === true) {
+      setTimeout(() => {
+        setEtherScanAlert({
+          status: false,
+          msg: "",
+          url: "",
+          type: ""
+        })
+      }, 600000)
+    }
+
   })
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     let confirm = window.confirm("Are you sure want to Submit?");
-    if (confirm){
+    if (confirm) {
+
+      const { ethereum } = window;
+      let contractAddress = lockContractAddress;
+      let _propertyId = propertyId;
+      let societyName = areaName;
+
+
+      const walletProvider = new ethers.providers.Web3Provider(
+        ethereum
+      )
+
+      const signer = walletProvider.getSigner();
+
+      const sendTx = new ethers.Contract(
+        contractAddress,
+        landInspectorContract.abi,
+        signer
+      )
+
+      const dataResult = await sendTx.addNewProperty(_propertyId, societyName, { gasLimit: 5000000 });
+
+      console.log(dataResult);
+
+      let txHash = dataResult.hash
+      let scanUrl = "https://sepolia.etherscan.io/tx/" + txHash;
+
+      setEtherScanAlert(
+        {
+          status: true,
+          msg: "View Transaction on EtherScan",
+          url: scanUrl,
+          type: "success"
+        }
+      )
+
+      await dataResult.wait();
+
+      console.log(dataResult)
+
+
       setAlert({
-      status: true,
-      msg: "Submitted Successfuly!",
-      type: "success"
-    });
+        status: true,
+        msg: "Submitted Successfuly!",
+        type: "success"
+      });
     }
-    
+
   };
 
   const [distric, setDistric] = useState("lahore");
   const [province, setProvince] = useState("punjab");
   const [society, setSociety] = useState("none");
-  const [block, setBlock] = useState("park-view");
+  const [block, setBlock] = useState("none");
+
+  const [areaName, setAreaName] = useState("none");
+
+  const [propertyId, setPropertyId] = useState("");
 
 
   const handleChangeProvience = (event) => {
@@ -67,7 +138,14 @@ const AddPropertyForm = () => {
   };
   const handleChangeBlock = (event) => {
     setBlock(event.target.value);
+    setAreaName(event.target.value);
+    setLockContractAddress("0xb8B7050CdaC5154E9d56680Db23286eaf536BE37");
+
   };
+
+  const handChangePropertyId = (e) => {
+    setPropertyId(e.target.value);
+  }
   return (
     <Box
       width="100%"
@@ -162,7 +240,7 @@ const AddPropertyForm = () => {
                   onChange={handleChangeBlock}
                 >
                   <MenuItem value="none">None</MenuItem>
-                  <MenuItem value="park-view">A Block</MenuItem>
+                  <MenuItem value="bahria-1-A">A Block</MenuItem>
                   <MenuItem value="bahria">B Block</MenuItem>
                   <MenuItem value="rehman-garden">X Block</MenuItem>
                   <MenuItem value="iqbal-town">Y Block</MenuItem>
@@ -170,7 +248,7 @@ const AddPropertyForm = () => {
               </FormControl>
             </Grid>
 
-            <Grid item lg={4} md={4} sm={4}>
+            {/* <Grid item lg={4} md={4} sm={4}>
               <TextField
                 fullWidth
                 id="propertyTitle"
@@ -178,7 +256,7 @@ const AddPropertyForm = () => {
                 label="Property Title"
                 variant="outlined"
               />
-            </Grid>
+            </Grid> */}
 
             <Grid item lg={4} md={4} sm={4}>
               <TextField
@@ -187,6 +265,8 @@ const AddPropertyForm = () => {
                 name="propertyId"
                 label="Property ID"
                 variant="outlined"
+                value={propertyId}
+                onChange={handChangePropertyId}
               />
             </Grid>
           </Grid>
@@ -202,6 +282,8 @@ const AddPropertyForm = () => {
           </Box>
 
           {alert.status ? <Alert severity={alert.type} sx={{ mt: 3 }}>{alert.msg}</Alert> : ''}
+          {etherScanAlert.status ? <><Alert severity={etherScanAlert.type} sx={{ mt: 3 }}>{etherScanAlert.msg}<a href={etherScanAlert.url} target="_blank" > Click Me</a> </Alert>  </> : ''}
+
         </Box>
       </Box>
     </Box>

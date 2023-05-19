@@ -3,10 +3,6 @@ import { ethers } from "ethers";
 
 import nodeProviderUrl from "../dataVariables";
 
-
-
- 
-
 const [etherScanAlert, setEtherScanAlert] = useState({
     status: false,
     msg: "",
@@ -14,21 +10,15 @@ const [etherScanAlert, setEtherScanAlert] = useState({
     type: ""
   });
 
-
-
-
   const [lockContractAddress, setLockContractAddress] = useState("");
 
-
   {
-
 
     const { ethereum } = window;
 
     let contractAddress = lockContractAddress;
     let applicantCnic = cnic;
 
-    console.log(contractAddress);
 
     const nodeProvider = new ethers.providers.JsonRpcProvider(
       nodeProviderUrl
@@ -38,15 +28,15 @@ const [etherScanAlert, setEtherScanAlert] = useState({
       ethereum
     )
 
-    const signer = walletProvider.getSigner();
-
-    // console.log(nodeProvider , walletProvider)
+    
 
     const getContractData = new ethers.Contract(
       contractAddress,
       govAuthorityContract.abi,
       nodeProvider
     )
+
+    const signer = walletProvider.getSigner();
 
     const sendTx = new ethers.Contract(
       contractAddress,
@@ -75,3 +65,20 @@ const [etherScanAlert, setEtherScanAlert] = useState({
 
     console.log(dataResult)
   }
+
+
+  {etherScanAlert.status ? <><Alert severity={etherScanAlert.type} sx={{ mt: 3 }}>{etherScanAlert.msg}<a href={etherScanAlert.url} target="_blank" > Click Me</a> </Alert>  </> : ''}
+
+
+  useEffect(() => {
+    if (etherScanAlert.status === true) {
+      setTimeout(() => {
+        setEtherScanAlert({
+          status: false,
+          msg: "",
+          url: "",
+          type: ""
+        })
+      }, 600000)
+    }
+  })

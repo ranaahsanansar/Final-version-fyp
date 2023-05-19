@@ -1,26 +1,53 @@
 import {
   Alert,
-    Box,
-    Button,
-    Container,
-    Divider,
-    FormControl,
-    Grid,
-    InputLabel,
-    MenuItem,
-    Select,
-    Stack,
-    TextField,
-    Typography,
-  } from "@mui/material";
-  import React, { useEffect, useState } from "react";
+  Box,
+  Button,
+  Container,
+  Divider,
+  FormControl,
+  Grid,
+  InputLabel,
+  MenuItem,
+  Select,
+  Stack,
+  TextField,
+  Typography,
+} from "@mui/material";
+import React, { useEffect, useState } from "react";
+
+import landInspectorContract from '../../artifacts/contracts/LandInspector.sol/LandInspector.json';
+
+import { ethers } from "ethers";
+
+import nodeProviderUrl from "../../dataVariables";
 
 
 const TransferNewOwnership = () => {
+
+
+
+  const [etherScanAlert, setEtherScanAlert] = useState({
+    status: false,
+    msg: "",
+    url: "",
+    type: ""
+  });
+
+
+
   const [distric, setDistric] = useState("lahore");
   const [province, setProvince] = useState("punjab");
   const [society, setSociety] = useState("none");
   const [block, setBlock] = useState("park-view");
+  const [lockContractAddress, setLockContractAddress] = useState("");
+  const [areaName, setAreaName] = useState("");
+  const [propertyId, setPropertyId] = useState();
+  const [cnic, setCnic] = useState();
+  const [shares, setShares] = useState();
+  const [propertyAmmount, setPropertyAmmount] = useState();
+
+
+
 
   const [alert, setAlert] = useState({
     status: false,
@@ -28,31 +55,96 @@ const TransferNewOwnership = () => {
     type: ""
   });
 
-  useEffect(()=>{
-    if(alert.status === true){
-        setTimeout(() => {
-      
-      setAlert({
-        status: false,
-        msg: "",
-        type: ""
-      })
-    }, 5000);
-    } 
-    
+  useEffect(() => {
+    if (alert.status === true) {
+      setTimeout(() => {
+
+        setAlert({
+          status: false,
+          msg: "",
+          type: ""
+        })
+      }, 5000);
+    }
+
+    if (etherScanAlert.status === true) {
+      setTimeout(() => {
+        setEtherScanAlert({
+          status: false,
+          msg: "",
+          url: "",
+          type: ""
+        })
+      }, 600000)
+    }
+
   })
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     let confirm = window.confirm("Are you sure want to Submit?");
-    if (confirm){
+    if (confirm) {
+
+      const { ethereum } = window;
+
+      let contractAddress = lockContractAddress;
+      let societyName = areaName;
+      let id = propertyId;
+      let applicantCnic = cnic;
+      let sharesAmmount = shares;
+      let _propertyAmmount = propertyAmmount;
+
+      const walletProvider = new ethers.providers.Web3Provider(
+        ethereum
+      )
+
+      const signer = walletProvider.getSigner();
+
+      const sendTx = new ethers.Contract(
+        contractAddress,
+        landInspectorContract.abi,
+        signer
+      )
+      console.log("Ok ha 1")
+      const dataResult = await sendTx.transferNewProperty(
+        id,
+        applicantCnic,
+        sharesAmmount,
+        _propertyAmmount,
+        societyName,
+        { gasLimit: 5000000 }
+      )
+
+
+
+      console.log("Ok ha 2")
+
+
+      let txHash = dataResult.hash
+      let scanUrl = "https://sepolia.etherscan.io/tx/" + txHash;
+
+
+
+      setEtherScanAlert(
+        {
+          status: true,
+          msg: "View Transaction on EtherScan",
+          url: scanUrl,
+          type: "success"
+        }
+      )
+
+      await dataResult.wait();
+
+
+
       setAlert({
-      status: true,
-      msg: "Submitted Successfuly!",
-      type: "success"
-    });
+        status: true,
+        msg: "Submitted Successfuly!",
+        type: "success"
+      });
     }
-    
+
   };
 
   const handleChangeProvience = (event) => {
@@ -66,7 +158,27 @@ const TransferNewOwnership = () => {
   };
   const handleChangeBlock = (event) => {
     setBlock(event.target.value);
+    setAreaName(event.target.value);
+    setLockContractAddress("0xb8B7050CdaC5154E9d56680Db23286eaf536BE37");
   };
+
+  const handleChangeCnic = (event) => {
+    setCnic(event.target.value);
+  };
+
+  const handleChangePropertyId = (event) => {
+    setPropertyId(event.target.value);
+  }
+
+  const handleChangeShares = (event) => {
+    setShares(event.target.value);
+  }
+
+  const handleChangePropertyAmmount = (event) => {
+    setPropertyAmmount(event.target.value);
+  }
+
+
   return (
     <Box
       width="100%"
@@ -160,7 +272,7 @@ const TransferNewOwnership = () => {
                   onChange={handleChangeBlock}
                 >
                   <MenuItem value="none">None</MenuItem>
-                  <MenuItem value="park-view">A Block</MenuItem>
+                  <MenuItem value="bahria-1-A">A Block</MenuItem>
                   <MenuItem value="bahria">B Block</MenuItem>
                   <MenuItem value="rehman-garden">X Block</MenuItem>
                   <MenuItem value="iqbal-town">Y Block</MenuItem>
@@ -168,16 +280,17 @@ const TransferNewOwnership = () => {
               </FormControl>
             </Grid>
 
-            <Grid item lg={4} md={4} sm={4}>
+            {/* <Grid item lg={4} md={4} sm={4}>
               <TextField
                 fullWidth
                 id="propertyTitle"
                 label="Property Title"
                 variant="outlined"
                 name="propertyTitle"
+                onChange={hand}
 
               />
-            </Grid>
+            </Grid> */}
 
             <Grid item lg={4} md={4} sm={4}>
               <TextField
@@ -185,7 +298,9 @@ const TransferNewOwnership = () => {
                 id="propertyID"
                 name="propertyID"
                 label="Property ID"
+                type='number'
                 variant="outlined"
+                onChange={handleChangePropertyId}
               />
             </Grid>
 
@@ -198,6 +313,7 @@ const TransferNewOwnership = () => {
                 variant="outlined"
                 type="Number"
                 placeholder="3520200000000"
+                onChange={handleChangeCnic}
               />
             </Grid>
             <Grid item lg={4} md={4} sm={4}>
@@ -209,7 +325,20 @@ const TransferNewOwnership = () => {
                 variant="outlined"
                 type="number"
                 placeholder="0-100"
-                inputProps={{ min: 0 , max: 100 }}
+                inputProps={{ min: 0, max: 100 }}
+                onChange={handleChangeShares}
+
+              />
+            </Grid>
+            <Grid item lg={4} md={4} sm={4}>
+              <TextField
+                fullWidth
+                id="propertyAmmount"
+                name="propertyAmmount"
+                label="Property Amount"
+                variant="outlined"
+                type="number"
+                onChange={handleChangePropertyAmmount}
 
               />
             </Grid>
@@ -225,6 +354,7 @@ const TransferNewOwnership = () => {
             </Button>
           </Box>
           {alert.status ? <Alert severity={alert.type} sx={{ mt: 3 }}>{alert.msg}</Alert> : ''}
+          {etherScanAlert.status ? <><Alert severity={etherScanAlert.type} sx={{ mt: 3 }}>{etherScanAlert.msg}<a href={etherScanAlert.url} target="_blank" > Click Me</a> </Alert>  </> : ''}
         </Box>
       </Box>
     </Box>

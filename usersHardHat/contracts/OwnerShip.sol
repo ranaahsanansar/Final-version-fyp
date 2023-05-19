@@ -2,7 +2,6 @@
 pragma solidity ^0.8.0;
 
 import "contracts/Citizens.sol";
-
 import "contracts/Parkview.sol";
 
 contract OwnerShip is SocietyBlock {
@@ -37,7 +36,6 @@ contract OwnerShip is SocietyBlock {
         uint256 indexed PropertyId,
         uint256 BuyerCnic,
         uint256 Shares,
-        uint256 AmountOfPropertyCoins,
         address indexed InspectorAddress,
         uint256 Time
     );
@@ -51,7 +49,6 @@ contract OwnerShip is SocietyBlock {
         uint256 _propertyId,
         uint256 _cnic,
         uint256 _sharesPercentage,
-        uint256 _propertyTokensAmount,
         address _inspectorAddress
     ) public payable isLandInspector {
         require(
@@ -97,7 +94,6 @@ contract OwnerShip is SocietyBlock {
             _propertyId,
             _cnic,
             _sharesPercentage,
-            _propertyTokensAmount,
             _inspectorAddress,
             block.timestamp
         );
@@ -592,5 +588,3 @@ contract OwnerShip is SocietyBlock {
         properties[_propertyId].stay = true;
     }
 }
-
-// 0xcD8D44a2c5013E3BF4Ae8Aa6CEdEe15b049EaF5A

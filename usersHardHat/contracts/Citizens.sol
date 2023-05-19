@@ -54,7 +54,6 @@ contract Citizens{
         return citizensArray[_cnic].walletAddress;
     }
 
-
     function newCitizenRequest(uint _CNIC ) public {
         require(citizensArray[_CNIC].isApproved == false , "You are already exists.");
         require(citizensArray[_CNIC].reTry == false , "You are in waiting List");
@@ -92,4 +91,3 @@ contract Citizens{
 
    
 }
-// 0x6D775f5A4008BaAEF0FdadC09dAEe96149aB301c

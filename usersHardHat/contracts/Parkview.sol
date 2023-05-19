@@ -22,10 +22,10 @@ contract SocietyBlock {
     // uint transferRequestsCount ;
     }
 
-    // constructor() {
-    //     landInspectorContract = msg.sender ;
-    //     govermentAuthority = msg.sender ;
-    // }
+    constructor() {
+        landInspectorContract = msg.sender ;
+        govermentAuthority = msg.sender ;
+    }
 
     modifier isGovermentAuthority() {
         require(msg.sender == govermentAuthority, "Only Goverment Authority");

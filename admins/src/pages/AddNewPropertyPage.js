@@ -3,7 +3,12 @@ import React from 'react'
 import AddPropertyForm from '../components/Froms/AddPropertyForm'
 import TransferNewOwnership from '../components/Froms/TransferNewOwnership'
 
+
+
 const AddNewPropertyPage = () => {
+
+
+
   return (
     <>
 

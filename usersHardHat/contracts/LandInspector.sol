@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import "contracts/Parkview.sol";
-import "contracts/OwnerShip.sol"; 
+// import "contracts/Parkview.sol";
+import "contracts/OwnerShip.sol";
 
 contract LandInspector {
     address govermentAuthority;
@@ -98,7 +98,6 @@ contract LandInspector {
         uint256 _propertyId,
         uint256 _cnic,
         uint256 _sharesPercentage,
-        uint256 _propertyTokensAmount,
         string memory _areaName
     ) public isLandInspector {
         OwnerShip obj;
@@ -107,7 +106,6 @@ contract LandInspector {
             _propertyId,
             _cnic,
             _sharesPercentage,
-            _propertyTokensAmount,
             msg.sender
         );
     }

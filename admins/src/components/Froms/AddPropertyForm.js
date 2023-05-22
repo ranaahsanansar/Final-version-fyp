@@ -78,9 +78,9 @@ const AddPropertyForm = () => {
       const walletProvider = new ethers.providers.Web3Provider(
         ethereum
       )
-
+ 
       const signer = walletProvider.getSigner();
-
+      // console.log(signer)
       const sendTx = new ethers.Contract(
         contractAddress,
         landInspectorContract.abi,

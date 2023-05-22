@@ -3,7 +3,7 @@ pragma solidity ^0.8.0;
 
 // import "contracts/Parkview.sol";
 
-contract Citizens{
+contract Citizens{ 
 
     address private govAuthority;
     address private highCourt;

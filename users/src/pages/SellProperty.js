@@ -17,89 +17,9 @@ import {
   Typography,
 } from "@mui/material";
 import SellingRecords from "../components/SellingRecords";
+import SellPropertyForm from "../components/SellPropertyForm";
 
 const SellProperty = () => {
-
-  const [alert, setAlert] = useState({
-    status: false,
-    msg: "",
-    type: ""
-});
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const data = new FormData(e.currentTarget);
-    const actualData = {
-      province: data.get('province'),
-      distric: data.get('distric'),
-      society: data.get('society'),
-      block: data.get('block'),
-      propertyId: data.get('propertyId'),
-      ownerFullName: data.get('ownerFullName'),
-      ownerCNIC: data.get('ownerCNIC'),
-      priceOfShare: data.get('priceOfShare'),
-      buyerCNIC: data.get('buyerCNIC'),
-      agree: data.get('agree')
-    }
-    console.log(actualData)
-    if (actualData.province && actualData.distric && actualData.society && actualData.block && actualData.propertyId && actualData.ownerFullName && actualData.ownerCNIC && actualData.priceOfShare && actualData.buyerCNIC && actualData.agree ) {
-      setAlert({
-        status: true,
-        msg: "Your Request is now generated! Contact to the land Inspector",
-        type: "success"
-    });
-      
-    } else {
-      // setError({ status: true, msg: "All Fields are Required", type: 'error' })
-      setAlert({
-        status: true,
-        msg: "All Fields are required!",
-        type: "error"
-    });
-    }
-  };
-
-  useEffect(() => {
-    if (alert.status === true) {
-      setTimeout(() => {
-
-        setAlert({
-          status: false,
-          msg: "",
-          type: ""
-        });
-
-      }, 5000);
-
-
-    }
-
-  })
-
-  const [distric, setDistric] = useState('lahore');
-  const [province, setProvince] = useState('punjab');
-  const [selectPropertyId, setSelectPropertyId] = useState('none');
-  const [society, setSociety] = useState('none');
-  const [block, setBlock] = useState('park-view');
-
-
-
-  const handleChangeProvience = (event) => {
-    setProvince(event.target.value);
-  };
-  const handleChangeDistric = (event) => {
-    setDistric(event.target.value);
-  };
-  const handleChangeBlock = (event) => {
-    setBlock(event.target.value);
-  };
-  const handleChangePropertyId = (event) => {
-    setSelectPropertyId(event.target.value);
-  };
-  const handleChangeSociety = (event) => {
-    setSociety(event.target.value);
-  };
-
 
 
   const glassMorphismStyle = {
@@ -107,12 +27,6 @@ const SellProperty = () => {
     boxShadow: " 0 4px 30px rgba(0, 0, 0, 0.1)",
     backdropFilter: "blur(5px)",
     border: "1px solid rgba(255, 255, 255, 0.3)",
-  };
-
-  const [checked, setChecked] = useState(false);
-
-  const handleCheck = (event) => {
-    setChecked(event.target.checked);
   };
 
 
@@ -131,7 +45,7 @@ const SellProperty = () => {
                     How to Sell property through Blockchain
                   </Typography>
                   <ul style={{ listStyle: "none" }} >
-                  <li>Verify Your self as a Seller.</li>
+                    <li>Verify Your self as a Seller.</li>
                     <li>Contact to the owner.</li>
                     <li>Decide the price of property per share.</li>
                     <li>Take request number from the owner.</li>
@@ -145,7 +59,7 @@ const SellProperty = () => {
               </Stack>
             </Box>
 
-            <Box sx={{ backgroundColor: 'white', borderRadius: 2, padding: 2 }} >
+            {/* <Box sx={{ backgroundColor: 'white', borderRadius: 2, padding: 2 }} >
               <Box
                 component="form"
                 noValidate
@@ -365,7 +279,11 @@ const SellProperty = () => {
                 {alert.status ? <Alert severity={alert.type} sx={{ mt: 3 }}>{alert.msg}</Alert> : ''}
                 
               </Box>
-            </Box>
+            </Box> */}
+
+            <SellPropertyForm />
+
+
 
             <Box>
               <Stack spacing={2}>
@@ -379,7 +297,7 @@ const SellProperty = () => {
                 </Box>
               </Stack>
             </Box>
-            
+
           </Stack>
         </Box>
       </Container>

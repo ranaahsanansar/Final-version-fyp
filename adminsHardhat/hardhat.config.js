@@ -26,6 +26,11 @@ module.exports = {
       accounts: [privateKey1],
     }
   },
+  etherscan: {
+    apiKey: {
+      sepolia: 'g5_IZehi2__Fi9Jj5Pgs53cy_Shg9umf'
+    }
+  },
   paths: {
     sources: "./contracts",
     tests: "./test",

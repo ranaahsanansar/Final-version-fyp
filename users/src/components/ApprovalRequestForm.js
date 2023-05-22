@@ -20,6 +20,7 @@ import BuyingRecords from "../components/BuyingRecords";
 import React, { useEffect, useState } from "react";
 import citizenContract from "../artifacts/contracts/Citizens.sol/Citizens.json";
 import { ethers } from "ethers";
+import { citizenContractAddress } from "../dataVariables"; 
 
 
 const ApprovalRequestForm = () => {
@@ -57,7 +58,7 @@ const ApprovalRequestForm = () => {
         }
 
 
-        const contractAddress = 
+        const contractAddress = citizenContractAddress
             console.log(contractAddress);
             
             let providerUrl = "https://eth-sepolia.g.alchemy.com/v2/g5_IZehi2__Fi9Jj5Pgs53cy_Shg9umf";

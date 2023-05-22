@@ -22,6 +22,7 @@ import areaContract from "../artifacts/contracts/OwnerShip.sol/OwnerShip.json";
 import { ethers } from "ethers";
 
 import nodeProviderUrl from "../dataVariables";
+import { ownerShipAddress } from "../dataVariables";
 
 
 
@@ -185,7 +186,7 @@ const SellPropertyForm = () => {
     };
     const handleChangeBlock = (event) => {
         setBlock(event.target.value);
-        setLockContractAddress("0x2604e9292a4cF4C622B806480cF41279920F56A3");
+        setLockContractAddress(ownerShipAddress);
     };
     const handleChangePropertyId = (event) => {
         setSelectPropertyId(event.target.value);

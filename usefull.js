@@ -69,6 +69,9 @@ const [lockContractAddress, setLockContractAddress] = useState("");
 
 
 useEffect(() => {
+
+
+
   if (etherScanAlert.status === true) {
     setTimeout(() => {
       setEtherScanAlert({
@@ -79,4 +82,8 @@ useEffect(() => {
       })
     }, 600000)
   }
+
+
+
+  
 })

@@ -133,8 +133,7 @@ contract LandInspector {
         uint256 _propertyId,
         uint256 _requestNumber,
         uint256 _ownerCnic,
-        uint256 _buyerCnic,
-        address _landinspectorWallet
+        uint256 _buyerCnic
     ) external isLandInspector {
         OwnerShip obj;
         obj = OwnerShip(_societyBlockAddress);
@@ -143,7 +142,7 @@ contract LandInspector {
             _requestNumber,
             _ownerCnic,
             _buyerCnic,
-            _landinspectorWallet
+            msg.sender
         );
     }
 }

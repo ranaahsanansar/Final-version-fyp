@@ -15,7 +15,7 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useState } from "react";
-import nodeProviderUrl from "../dataVariables";
+import nodeProviderUrl, { govermentAuthorityContractAddress } from "../dataVariables";
 import { ethers } from "ethers";
 
 import govAuthorityContract from "../artifacts/contracts/govermenAuthority.sol/GovermentAuthority.json";
@@ -34,7 +34,7 @@ const CitizenApprovalPage = () => {
     setCitizen(!citizen);
 
     // Fetching Result from DB 
-    setLockContractAddress("0x4ACCaDaa8AbFB3061A4a5844f8307d42D97FfF9c");
+    setLockContractAddress(govermentAuthorityContractAddress);
     setLockCnic(cnic);
 
   };

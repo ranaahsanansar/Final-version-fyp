@@ -17,6 +17,7 @@ import {
 import React, { useEffect, useState } from "react";
 import areaContract from "../artifacts/contracts/OwnerShip.sol/OwnerShip.json";
 import { ethers } from "ethers";
+import { ownerShipAddress } from "../dataVariables";
 
 
 const BuyPropertyForm = () => {
@@ -139,7 +140,7 @@ const BuyPropertyForm = () => {
     };
     const handleChangeBlock = (event) => {
         setBlock(event.target.value);
-        setLockContractAddress("0x2604e9292a4cF4C622B806480cF41279920F56A3");
+        setLockContractAddress(ownerShipAddress);
     };
 
     const [checked, setChecked] = useState(false);

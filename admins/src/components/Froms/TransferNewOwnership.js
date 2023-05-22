@@ -19,7 +19,7 @@ import landInspectorContract from '../../artifacts/contracts/LandInspector.sol/L
 
 import { ethers } from "ethers";
 
-import nodeProviderUrl from "../../dataVariables";
+import nodeProviderUrl, { landInspectorContractAddress } from "../../dataVariables";
 
 
 const TransferNewOwnership = () => {
@@ -159,7 +159,7 @@ const TransferNewOwnership = () => {
   const handleChangeBlock = (event) => {
     setBlock(event.target.value);
     setAreaName(event.target.value);
-    setLockContractAddress("0xb8B7050CdaC5154E9d56680Db23286eaf536BE37");
+    setLockContractAddress(landInspectorContractAddress);
   };
 
   const handleChangeCnic = (event) => {

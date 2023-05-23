@@ -3,6 +3,9 @@ import { ethers } from "ethers";
 
 import nodeProviderUrl from "../dataVariables";
 
+
+
+
 const [etherScanAlert, setEtherScanAlert] = useState({
   status: false,
   msg: "",
@@ -12,12 +15,14 @@ const [etherScanAlert, setEtherScanAlert] = useState({
 
 const [lockContractAddress, setLockContractAddress] = useState("");
 
+
+
+
 {
 
   const { ethereum } = window;
 
   let contractAddress = lockContractAddress;
-  let applicantCnic = cnic;
 
 
   const nodeProvider = new ethers.providers.JsonRpcProvider(
@@ -80,7 +85,7 @@ useEffect(() => {
         url: "",
         type: ""
       })
-    }, 600000)
+    }, 60000)
   }
 
 

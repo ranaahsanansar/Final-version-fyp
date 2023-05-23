@@ -24,8 +24,6 @@ import nodeProviderUrl, { landInspectorContractAddress } from "../../dataVariabl
 
 const TransferNewOwnership = () => {
 
-
-
   const [etherScanAlert, setEtherScanAlert] = useState({
     status: false,
     msg: "",

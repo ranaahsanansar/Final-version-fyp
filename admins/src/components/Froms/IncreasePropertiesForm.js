@@ -15,11 +15,28 @@ import {
   } from "@mui/material";
   import React, { useState , useEffect } from "react";
 
+  import govAuthority from "../../artifacts/contracts/govermenAuthority.sol/GovermentAuthority.json";
+import { ethers } from "ethers";
+  
+import { ownerShipAddress, govermentAuthorityContractAddress } from "../../dataVariables";
+
 const IncreasePropertiesForm = () => {
     const [distric , setDistric ] = useState('lahore');
     const [province , setProvince ] = useState('punjab');
     const [society , setSociety ] = useState('none');
     const [block , setBlock ] = useState('park-view');
+    const [areaContractAddress , setAreaContractAddress ] = useState('');
+    const [increaseAmmount , setIncreaseAmmount ] = useState('');
+
+
+    const [etherScanAlert, setEtherScanAlert] = useState({
+      status: false,
+      msg: "",
+      url: "",
+      type: ""
+    });
+    const [lockContractAddress, setLockContractAddress] = useState("");
+    
 
     const [alert, setAlert] = useState({
       status: false,
@@ -41,10 +58,47 @@ const IncreasePropertiesForm = () => {
       
     })
   
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
       e.preventDefault();
       let confirm = window.confirm("Are you sure want to Submit?");
       if (confirm){
+
+
+        const { ethereum } = window;
+
+        let contractAddress = lockContractAddress;
+        let _areaContractAddress = areaContractAddress;
+        let _incraseAmmount = increaseAmmount;
+
+        const walletProvider = new ethers.providers.Web3Provider(
+          ethereum
+        )
+      
+        const signer = walletProvider.getSigner();
+      
+        const sendTx = new ethers.Contract(
+          contractAddress,
+          govAuthority.abi,
+          signer
+        )
+        console.log("Ok ha")
+      
+        const dataResult = await sendTx.increaseProperties(_areaContractAddress, _incraseAmmount , {gasLimit : 5000000});
+      
+        let txHash = dataResult.hash
+        let scanUrl = "https://sepolia.etherscan.io/tx/" + txHash;
+      
+      
+      
+        setEtherScanAlert(
+          {
+            status: true,
+            msg: "View Transaction on EtherScan",
+            url: scanUrl,
+            type: "success"
+          }
+        )
+
         setAlert({
         status: true,
         msg: "Submitted Successfuly!",
@@ -66,7 +120,14 @@ const IncreasePropertiesForm = () => {
     };
     const handleChangeBlock = (event) => {
       setBlock(event.target.value);
+      setLockContractAddress(govermentAuthorityContractAddress)
     };
+    const handleChangeAreaContractAddress = (e) => {
+      setAreaContractAddress(e.target.value)
+    }
+    const handleChangeIncreaseAmmount = (e) => {
+      setIncreaseAmmount(e.target.value)
+    }
     return (
       <Box width='100%'  sx={{
         border:'2px solid gray' , padding:2 , borderRadius: '15px', backgroundColor: '#f2f2f2'
@@ -168,12 +229,12 @@ const IncreasePropertiesForm = () => {
   
   
                 <Grid item lg={4} md={4} sm={4} > 
-              <TextField fullWidth id="address" name="address" label="Contract Address" variant="outlined" placeholder="9x99856489264896519879654" />
+              <TextField fullWidth id="address" name="address" onChange={handleChangeAreaContractAddress} label="Contract Address" variant="outlined" placeholder="9x99856489264896519879654" />
                 
                  </Grid>
   
                  <Grid item lg={4} md={4} sm={4} > 
-              <TextField fullWidth id="increaseAmount" name="increaseAmount" label="Increase Amount" variant="outlined" type="number" inputProps={{ min: 1}} />
+              <TextField fullWidth id="increaseAmount" name="increaseAmount" onChange={handleChangeIncreaseAmmount} label="Increase Amount" variant="outlined" type="number" inputProps={{ min: 1}} />
                 
                  </Grid>
   
@@ -190,6 +251,7 @@ const IncreasePropertiesForm = () => {
                   </Box>
 
           {alert.status ? <Alert severity={alert.type} sx={{ mt: 3 }}>{alert.msg}</Alert> : ''}
+          { etherScanAlert.status ? <><Alert severity={etherScanAlert.type} sx={{ mt: 3 }}>{etherScanAlert.msg}<a href={etherScanAlert.url} target="_blank" > Click Me</a> </Alert>  </> : '' }
 
                   
   

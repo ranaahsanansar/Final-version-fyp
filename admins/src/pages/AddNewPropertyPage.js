@@ -7,8 +7,6 @@ import TransferNewOwnership from '../components/Froms/TransferNewOwnership'
 
 const AddNewPropertyPage = () => {
 
-
-
   return (
     <>
 

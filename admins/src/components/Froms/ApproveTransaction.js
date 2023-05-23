@@ -17,6 +17,7 @@ import React, { useEffect, useState } from "react";
 
 import landInspectorContract from "../../artifacts/contracts/LandInspector.sol/LandInspector.json";
 import { ethers } from "ethers";
+import { landInspectorContractAddress, ownerShipAddress } from "../../dataVariables";
 
 
 const ApproveTransaction = () => {
@@ -145,8 +146,8 @@ const ApproveTransaction = () => {
   };
   const handleChangeBlock = (event) => {
     setBlock(event.target.value);
-    setLockContractAddress("0xc657D9aee8eBa95dFaa3c6D3AD1CB82D97Ee8A0A");
-    setAreaContractAddress("0x70fefc19b5B632996377904f1Ba21897a3d7F0f3");
+    setLockContractAddress(landInspectorContractAddress);
+    setAreaContractAddress(ownerShipAddress);
   };
 
   const handleChangeId = (e) => {

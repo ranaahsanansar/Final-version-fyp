@@ -84,11 +84,17 @@ contract Citizens{
         citizensArray[_CNIC].isAlive = false ;
     }
 
-    function stayOnCitizen(uint _CNIC) external isHighCourt {
-        citizensArray[_CNIC].stay = true ;
+
+    event StayOnCitizenLogs(uint Cnic , bool Status);
+    function RemoveStayOnCitizen(uint _CNIC) external isHighCourt {
+        citizensArray[_CNIC].stay = false ;
+        emit StayOnCitizenLogs(_CNIC, false);
     }
 
+    function stayOnCitizen(uint _CNIC) external isHighCourt {
+        citizensArray[_CNIC].stay = true ;
+        emit StayOnCitizenLogs(_CNIC, true);
 
+    }
 
-   
 }

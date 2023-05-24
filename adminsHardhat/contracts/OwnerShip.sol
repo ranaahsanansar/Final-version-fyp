@@ -158,7 +158,6 @@ contract OwnerShip is SocietyBlock {
         uint256 indexed BuyerCnic,
         uint256 Shares,
         uint256 PrizeOFOneShare,
-        uint256 RequestNumber,
         uint256 Time
     );
 
@@ -169,7 +168,7 @@ contract OwnerShip is SocietyBlock {
         uint256 _transferSharesAmount,
         uint256 _priceOfOneShare,
         uint256 _buyerCnic
-    ) public {
+    ) public returns (uint256) {
         // Time limit for 5 mintues
         require(
             shareRecords[_propertyId].shareholders[_OwnerCnic].time + 300 <
@@ -235,9 +234,9 @@ contract OwnerShip is SocietyBlock {
             _buyerCnic,
             _transferSharesAmount,
             _totalPrice,
-            blockTime,
             block.timestamp
         );
+        return blockTime;
     }
 
     event IndexOfRecordedTransaction(
@@ -427,9 +426,8 @@ contract OwnerShip is SocietyBlock {
         uint256 _caseNumber,
         uint256 _cutFrom,
         uint256 _addTo,
-        uint256 _amountOfShares,
-        uint256 OTPCode
-    ) public {
+        uint256 _amountOfShares
+    ) public returns(uint256 OTP) {
         require(
             shareRecords[_propertyId].shareholders[_cutFrom].shares >=
                 _amountOfShares,
@@ -447,6 +445,7 @@ contract OwnerShip is SocietyBlock {
         );
 
         // Make this Owner to Stay  Function
+        uint OTPCode = block.timestamp;
 
         ReverseCaseDetails memory reverseObj;
         reverseObj = ReverseCaseDetails(
@@ -471,15 +470,15 @@ contract OwnerShip is SocietyBlock {
             _amountOfShares,
             block.timestamp
         );
+        return OTPCode;
     }
 
     // is Lda only
     function singnatureToReverseCase(
         uint256 _propertyId,
         uint256 _caseNumber,
-        uint256 _verficationOTPCode,
-        uint256 _newOTPCode
-    ) public isGovermentAuthority {
+        uint256 _verficationOTPCode
+    ) public isGovermentAuthority returns (uint256 NewOtp)  {
         require(
             reverseCasesArray[_propertyId]
                 .detailsOfCasesArray[_caseNumber]
@@ -487,12 +486,16 @@ contract OwnerShip is SocietyBlock {
             "Invalid Information"
         );
 
+        uint256 _newOTPCode = block.timestamp;
+
         reverseCasesArray[_propertyId]
             .detailsOfCasesArray[_caseNumber]
             .signatureForGovermentAuthority = true;
         reverseCasesArray[_propertyId]
             .detailsOfCasesArray[_caseNumber]
             .OTP = _newOTPCode;
+
+        return _newOTPCode;
     }
 
     event ConfirmedReverseCaseLogs(
@@ -575,7 +578,7 @@ contract OwnerShip is SocietyBlock {
                 }
             }
         }
-        delete  reverseCasesArray[_propertyId];
+        delete reverseCasesArray[_propertyId];
 
         emit ConfirmedReverseCaseLogs(
             _propertyId,
@@ -588,7 +591,41 @@ contract OwnerShip is SocietyBlock {
         );
     }
 
+    event StayOnPropertyLog(uint ID , bool Status);
+
     function stayOnProperty(uint256 _propertyId) external isHighCourt {
         properties[_propertyId].stay = true;
+        emit StayOnPropertyLog(_propertyId , true);
+    }
+
+    function removeStayOnProperty(uint256 _propertyId) external isHighCourt {
+        properties[_propertyId].stay = false;
+        emit StayOnPropertyLog(_propertyId , false);
+    }
+
+    event DelareSuccersorsLog(uint256 _owner,
+        uint256 _succesor,
+        uint256 _propertyId,
+        uint256 _sharesAmmount);
+
+    function declareSuccesors(
+        uint256 _owner,
+        uint256 _succesor,
+        uint256 _propertyId,
+        uint256 _sharesAmmount
+    ) external isGovermentAuthority {
+        Citizens obj;
+        obj = Citizens(CitizenContract);
+        require(obj.getCitizenIsAlive(_owner), "Owner is not Alive");
+        require(obj.getCitizenIsAlive(_succesor), "Succesor is not Alive");
+        require(
+            properties[_propertyId].stay == false,
+            "Property is on Stay by Goverment"
+        );
+        require(properties[_propertyId].exists == true, "Wrong Property ID");
+        shareRecords[_propertyId].shareholders[_owner].shares -= _sharesAmmount ;
+        shareRecords[_propertyId].shareholders[_succesor].shares += _sharesAmmount ;
+        emit DelareSuccersorsLog(_owner , _succesor , _propertyId , _sharesAmmount);
+
     }
 }

@@ -20,5 +20,6 @@ router.get('/getSociety/:id' , ContractsConroller.getSociety)
 
 router.post("/addArea" , ContractsConroller.addArea)
 router.get('/getArea/:id' , ContractsConroller.getArea)
+router.get('/getAreaName/:id' , ContractsConroller.getAreaName)
 
 export default router

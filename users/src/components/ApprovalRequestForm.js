@@ -20,7 +20,7 @@ import BuyingRecords from "../components/BuyingRecords";
 import React, { useEffect, useState } from "react";
 import citizenContract from "../artifacts/contracts/Citizens.sol/Citizens.json";
 import { ethers } from "ethers";
-import { citizenContractAddress } from "../dataVariables"; 
+import { citizenContractAddress } from "../dataVariables";
 
 
 const ApprovalRequestForm = () => {
@@ -35,8 +35,8 @@ const ApprovalRequestForm = () => {
         msg: "",
         url: "",
         type: ""
-      });
-  const { ethereum } = window;
+    });
+    const { ethereum } = window;
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -48,7 +48,6 @@ const ApprovalRequestForm = () => {
         //     }]
         //   }); 
         const actualData = {
-            province: data.get('province'),
             citzenName: data.get('citizenName'),
             cnic: data.get('citizenCNIC'),
             fatherName: data.get('fatherName'),
@@ -58,54 +57,56 @@ const ApprovalRequestForm = () => {
         }
 
 
-        const contractAddress = citizenContractAddress
-            console.log(contractAddress);
-            
-            let providerUrl = "https://eth-sepolia.g.alchemy.com/v2/g5_IZehi2__Fi9Jj5Pgs53cy_Shg9umf";
+       
 
+
+
+        if (actualData.citzenName && actualData.cnic && actualData.fatherName && actualData.phone && actualData.email && actualData.agree) {
+
+
+            const contractAddress = citizenContractAddress
+            console.log(contractAddress);
+    
+            let providerUrl = "https://eth-sepolia.g.alchemy.com/v2/g5_IZehi2__Fi9Jj5Pgs53cy_Shg9umf";
+    
             const nodeProvider = new ethers.providers.JsonRpcProvider(
                 providerUrl
             )
-
+    
             const walletProvider = new ethers.providers.Web3Provider(
                 ethereum
             )
-
+    
             const signer = walletProvider.getSigner();
-
+    
             // console.log(nodeProvider , walletProvider)
-
+    
             const getContractData = new ethers.Contract(
                 contractAddress,
                 citizenContract.abi,
                 nodeProvider
             )
-
+    
             const sendTx = new ethers.Contract(
                 contractAddress,
                 citizenContract.abi,
                 signer
             )
             console.log("Ok ha")
-
+    
             const dataResult = await sendTx.newCitizenRequest(actualData.cnic);
-
+    
             let txHash = dataResult.hash
-    let scanUrl = "https://sepolia.etherscan.io/tx/" + txHash;
-
+            let scanUrl = "https://sepolia.etherscan.io/tx/" + txHash;
+    
             setEtherScanAlert(
                 {
-                  status: true,
-                  msg: "View Transaction on EtherScan",
-                  url: scanUrl,
-                  type: "success"
+                    status: true,
+                    msg: "View Transaction on EtherScan",
+                    url: scanUrl,
+                    type: "success"
                 }
-              )
-
-
-
-        if (actualData.province  && actualData.citzenName && actualData.cnic && actualData.fatherName && actualData.phone && actualData.email && actualData.agree) {
-            
+            )
             setAlert({
                 status: true,
                 msg: "Your Request is now generated! Contact to the land Inspector",
@@ -120,7 +121,7 @@ const ApprovalRequestForm = () => {
                 type: "error"
             });
         }
-        
+
     };
 
     const [distric, setDistric] = useState("");
@@ -185,21 +186,6 @@ const ApprovalRequestForm = () => {
                                 <Box sx={[glassMorphismStyle, { borderRadius: 2, padding: 2 }]} >
                                     <Typography variant="h3">Send Request for Citizen Approval</Typography>
                                 </Box>
-                                {/* <Box sx={[glassMorphismStyle, { borderRadius: 2, padding: 2 }]} >
-                    <Typography fontWeight="bold">
-                      How to Buy property through Blockchain
-                    </Typography>
-                    <ul>
-                      <li>Contact to the owner.</li>
-                      <li>Decide the price of property per share.</li>
-                      <li>Take request number from the owner.</li>
-                      <li>Enter required details below.</li>
-                      <li>
-                        Go to the landInspector office and approve your transaction.
-                      </li>
-                    </ul>
-                  </Box> */}
-
 
                             </Stack>
                         </Box>
@@ -214,7 +200,7 @@ const ApprovalRequestForm = () => {
                             >
                                 <Grid container spacing={2}>
 
-
+                                    {/* 
                                     <Grid item sm={12} xs={12} md={6} lg={6}>
                                         <FormControl fullWidth>
                                             <InputLabel id="province-label">Province</InputLabel>
@@ -235,8 +221,8 @@ const ApprovalRequestForm = () => {
                                                 <MenuItem value="KPK">KPK</MenuItem>
                                             </Select>
                                         </FormControl>
-                                    </Grid>
- 
+                                    </Grid> */}
+
                                     {/* <Grid item sm={12} xs={12} md={6} lg={6}>
                                         <FormControl fullWidth>
                                             <InputLabel id="distric-label">Distric</InputLabel>

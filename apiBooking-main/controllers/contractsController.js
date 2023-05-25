@@ -190,6 +190,20 @@ class ContractsConroller {
 
     }
 
+    static getAreaName = async (req, res )=> {
+        const { id } = req.params;
+        try{
+            const result = await AreaModel.findById(id);
+            if(result){
+                res.send({name: result.name})
+            }else {
+                res.send(false)
+            }
+        }catch (err) {
+            res.send("DB Error" + err)
+        }
+    }
+
     static addContracts = async (req, res) => {
         const { _areaId, _areaContract, _govermentAuthority, _highCourt, _citzenContract, _landInspector } = req.body;
         try {

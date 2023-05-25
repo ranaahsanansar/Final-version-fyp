@@ -18,7 +18,7 @@ import React, { useEffect, useState } from "react";
 
 import landInspectorContract from '../../artifacts/contracts/LandInspector.sol/LandInspector.json';
 import { ethers } from "ethers";
-import nodeProviderUrl from "../../dataVariables";
+import nodeProviderUrl, { getAllDistricURL, getAllProvienceURL, getAreaNameURL, getAreaURL, getContractURL, getSocietyURL } from "../../dataVariables";
 
 import { landInspectorContractAddress } from "../../dataVariables";
 
@@ -42,6 +42,7 @@ const AddPropertyForm = () => {
   });
 
   useEffect(() => {
+    // console.log("1")
     if (alert.status === true) {
       setTimeout(() => {
 
@@ -66,6 +67,28 @@ const AddPropertyForm = () => {
 
   })
 
+  useEffect(() => {
+
+    // provinceOptions.push({id: "2" , name: "Ahsan"})
+    var array;
+
+    const fetchData = async () => {
+
+      const data = await fetch(getAllProvienceURL);
+
+      const json = await data.json();
+      setPropvinceOptions(json)
+    }
+    fetchData()
+    // console.log(array);
+    // setPropvinceOptions(array)
+    // console.log(provinceOptions)
+
+  }, [])
+
+  const [provinceOptions, setPropvinceOptions] = useState([])
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     let confirm = window.confirm("Are you sure want to Submit?");
@@ -76,11 +99,13 @@ const AddPropertyForm = () => {
       let _propertyId = propertyId;
       let societyName = areaName;
 
+      console.log("Society Name" + societyName)
+
 
       const walletProvider = new ethers.providers.Web3Provider(
         ethereum
       )
- 
+
       const signer = walletProvider.getSigner();
       // console.log(signer)
       const sendTx = new ethers.Contract(
@@ -91,7 +116,7 @@ const AddPropertyForm = () => {
 
       const dataResult = await sendTx.addNewProperty(_propertyId, societyName, { gasLimit: 5000000 });
 
-      console.log(dataResult);
+      // console.log(dataResult);
 
       let txHash = dataResult.hash
       let scanUrl = "https://sepolia.etherscan.io/tx/" + txHash;
@@ -107,7 +132,7 @@ const AddPropertyForm = () => {
 
       await dataResult.wait();
 
-      console.log(dataResult)
+      // console.log(dataResult)
 
 
       setAlert({
@@ -119,8 +144,8 @@ const AddPropertyForm = () => {
 
   };
 
-  const [distric, setDistric] = useState("lahore");
-  const [province, setProvince] = useState("punjab");
+  const [distric, setDistric] = useState("none");
+  const [province, setProvince] = useState("none");
   const [society, setSociety] = useState("none");
   const [block, setBlock] = useState("none");
 
@@ -128,20 +153,115 @@ const AddPropertyForm = () => {
 
   const [propertyId, setPropertyId] = useState("");
 
+  const [districOptions, setDistricOptions] = useState([])
 
   const handleChangeProvience = (event) => {
     setProvince(event.target.value);
+
+    const fetchData = async () => {
+      let url = getAllDistricURL + event.target.value;
+      // console.log("URL")
+      // console.log(url)
+      const data = await fetch(url);
+      // console.log("Data")
+      // console.log(data);
+
+
+      const json = await data.json();
+      setDistricOptions(json)
+    }
+    fetchData();
+
   };
+
+
+  const [societyOtpions, setSocietyOptions] = useState([])
+
+
   const handleChangeDistric = (event) => {
+
     setDistric(event.target.value);
+
+    const fetchData = async () => {
+      let url = getSocietyURL + event.target.value;
+      // console.log("URL")
+      // console.log(url)
+      const data = await fetch(url);
+      // console.log("Data")
+      // console.log(data);
+
+
+      const json = await data.json();
+      setSocietyOptions(json)
+    }
+    fetchData();
   };
+
+  const [areaOptions, setAreaOptions] = useState([])
+
+
   const handleChangeSociety = (event) => {
     setSociety(event.target.value);
-  }; 
+    const fetchData = async () => {
+      let url = getAreaURL + event.target.value;
+      // console.log("URL")
+      // console.log(url)
+      const data = await fetch(url);
+      // console.log("Data")
+      // console.log(data);
+
+
+      const json = await data.json();
+      setAreaOptions(json)
+    }
+    fetchData();
+  };
+
   const handleChangeBlock = (event) => {
     setBlock(event.target.value);
-    setAreaName(event.target.value);
-    setLockContractAddress(landInspectorContractAddress);
+
+    
+
+    const fetchData = async () => {
+      let url = getAreaNameURL + event.target.value;
+      // console.log("URL")
+      // console.log(url)
+      const data = await fetch(url);
+      
+      const json = await data.json();
+      // console.log("Data")
+      // console.log(json.name);
+      let _name = json.name
+      // console.log(_name)
+      setAreaName(_name)
+      // console.log("Area Name: ");
+      // console.log(areaName)
+    }
+    fetchData();
+
+    const fetchContracts = async () => {
+      let url = getContractURL + event.target.value;
+      // console.log("URL")
+      // console.log(url)
+      const data = await fetch(url);
+      
+      const json = await data.json();
+      // console.log("Data")
+      // console.log(json.name);
+      let _landInspector = json[0].landInspector
+      console.log("Land")
+      console.log(_landInspector)
+      setLockContractAddress(_landInspector);
+      // setAreaName(_name)
+      // console.log("Area Name: ");
+      // console.log(areaName)
+    }
+    fetchContracts();
+
+
+    // setAreaName(event.target.value);
+ 
+    // setLockContractAddress(landInspectorContractAddress);
 
   };
 
@@ -178,10 +298,18 @@ const AddPropertyForm = () => {
                   label="province"
                   onChange={handleChangeProvience}
                 >
-                  <MenuItem value="punjab">punjab</MenuItem>
+                  <MenuItem value="none">None</MenuItem>
+
+                  {
+                    provinceOptions.map((e) => {
+                      return (<MenuItem value={e._id}>{e.name}</MenuItem>)
+
+                    })
+                  }
+                  {/* <MenuItem value="punjab">punjab</MenuItem>
                   <MenuItem value="sindh">Karachi</MenuItem>
                   <MenuItem value="balochistan">Sialkot</MenuItem>
-                  <MenuItem value="KPK">KPK</MenuItem>
+                  <MenuItem value="KPK">KPK</MenuItem> */}
                 </Select>
               </FormControl>
             </Grid>
@@ -199,9 +327,20 @@ const AddPropertyForm = () => {
                   label="Distric"
                   onChange={handleChangeDistric}
                 >
-                  <MenuItem value="lahore">Lahore</MenuItem>
+
+                  <MenuItem value="none">None</MenuItem>
+
+                  {
+                    districOptions.map((e) => {
+
+                      return (<MenuItem value={e._id}>{e.name}</MenuItem>)
+
+                    })
+                  }
+
+                  {/* <MenuItem value="lahore">Lahore</MenuItem>
                   <MenuItem value="karachi">Karachi</MenuItem>
-                  <MenuItem value="sialkot">Sialkot</MenuItem>
+                  <MenuItem value="sialkot">Sialkot</MenuItem> */}
                 </Select>
               </FormControl>
             </Grid>
@@ -220,10 +359,18 @@ const AddPropertyForm = () => {
                   onChange={handleChangeSociety}
                 >
                   <MenuItem value="none">None</MenuItem>
-                  <MenuItem value="park-view">Park View</MenuItem>
+                  {
+                    societyOtpions.map((e) => {
+
+                      return (<MenuItem value={e._id}>{e.name}</MenuItem>)
+
+                    })
+                  }
+
+                  {/* <MenuItem value="park-view">Park View</MenuItem>
                   <MenuItem value="bahria">Bahria</MenuItem>
                   <MenuItem value="rehman-garden">Rehman Garden</MenuItem>
-                  <MenuItem value="iqbal-town">Iqbal Town</MenuItem>
+                  <MenuItem value="iqbal-town">Iqbal Town</MenuItem> */}
                 </Select>
               </FormControl>
             </Grid>
@@ -242,10 +389,17 @@ const AddPropertyForm = () => {
                   onChange={handleChangeBlock}
                 >
                   <MenuItem value="none">None</MenuItem>
-                  <MenuItem value="bahria-1-A">A Block</MenuItem>
+                  {
+                    areaOptions.map((e) => {
+
+                      return (<MenuItem value={e._id}>{e.name}</MenuItem>)
+
+                    })
+                  }
+                  {/* <MenuItem value="bahria-1-A">A Block</MenuItem>
                   <MenuItem value="bahria">B Block</MenuItem>
                   <MenuItem value="rehman-garden">X Block</MenuItem>
-                  <MenuItem value="iqbal-town">Y Block</MenuItem>
+                  <MenuItem value="iqbal-town">Y Block</MenuItem> */}
                 </Select>
               </FormControl>
             </Grid>

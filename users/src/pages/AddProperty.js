@@ -137,7 +137,8 @@ const AddProperty = () => {
               fullWidth
               required
               labelId="city-label"
-              id="propertyType"
+              id="city"
+              name="city"
               value={propertyType}
               label="City"
               onChange={handleChange}
@@ -156,6 +157,7 @@ const AddProperty = () => {
                 required
                 labelId="property-type-label"
                 id="propertyType"
+                name="propertyType"
                 value={propertyType}
                 label="Property Type"
                 onChange={handleChange}
@@ -192,7 +194,7 @@ const AddProperty = () => {
 
           <Grid item sm={12} md={12} lg={12} xs={12}>
             <p>Images</p>
-            <input type='file' multiple />
+            <input type='file' name="propertyImage" multiple />
           </Grid> 
         </Grid>
 

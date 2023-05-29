@@ -24,7 +24,6 @@ app.use(express.json())
 // Load Routes
 app.use("/api/user", userRoutes)
 app.use("/api/dashboard/property"  , propertyRoutes )
-app.use("/api/dashboard/property"  , propertyRoutes )
 app.use("/api/contracts" , contractRoutes)
 app.listen(port, () => {
   console.log(`Server listening at http://localhost:${port}`)

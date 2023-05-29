@@ -7,8 +7,6 @@ contract Citizens{
 
     address private govAuthority;
     address private highCourt;
-
-
     constructor (address _goverment , address _highcourt ) {
         govAuthority = _goverment;
         highCourt = _highcourt;

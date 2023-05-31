@@ -21,7 +21,7 @@ import {
 import areaContract from "../artifacts/contracts/OwnerShip.sol/OwnerShip.json";
 import { ethers } from "ethers";
 
-import nodeProviderUrl from "../dataVariables";
+import {nodeProviderUrl} from  "../dataVariables";
 import { ownerShipAddress } from "../dataVariables";
 
 
@@ -71,6 +71,9 @@ const SellPropertyForm = () => {
                 ethereum
             )
 
+      const provider = new ethers.providers.JsonRpcProvider(nodeProviderUrl);
+
+
             const signer = walletProvider.getSigner();
 
             const sendTx = new ethers.Contract(
@@ -105,6 +108,9 @@ const SellPropertyForm = () => {
                 { gasLimit: 5000000 }
             );
 
+
+
+
             let txHash = dataResult.hash
             let scanUrl = "https://sepolia.etherscan.io/tx/" + txHash;
 
@@ -118,6 +124,17 @@ const SellPropertyForm = () => {
                     type: "success"
                 }
             )
+                 // Get the transaction receipt
+                 const transactionReceipt = await provider.getTransactionReceipt(dataResult.hash);
+
+                 // Get the return value from the transaction receipt
+                //  const returnValue = ethers.utils.hexlify(transactionReceipt.logs[0].data);
+
+                 const returnValue = ethers.utils.defaultAbiCoder.decode(['uint256'], dataResult);
+
+
+      console.log("1: " + returnValue);
+      console.log("2: " + dataResult);
 
             // await dataResult.wait();
 

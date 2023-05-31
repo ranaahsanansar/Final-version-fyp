@@ -1,5 +1,5 @@
 const nodeProviderUrl = "https://eth-sepolia.g.alchemy.com/v2/g5_IZehi2__Fi9Jj5Pgs53cy_Shg9umf";
-export  {nodeProviderUrl};
+export {nodeProviderUrl};
 
 export const govermentAuthorityContractAddress = "0x6AAe87ab6f2857c8b9dA2808c17d74E601bb098B";
 export const HighCourtAddress = "0x56a5676ed8A278EA811c379E127e6FE52704eEEC";

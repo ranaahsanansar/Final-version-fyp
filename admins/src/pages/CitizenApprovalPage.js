@@ -74,7 +74,7 @@ const CitizenApprovalPage = () => {
     )
     console.log("Ok ha")
 
-    const dataResult = await sendTx.approveCitizen(applicantCnic, "0xf6F304847c55f0EcC3c55640FBcDe615b08fE30e", "only", { gasLimit: 5000000 });
+    const dataResult = await sendTx.approveCitizen(applicantCnic, "0xa543CBa1E566DB08d3d0fe2D888bC1797E5226F6", "only", { gasLimit: 5000000 });
 
     let txHash = dataResult.hash
     let scanUrl = "https://sepolia.etherscan.io/tx/" + txHash;

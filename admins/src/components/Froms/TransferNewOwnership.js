@@ -96,6 +96,7 @@ const TransferNewOwnership = () => {
         ethereum
       )
 
+
       const signer = walletProvider.getSigner();
 
       const sendTx = new ethers.Contract(
@@ -113,6 +114,7 @@ const TransferNewOwnership = () => {
         { gasLimit: 5000000 }
       )
 
+      // await dataResult.wait();
 
 
       console.log("Ok ha 2")
@@ -270,7 +272,7 @@ const TransferNewOwnership = () => {
                   onChange={handleChangeBlock}
                 >
                   <MenuItem value="none">None</MenuItem>
-                  <MenuItem value="bahria-1-A">A Block</MenuItem>
+                  <MenuItem value="Bahria">A Block</MenuItem>
                   <MenuItem value="bahria">B Block</MenuItem>
                   <MenuItem value="rehman-garden">X Block</MenuItem>
                   <MenuItem value="iqbal-town">Y Block</MenuItem>

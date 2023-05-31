@@ -17,6 +17,7 @@ import citizenContract from "../artifacts/contracts/Citizens.sol/Citizens.json";
 import { ethers } from "ethers";
 import {nodeProviderUrl} from "../dataVariables";
 import { citizenContractAddress } from "../dataVariables";
+import YourPropertiesDetails from "../components/YourPropertiesDetails";
 
 const Profile = () => {
 
@@ -70,15 +71,20 @@ const Profile = () => {
       nodeProvider
     )
 
-    const dataResult = await getContractData.getCitizenIsApproved(9999);
+    const provider = new ethers.providers.Web3Provider(window.ethereum, "any")
+
+    const _accounts = await provider.send("eth_requestAccounts", []);
+
+    const _address = _accounts[0];
+    console.log(_address)
+
+    const dataResult = await getContractData.getCitizenIsApproved(_address);
 
     console.log(dataResult);
 
     setApprovStatus(dataResult);
 
 
-
-    
   }
 
   return (
@@ -248,6 +254,11 @@ const Profile = () => {
                     </Grid>
                   </Grid>
                 </Box>
+              </Box>
+                  {/* Your Property Details */}
+                  <YourPropertiesDetails />
+              <Box>
+                
               </Box>
             </Stack>
           </Box>

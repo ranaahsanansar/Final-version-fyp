@@ -1,9 +1,19 @@
 
+const reqTableColums = [
+    { id: "id", label: "Property ID", minWidth: 170 },
+    { id: "cnic", label: "Cnic", minWidth: 100 },
+    { id: "shares", label: "Shares", minWidth: 100 },
+];
+
     const [flagNewProTable, setFlagNewProTable] = useState(false)
+
+    const [reqTableRows, setReqTableRows] = useState([])
+
+
     function createReqTableDat(id, seller , buyer , shares , price){
         return {id, seller , buyer , shares , price}
     }
-      
+    //   --------------------
       setFlagTransReq(false)
 
 

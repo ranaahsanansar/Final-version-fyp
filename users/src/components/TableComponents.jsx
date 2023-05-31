@@ -86,7 +86,7 @@ export default function TableComponents( { columsArray , rowsArray} ) {
               ))}
             </TableRow>
           </TableHead>
-          <TableBody maxHeight="200px" overflow="scroll" >
+          <TableBody maxheight="200px" overflow="scroll" >
             {rows
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row) => {

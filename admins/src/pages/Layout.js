@@ -23,6 +23,10 @@ const Layout = () => {
                 </Box>
                 <Box mx={2} >
                   <Stack spacing={2}>
+                  <Button
+                    component={NavLink} 
+                    to='/'
+                    variant='contained' >Home</Button>
                   <Typography variant="h6"  fontSize='medium' color='whitesmoke' >LandInspector</Typography>
                     <Button
                     component={NavLink} 

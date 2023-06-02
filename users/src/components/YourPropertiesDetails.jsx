@@ -362,7 +362,7 @@ const YourPropertiesDetails = () => {
                 {
                     flagOwnerTransaction ? (
                         <>
-                            <Typography fontSize='18px' fontWeight='bold' mt={2} >Ownership Transactions (You bought)</Typography>
+                            <Typography fontSize='18px' fontWeight='bold' mt={2} >Ownership Transactions (You Bought)</Typography>
                             <TableComponents key="request" columsArray={reqTableColums} rowsArray={ownerTnxRows} />
                         </>
                     ) : ""

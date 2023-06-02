@@ -17,6 +17,7 @@ import {
 import TextareaAutosize from "@mui/base/TextareaAutosize";
 
 const validationSchema = Yup.object().shape({
+  propertyId: Yup.number().required("Id is required"),
   title: Yup.string().required("Ad Title is required"),
   price: Yup.number().required("Price Per Share is required"),
   priceDes: Yup.string().required("Price Description is required"),
@@ -77,6 +78,9 @@ const AddProperty = () => {
               label="Property ID"
               value={formik.values.propertyId}
               onChange={formik.handleChange}
+              error={formik.touched.propertyId && Boolean(formik.errors.title)}
+              helperText={formik.touched.propertyId && formik.errors.propertyId}
+
             />
           </Grid>
 

@@ -40,6 +40,7 @@ const YourPropertiesDetails = () => {
 
     const [newPropertyTableRows, setNewPropertyTableRows] = useState([])
     const [reqTableRows, setReqTableRows] = useState([])
+    const [ownerTnxRows , setOwnerTnxRows] = useState([]);
     const [distric, setDistric] = useState('lahore');
     const [province, setProvince] = useState('punjab');
     const [society, setSociety] = useState('none');
@@ -79,8 +80,13 @@ const YourPropertiesDetails = () => {
         return { id, seller, buyer, shares, price }
     }
 
+    
+
     const [flagNewProTable, setFlagNewProTable] = useState(false)
     const [flagReqTable, setFlagReqTable] = useState(false);
+
+    const [flagOwnerTransaction , setFlagOwnerTransaction] = useState(false);
+
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -148,8 +154,8 @@ const YourPropertiesDetails = () => {
 
         reqTableRows.splice(0 , reqTableRows.length);
 
-        console.log("Yaha Sy ")
-        console.log(reqTableRows)
+        // console.log("Yaha Sy ")
+        // console.log(reqTableRows)
         
         
 
@@ -170,6 +176,30 @@ const YourPropertiesDetails = () => {
         })
 
         setFlagReqTable(true)
+
+        // ------------------------------------------------
+
+        setFlagOwnerTransaction(false);
+
+        const filterOwnerTnx = getContractData.filters.TransactionRecordLogs(actualData.id , null , actualData.cnic)
+
+        const ownerTnxResult = await getContractData.queryFilter(filterOwnerTnx);
+
+        ownerTnxRows.splice(0 , ownerTnxRows.length);
+
+        ownerTnxRows.map((item)=>{
+            let id = item.args[0].toString();
+            let ownerCnic = item.args[1].toString();
+            let buyerCnic = item.args[2].toString();
+            let shares = item.args[3].toString();
+            let prize = item.args[4].toString();
+
+            ownerTnxRows.push(createReqTableData(id , ownerCnic , buyerCnic , shares , prize));
+
+        })
+
+        setFlagOwnerTransaction(true);
+
 
 
     }
@@ -326,6 +356,14 @@ const YourPropertiesDetails = () => {
                         <>
                             <Typography fontSize='18px' fontWeight='bold' mt={2} >Requests of Owner</Typography>
                             <TableComponents key="request" columsArray={reqTableColums} rowsArray={reqTableRows} />
+                        </>
+                    ) : ""
+                }
+                {
+                    flagOwnerTransaction ? (
+                        <>
+                            <Typography fontSize='18px' fontWeight='bold' mt={2} >Ownership Transactions (You bought)</Typography>
+                            <TableComponents key="request" columsArray={reqTableColums} rowsArray={ownerTnxRows} />
                         </>
                     ) : ""
                 }

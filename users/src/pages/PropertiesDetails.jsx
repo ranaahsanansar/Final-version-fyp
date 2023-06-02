@@ -386,25 +386,25 @@ const PropertiesDetails = () => {
               },
             }}
           >
-            <Tab
+            {/* <Tab
               label="Share Holders"
               style={{ textTransform: "none", fontWeight: "bold" }}
-            />
+            /> */}
             <Tab
               label="Transaction History"
               style={{ textTransform: "none", fontWeight: "bold" }}
             />
           </Tabs>
 
-          <TabPanel value={value} index={0}>
+          {/* <TabPanel value={value} index={0}>
             <Box mt={2}>
               <ShresDetailsTable key="shearHolders"
                 columsArray={sharesTableColumns}
                 rowsArray={sharesTableRows}
               />
             </Box>
-          </TabPanel>
-          <TabPanel value={value} index={1}>
+          </TabPanel> */}
+          <TabPanel value={value} index={0}>
             <Box mt={2}>
               <ShresDetailsTable key="transaction"
                 columsArray={historyTableColumns}

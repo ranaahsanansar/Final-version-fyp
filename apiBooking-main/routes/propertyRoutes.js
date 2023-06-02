@@ -10,7 +10,6 @@ router.use('/list-new-property' , checkUserAuth ,uploadFile.fields([{ name: 'pro
 
 router.use('/delete/:id' , checkUserAuth )
 
-
 // Public Routes 
 router.post('/list-new-property' , PropertyController.listNewProperty )
 router.get('/getProperty/:id' , PropertyController.getPropertyDetails )

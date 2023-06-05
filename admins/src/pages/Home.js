@@ -99,7 +99,7 @@ const Home = () => {
 
   const handleSubmit = async (event) => {
       event.preventDefault();
-
+        
       setFlagNewProTable(false)
 
       const actualData = {
@@ -262,10 +262,12 @@ const Home = () => {
                               name="province"
                               onChange={handleChangeProvience}
                           >
-                              <MenuItem value="punjab">punjab</MenuItem>
-                              <MenuItem value="sindh">Karachi</MenuItem>
-                              <MenuItem value="balochistan">Sialkot</MenuItem>
-                              <MenuItem value="KPK">KPK</MenuItem>
+                              <MenuItem value="punjab">Punjab</MenuItem>
+              <MenuItem value="sindh">Sindh</MenuItem>
+              <MenuItem value="balochistan">Balochistan</MenuItem>
+              <MenuItem value="KPK">KPK</MenuItem>
+              <MenuItem value="KPK">Gilgit</MenuItem>
+              <MenuItem value="KPK">Islammabad</MenuItem>
                           </Select>
                       </FormControl>
                   </Grid>
@@ -375,10 +377,10 @@ const Home = () => {
                   </Button>
               </Box>
               {/* ---------------------------------------------------------------------- */}
-              {
+              {/* {
                   flagNewProTable ? (<><Typography fontSize='18px' mt={2} fontWeight='bold' >Minted Properties</Typography>
                       <TableComponents key="Property Shares" columsArray={mintedPropertiesColumns} rowsArray={mintedPropRows} /></>) : ""
-              }
+              } */}
               {
                   flagNewProTable ? (<><Typography fontSize='18px' mt={2} fontWeight='bold' >Inital Transactions of Property </Typography>
                       <TableComponents key="Property Shares" columsArray={newPropertyTableColumns} rowsArray={newPropertyTableRows} /></>) : ""

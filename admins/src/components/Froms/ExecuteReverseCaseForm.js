@@ -185,10 +185,12 @@ const ExecuteReverseCaseForm = () => {
                   label="province"
                   onChange={handleChangeProvience}
                 >
-                  <MenuItem value="punjab">punjab</MenuItem>
-                  <MenuItem value="sindh">Karachi</MenuItem>
-                  <MenuItem value="balochistan">Sialkot</MenuItem>
-                  <MenuItem value="KPK">KPK</MenuItem>
+                  <MenuItem value="punjab">Punjab</MenuItem>
+                                <MenuItem value="sindh">Sindh</MenuItem>
+                                <MenuItem value="balochistan">Balochistan</MenuItem>
+                                <MenuItem value="KPK">KPK</MenuItem>
+                                <MenuItem value="gilgit">Gilgit</MenuItem>
+                                <MenuItem value="islammabad">Islammabad</MenuItem>
                 </Select>
               </FormControl>
             </Grid>

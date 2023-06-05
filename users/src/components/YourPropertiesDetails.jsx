@@ -21,6 +21,7 @@ import ownerShipContract from '../artifacts/contracts/OwnerShip.sol/OwnerShip.js
 import { ethers } from "ethers";
 import { nodeProviderUrl } from "../dataVariables";
 import TableComponents from "./TableComponents";
+import Chart from "./ChartComponent";
 
 const YourPropertiesDetails = () => {
 
@@ -48,6 +49,9 @@ const YourPropertiesDetails = () => {
     const [propertyId, setPropertyId] = useState('');
     const [cnic, setCnic] = useState('');
     const [contractAddress, setContractAddress] = useState('');
+    const [percentage , setPercentage ] = useState(20)
+    const [remainig , setRemaining ] = useState(80)
+    const [flagChart , setFlagChart] = useState(true)
 
     const handleChangeProvience = (event) => {
         setProvince(event.target.value);
@@ -90,8 +94,9 @@ const YourPropertiesDetails = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-
+        setPercentage(0)
         setFlagNewProTable(false)
+        setFlagChart(false)
 
         const actualData = {
             id: propertyId,
@@ -130,7 +135,13 @@ const YourPropertiesDetails = () => {
             let hexaCnic = item.args[1]
             // let cnic = hexaCnic.toString()
             let hexaShares = item.args[2]
-            // let shares = hexaShares.toString()
+            let remaining = parseInt(hexaShares.toString()) - 100;
+            console.log("Chat Data ")
+            console.log(hexaShares);
+            console.log(remaining);
+            setPercentage( parseInt(hexaShares.toString()) );
+            setRemaining(remaining)
+            // let shares = hexaShares.toString( )
             // console.log(createNewPropertyData(hexaId.toString(), hexaCnic.toString(), hexaShares.toString()))
 
             newPropertyTableRows.push(createNewPropertyData(hexaId.toString(), hexaCnic.toString(), hexaShares.toString()))
@@ -138,6 +149,7 @@ const YourPropertiesDetails = () => {
 
         console.log(newPropertyTableRows);
         setFlagNewProTable(true);
+        setFlagChart(true);
 
         // ------------------------------------------------------
 
@@ -181,13 +193,15 @@ const YourPropertiesDetails = () => {
 
         setFlagOwnerTransaction(false);
 
-        const filterOwnerTnx = getContractData.filters.TransactionRecordLogs(actualData.id , null , actualData.cnic)
+        const filterOwnerTnx = getContractData.filters.TransactionRecordLogs(actualData.id , null , null)
 
         const ownerTnxResult = await getContractData.queryFilter(filterOwnerTnx);
-
+        console.log("Ahsan")
+        console.log(ownerTnxResult)
+ 
         ownerTnxRows.splice(0 , ownerTnxRows.length);
 
-        ownerTnxRows.map((item)=>{
+        ownerTnxResult.map((item)=>{
             let id = item.args[0].toString();
             let ownerCnic = item.args[1].toString();
             let buyerCnic = item.args[2].toString();
@@ -234,10 +248,12 @@ const YourPropertiesDetails = () => {
                                 name="province"
                                 onChange={handleChangeProvience}
                             >
-                                <MenuItem value="punjab">punjab</MenuItem>
-                                <MenuItem value="sindh">Karachi</MenuItem>
-                                <MenuItem value="balochistan">Sialkot</MenuItem>
+                                <MenuItem value="punjab">Punjab</MenuItem>
+                                <MenuItem value="sindh">Sindh</MenuItem>
+                                <MenuItem value="balochistan">Balochistan</MenuItem>
                                 <MenuItem value="KPK">KPK</MenuItem>
+                                <MenuItem value="KPK">Gilgit</MenuItem>
+                                <MenuItem value="KPK">Islammabad</MenuItem>
                             </Select>
                         </FormControl>
                     </Grid>
@@ -344,9 +360,18 @@ const YourPropertiesDetails = () => {
                         onClick={handleSubmit}
                     >
                         Fetch
-                    </Button>
+                    </Button> 
                 </Box>
                 {/* ---------------------------------------------------------------------- */}
+                {
+                    flagChart ? (<Box bgcolor='white'  >
+                    <Typography fontSize='18px' fontWeight='bold' mb={3} >Shares Sold</Typography>
+                  <Chart percent={percentage} remaning={remainig}/>
+                </Box>) : ""
+                }
+                <Typography>Sold: {percentage}% <Box sx={{backgroundColor: "#0088FE" , borderRadius:'5px'}} width="20px" height="10px" ></Box></Typography>
+        <Typography>Remaning: {remainig}% <Box sx={{backgroundColor: "#00C49F" , borderRadius:'5px'}} width="20px" height="10px" ></Box></Typography>
+                
                 {
                     flagNewProTable ? (<><Typography fontSize='18px' mt={2} fontWeight='bold' >Inital Transactions of Property </Typography>
                         <TableComponents key="Property Shares" columsArray={newPropertyTableColumns} rowsArray={newPropertyTableRows} /></>) : ""
@@ -359,14 +384,14 @@ const YourPropertiesDetails = () => {
                         </>
                     ) : ""
                 }
-                {
+                {/* {
                     flagOwnerTransaction ? (
                         <>
                             <Typography fontSize='18px' fontWeight='bold' mt={2} >Ownership Transactions (You Bought)</Typography>
                             <TableComponents key="request" columsArray={reqTableColums} rowsArray={ownerTnxRows} />
                         </>
                     ) : ""
-                }
+                } */}
             </Box>
         </Box>
 

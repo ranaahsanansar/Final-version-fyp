@@ -56,49 +56,44 @@ const ApprovalRequestForm = () => {
             agree: data.get('agree')
         }
 
-
-       
-
-
-
         if (actualData.citzenName && actualData.cnic && actualData.fatherName && actualData.phone && actualData.email && actualData.agree) {
 
 
             const contractAddress = citizenContractAddress
             console.log(contractAddress);
-    
+
             let providerUrl = "https://eth-sepolia.g.alchemy.com/v2/g5_IZehi2__Fi9Jj5Pgs53cy_Shg9umf";
-    
+
             const nodeProvider = new ethers.providers.JsonRpcProvider(
                 providerUrl
             )
-    
+
             const walletProvider = new ethers.providers.Web3Provider(
                 ethereum
             )
-    
+
             const signer = walletProvider.getSigner();
-    
+
             // console.log(nodeProvider , walletProvider)
-    
+
             const getContractData = new ethers.Contract(
                 contractAddress,
                 citizenContract.abi,
                 nodeProvider
             )
-    
+
             const sendTx = new ethers.Contract(
                 contractAddress,
                 citizenContract.abi,
                 signer
             )
             console.log("Ok ha")
-    
+
             const dataResult = await sendTx.newCitizenRequest(actualData.cnic);
-    
+
             let txHash = dataResult.hash
             let scanUrl = "https://sepolia.etherscan.io/tx/" + txHash;
-    
+
             setEtherScanAlert(
                 {
                     status: true,

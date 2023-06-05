@@ -41,13 +41,14 @@ export default function TableComponents( { columsArray , rowsArray} ) {
 
   const gradiantText = {
     backgroundcolor: "primary",
-    backgroundImage: `linear-gradient(to left, #5514B4, #9d149d)`,
+    // backgroundImage: `linear-gradient(to left, #5514B4, #9d149d)`,
+    color: "white" ,
     backgroundSize: "100%",
     backgroundRepeat: "repeat",
     backgroundClip: "text",
     WebkitBackgroundClip: "text",
     display: "table",
-    WebkitTextFillColor: "transparent",
+    // WebkitTextFillColor: "transparent",
   };
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);

@@ -18,6 +18,7 @@ import { ethers } from "ethers";
 import {nodeProviderUrl} from "../dataVariables";
 import { citizenContractAddress } from "../dataVariables";
 import YourPropertiesDetails from "../components/YourPropertiesDetails";
+import Chart from "../components/ChartComponent";
 
 const Profile = () => {
 
@@ -257,7 +258,9 @@ const Profile = () => {
               </Box>
                   {/* Your Property Details */}
                   <YourPropertiesDetails />
-              <Box>
+              <Box> 
+
+                
                 
               </Box>
             </Stack>

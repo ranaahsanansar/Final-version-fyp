@@ -176,7 +176,7 @@ const CitizenStayForm = () => {
 
             <Grid item lg={4} md={4} sm={4} >
               <FormControl fullWidth>
-                <InputLabel id="distric-label">Distric</InputLabel>
+                <InputLabel id="distric-label">District</InputLabel>
 
                 <Select
                   fullWidth

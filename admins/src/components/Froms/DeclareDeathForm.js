@@ -34,9 +34,7 @@ const DeclareDeathForm = () => {
     url: "",
     type: ""
   });
-
   const [lockContractAddress, setLockContractAddress] = useState("");
-
 
   const [alert, setAlert] = useState({
     status: false,
@@ -56,21 +54,17 @@ const DeclareDeathForm = () => {
       }, 5000);
     }
 
-  if (etherScanAlert.status === true) {
-    setTimeout(() => {
-      setEtherScanAlert({
-        status: false,
-        msg: "",
-        url: "",
-        type: ""
-      })
-    }, 60000)
-  }
-
-
+    if (etherScanAlert.status === true) {
+      setTimeout(() => {
+        setEtherScanAlert({
+          status: false,
+          msg: "",
+          url: "",
+          type: ""
+        })
+      }, 60000)
+    }
   })
-
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     let confirm = window.confirm("Are you sure want to Submit?");
@@ -96,13 +90,10 @@ const DeclareDeathForm = () => {
         signer
       )
 
-
-      const dataResult = await sendTx.declareDeath(citizenAddress ,  _id , {gasLimit: 5000000});
+      const dataResult = await sendTx.declareDeath(citizenAddress, _id, { gasLimit: 5000000 });
 
       let txHash = dataResult.hash
       let scanUrl = "https://sepolia.etherscan.io/tx/" + txHash;
-
-
 
       setEtherScanAlert(
         {
@@ -121,7 +112,6 @@ const DeclareDeathForm = () => {
     }
 
   };
-
 
   const handleChangeProvience = (event) => {
     setProvince(event.target.value);
@@ -162,18 +152,18 @@ const DeclareDeathForm = () => {
                   onChange={handleChangeProvience}
                 >
                   <MenuItem value="punjab">Punjab</MenuItem>
-                                <MenuItem value="sindh">Sindh</MenuItem>
-                                <MenuItem value="balochistan">Balochistan</MenuItem>
-                                <MenuItem value="KPK">KPK</MenuItem>
-                                <MenuItem value="gilgit">Gilgit</MenuItem>
-                                <MenuItem value="islammabad">Islammabad</MenuItem>
+                  <MenuItem value="sindh">Sindh</MenuItem>
+                  <MenuItem value="balochistan">Balochistan</MenuItem>
+                  <MenuItem value="KPK">KPK</MenuItem>
+                  <MenuItem value="gilgit">Gilgit</MenuItem>
+                  <MenuItem value="islammabad">Islammabad</MenuItem>
                 </Select>
               </FormControl>
             </Grid>
 
             <Grid item lg={4} md={4} sm={4} >
               <FormControl fullWidth>
-                <InputLabel id="distric-label">Distric</InputLabel>
+                <InputLabel id="distric-label">District</InputLabel>
 
                 <Select
                   fullWidth
@@ -209,10 +199,7 @@ const DeclareDeathForm = () => {
           </Box>
 
           {alert.status ? <Alert severity={alert.type} sx={{ mt: 3 }}>{alert.msg}</Alert> : ''}
-          { etherScanAlert.status ? <><Alert severity={etherScanAlert.type} sx={{ mt: 3 }}>{etherScanAlert.msg}<a href={etherScanAlert.url} target="_blank" > Click Me</a> </Alert>  </> : '' }
-
-
-
+          {etherScanAlert.status ? <><Alert severity={etherScanAlert.type} sx={{ mt: 3 }}>{etherScanAlert.msg}<a href={etherScanAlert.url} target="_blank" > Click Me</a> </Alert>  </> : ''}
         </Box>
       </Box>
     </Box>

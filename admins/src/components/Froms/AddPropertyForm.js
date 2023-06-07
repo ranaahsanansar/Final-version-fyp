@@ -153,7 +153,7 @@ const AddPropertyForm = () => {
 
   const [propertyId, setPropertyId] = useState("");
 
-  const [districOptions, setDistricOptions] = useState([])
+  const [districOptions, setDistricOptions] = useState([]);
 
   const handleChangeProvience = (event) => {
     setProvince(event.target.value);
@@ -219,19 +219,15 @@ const AddPropertyForm = () => {
 
   const handleChangeBlock = (event) => {
     setBlock(event.target.value);
-
-    
-
     const fetchData = async () => {
       let url = getAreaNameURL + event.target.value;
       // console.log("URL")
       // console.log(url)
       const data = await fetch(url);
-      
       const json = await data.json();
       // console.log("Data")
       // console.log(json.name);
-      let _name = json.name
+      let _name = json.name;
       // console.log(_name)
       setAreaName(_name)
       // console.log("Area Name: ");
@@ -268,6 +264,7 @@ const AddPropertyForm = () => {
   const handChangePropertyId = (e) => {
     setPropertyId(e.target.value);
   }
+  
   return (
     <Box
       width="100%"
@@ -316,7 +313,7 @@ const AddPropertyForm = () => {
 
             <Grid item lg={4} md={4} sm={4}>
               <FormControl fullWidth>
-                <InputLabel id="distric-label">Distric</InputLabel>
+                <InputLabel id="distric-label">District</InputLabel>
 
                 <Select
                   fullWidth

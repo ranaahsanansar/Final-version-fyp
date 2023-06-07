@@ -27,9 +27,6 @@ const ApproveBlockForm = () => {
   const [block, setBlock] = useState('park-view');
 
 
-
-
-
   const [etherScanAlert, setEtherScanAlert] = useState({
     status: false,
     msg: "",
@@ -184,7 +181,7 @@ const ApproveBlockForm = () => {
 
             <Grid item lg={4} md={4} sm={4} >
               <FormControl fullWidth>
-                <InputLabel id="distric-label">Distric</InputLabel>
+                <InputLabel id="distric-label">District</InputLabel>
 
                 <Select
                   fullWidth

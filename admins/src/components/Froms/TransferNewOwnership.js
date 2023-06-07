@@ -19,7 +19,7 @@ import landInspectorContract from '../../artifacts/contracts/LandInspector.sol/L
 
 import { ethers } from "ethers";
 
-import nodeProviderUrl, { landInspectorContractAddress } from "../../dataVariables";
+import nodeProviderUrl, { getAllDistricURL, getAllProvienceURL, getAreaNameURL, getAreaURL, getContractURL, getSocietyURL, landInspectorContractAddress } from "../../dataVariables";
 
 
 const TransferNewOwnership = () => {
@@ -31,8 +31,6 @@ const TransferNewOwnership = () => {
     type: ""
   });
 
-
-
   const [distric, setDistric] = useState("lahore");
   const [province, setProvince] = useState("punjab");
   const [society, setSociety] = useState("none");
@@ -43,6 +41,15 @@ const TransferNewOwnership = () => {
   const [cnic, setCnic] = useState();
   const [shares, setShares] = useState();
   const [propertyAmmount, setPropertyAmmount] = useState();
+
+
+
+  const [areaOptions, setAreaOptions] = useState([])
+
+  const [provinceOptions, setPropvinceOptions] = useState([]);
+  const [districOptions, setDistricOptions] = useState([]);
+  const [societyOtpions, setSocietyOptions] = useState([]);
+
 
 
 
@@ -147,20 +154,129 @@ const TransferNewOwnership = () => {
 
   };
 
+
   const handleChangeProvience = (event) => {
     setProvince(event.target.value);
+
+    const fetchData = async () => {
+      let url = getAllDistricURL + event.target.value;
+      // console.log("URL")
+      // console.log(url)
+      const data = await fetch(url);
+      // console.log("Data")
+      // console.log(data);
+
+
+      const json = await data.json();
+      setDistricOptions(json)
+    }
+    fetchData();
+
   };
+
   const handleChangeDistric = (event) => {
+
     setDistric(event.target.value);
+
+    const fetchData = async () => {
+      let url = getSocietyURL + event.target.value;
+      // console.log("URL")
+      // console.log(url)
+      const data = await fetch(url);
+      // console.log("Data")
+      // console.log(data);
+
+
+      const json = await data.json();
+      setSocietyOptions(json)
+    }
+    fetchData();
   };
+
   const handleChangeSociety = (event) => {
     setSociety(event.target.value);
+    const fetchData = async () => {
+      let url = getAreaURL + event.target.value;
+      // console.log("URL")
+      // console.log(url)
+      const data = await fetch(url);
+      // console.log("Data")
+      // console.log(data);
+
+
+      const json = await data.json();
+      setAreaOptions(json)
+    }
+    fetchData();
   };
+
+  // const handleChangeBlock = (event) => {
+  //   setBlock(event.target.value);
+  //   setAreaName(event.target.value);
+  //   setLockContractAddress(landInspectorContractAddress);
+  // };
   const handleChangeBlock = (event) => {
     setBlock(event.target.value);
-    setAreaName(event.target.value);
-    setLockContractAddress(landInspectorContractAddress);
+    const fetchData = async () => {
+      let url = getAreaNameURL + event.target.value;
+      // console.log("URL")
+      // console.log(url)
+      const data = await fetch(url);
+      const json = await data.json();
+      // console.log("Data")
+      // console.log(json.name);
+      let _name = json.name;
+      // console.log(_name)
+      setAreaName(_name)
+      // console.log("Area Name: ");
+      // console.log(areaName)
+    }
+    fetchData();
+
+    const fetchContracts = async () => {
+      let url = getContractURL + event.target.value;
+      // console.log("URL")
+      // console.log(url)
+      const data = await fetch(url);
+
+      const json = await data.json();
+      // console.log("Data")
+      // console.log(json.name);
+      let _landInspector = json[0].landInspector
+      console.log("Land")
+      console.log(_landInspector)
+      setLockContractAddress(_landInspector);
+      // setAreaName(_name)
+      // console.log("Area Name: ");
+      // console.log(areaName)
+    }
+    fetchContracts();
+
+
+    // setAreaName(event.target.value);
+
+    // setLockContractAddress(landInspectorContractAddress);
+
   };
+
+  useEffect(() => {
+
+    // provinceOptions.push({id: "2" , name: "Ahsan"})
+    var array;
+
+    const fetchData = async () => {
+
+      const data = await fetch(getAllProvienceURL);
+
+      const json = await data.json();
+      setPropvinceOptions(json)
+    }
+    fetchData()
+    // console.log(array);
+    // setPropvinceOptions(array)
+    // console.log(provinceOptions)
+
+  }, [])
 
   const handleChangeCnic = (event) => {
     setCnic(event.target.value);
@@ -208,17 +324,25 @@ const TransferNewOwnership = () => {
                   label="province"
                   onChange={handleChangeProvience}
                 >
-                  <MenuItem value="punjab">punjab</MenuItem>
+                  <MenuItem value="none">None</MenuItem>
+
+                  {
+                    provinceOptions.map((e) => {
+                      return (<MenuItem value={e._id}>{e.name}</MenuItem>)
+
+                    })
+                  }
+                  {/* <MenuItem value="punjab">punjab</MenuItem>
                   <MenuItem value="sindh">Karachi</MenuItem>
                   <MenuItem value="balochistan">Sialkot</MenuItem>
-                  <MenuItem value="KPK">KPK</MenuItem>
+                  <MenuItem value="KPK">KPK</MenuItem> */}
                 </Select>
               </FormControl>
             </Grid>
 
             <Grid item lg={4} md={4} sm={4}>
               <FormControl fullWidth>
-                <InputLabel id="distric-label">Distric</InputLabel>
+                <InputLabel id="distric-label">District</InputLabel>
 
                 <Select
                   fullWidth
@@ -229,9 +353,20 @@ const TransferNewOwnership = () => {
                   label="Distric"
                   onChange={handleChangeDistric}
                 >
-                  <MenuItem value="lahore">Lahore</MenuItem>
+
+                  <MenuItem value="none">None</MenuItem>
+
+                  {
+                    districOptions.map((e) => {
+
+                      return (<MenuItem value={e._id}>{e.name}</MenuItem>)
+
+                    })
+                  }
+
+                  {/* <MenuItem value="lahore">Lahore</MenuItem>
                   <MenuItem value="karachi">Karachi</MenuItem>
-                  <MenuItem value="sialkot">Sialkot</MenuItem>
+                  <MenuItem value="sialkot">Sialkot</MenuItem> */}
                 </Select>
               </FormControl>
             </Grid>
@@ -250,16 +385,24 @@ const TransferNewOwnership = () => {
                   onChange={handleChangeSociety}
                 >
                   <MenuItem value="none">None</MenuItem>
-                  <MenuItem value="park-view">Park View</MenuItem>
+                  {
+                    societyOtpions.map((e) => {
+
+                      return (<MenuItem value={e._id}>{e.name}</MenuItem>)
+
+                    })
+                  }
+
+                  {/* <MenuItem value="park-view">Park View</MenuItem>
                   <MenuItem value="bahria">Bahria</MenuItem>
                   <MenuItem value="rehman-garden">Rehman Garden</MenuItem>
-                  <MenuItem value="iqbal-town">Iqbal Town</MenuItem>
+                  <MenuItem value="iqbal-town">Iqbal Town</MenuItem> */}
                 </Select>
               </FormControl>
             </Grid>
 
             <Grid item lg={4} md={4} sm={4}>
-              <FormControl fullWidth>
+            <FormControl fullWidth>
                 <InputLabel id="block-label">Block</InputLabel>
 
                 <Select
@@ -272,10 +415,17 @@ const TransferNewOwnership = () => {
                   onChange={handleChangeBlock}
                 >
                   <MenuItem value="none">None</MenuItem>
-                  <MenuItem value="Bahria">A Block</MenuItem>
+                  {
+                    areaOptions.map((e) => {
+
+                      return (<MenuItem value={e._id}>{e.name}</MenuItem>)
+
+                    })
+                  }
+                  {/* <MenuItem value="bahria-1-A">A Block</MenuItem>
                   <MenuItem value="bahria">B Block</MenuItem>
                   <MenuItem value="rehman-garden">X Block</MenuItem>
-                  <MenuItem value="iqbal-town">Y Block</MenuItem>
+                  <MenuItem value="iqbal-town">Y Block</MenuItem> */}
                 </Select>
               </FormControl>
             </Grid>

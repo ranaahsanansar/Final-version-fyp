@@ -48,7 +48,7 @@ const [areaName, setAreaName] = useState("none");
 
   const [propertyId, setPropertyId] = useState();
   const [caseNumber, setCaseNumber] = useState();
-  const [otpVerify, setOtpVerify] = useState();
+  const [otpVerify, setOtpVerify] = useState(88);
 
   const handleChangeProppertyId = (e) => {
     setPropertyId(e.target.value)
@@ -457,7 +457,7 @@ useEffect(() => {
                 onChange={handleChangeCaseNum}
               />
             </Grid>
-            <Grid item lg={4} md={4} sm={4}>
+            {/* <Grid item lg={4} md={4} sm={4}>
               <TextField
                 fullWidth
                 id="OTPCodeVerify"
@@ -469,7 +469,7 @@ useEffect(() => {
                 placeholder="Minimum 8 Digits Code"
                 onChange={handleChangeOtpVerify}
               />
-            </Grid>
+            </Grid> */}
 
           </Grid>
           <Box textAlign="center">

@@ -17,9 +17,9 @@ const TransactionPage = () => {
                 <Box mt={2} >
                     <ApproveTransaction />
                 </Box>
-                <Box mt={2} >
+                {/* <Box mt={2} >
                     <TransferToSuccessors />
-                </Box>
+                </Box> */}
 
 
                 <Box mt={2} >

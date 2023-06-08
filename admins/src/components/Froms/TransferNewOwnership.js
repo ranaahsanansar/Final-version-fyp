@@ -31,10 +31,10 @@ const TransferNewOwnership = () => {
     type: ""
   });
 
-  const [distric, setDistric] = useState("lahore");
-  const [province, setProvince] = useState("punjab");
+  const [distric, setDistric] = useState("none");
+  const [province, setProvince] = useState("none");
   const [society, setSociety] = useState("none");
-  const [block, setBlock] = useState("park-view");
+  const [block, setBlock] = useState("none");
   const [lockContractAddress, setLockContractAddress] = useState("");
   const [areaName, setAreaName] = useState("");
   const [propertyId, setPropertyId] = useState();

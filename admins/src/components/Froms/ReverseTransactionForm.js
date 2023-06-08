@@ -43,7 +43,7 @@ const ReverseTransactionForm = () => {
   const [sharesAmmont, setSharesAmmount] = useState();
   const [otherApplicantCnic, setOtherApplicantCnic] = useState();
   const [caseNumber, setCaseNumber] = useState();
-  const [Otp, setOtp] = useState();
+  const [Otp, setOtp] = useState(99);
 
 
   const [alert, setAlert] = useState({
@@ -342,7 +342,7 @@ const ReverseTransactionForm = () => {
                 onChange={handleChangeCaseNum}
               />
             </Grid>
-            <Grid item lg={4} md={4} sm={4}>
+            {/* <Grid item lg={4} md={4} sm={4}>
               <TextField
                 fullWidth
                 id="OTPCode"
@@ -354,7 +354,7 @@ const ReverseTransactionForm = () => {
                 placeholder="Minimum 8 Digits Code"
                 onChange={handleChangeOtpCode}
               />
-            </Grid>
+            </Grid> */}
           </Grid>
           <Box textAlign="center">
             <Button

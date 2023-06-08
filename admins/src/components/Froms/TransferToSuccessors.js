@@ -66,7 +66,6 @@ const [areaName, setAreaName] = useState("none");
   const handleSubmit = (e) => {
     e.preventDefault();
     const data = new FormData(document.getElementById('addProperty-form'))
-
     console.log(data.get("propertyID"));
     let confirm = window.confirm("Are you sure want to Submit?");
     if (confirm) {

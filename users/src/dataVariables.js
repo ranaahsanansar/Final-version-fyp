@@ -10,7 +10,7 @@ export const citizenContractAddress = "0xC7d127cE7faD614Af410ac21546a2DbCa5f0841
 
 export const ownerShipAddress = "0x70fefc19b5B632996377904f1Ba21897a3d7F0f3";
 
-
+export const path = 'http://localhost:8000/public/uploads/propertyImage/';
 
 
 export const getAllProvienceURL = "http://localhost:8000/api/contracts/getAllProvience"

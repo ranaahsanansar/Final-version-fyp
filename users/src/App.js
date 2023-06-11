@@ -30,7 +30,7 @@ function App() {
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
             <Route path="filter" element={<Filter/>} />
-            <Route path="details" element={<PropertiesDetails />} />
+            <Route path="details/:id" element={<PropertiesDetails />} />
             <Route path="contact" element={<Contact />} />
             <Route path="login" element={!token ? <LoginReg /> : <Navigate to="/dashboard" />} />
             <Route path="sendpasswordresetemail" element={<SendPasswordResetEmail />} />

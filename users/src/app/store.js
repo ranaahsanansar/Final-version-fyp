@@ -5,6 +5,7 @@ import userReducer from '../features/userSlice'
 import authReducer from '../features/authSlice'
 import connectWalletReducer from '../features/connectWallet'
 import profileReducer from '../features/profileSlice'
+import propertyIdReducer from '../features/propertyIdSlice'
 
 
 export const store = configureStore({
@@ -13,7 +14,8 @@ export const store = configureStore({
     user: userReducer,
     auth: authReducer,
     connectWallet: connectWalletReducer,
-    profile : profileReducer
+    profile : profileReducer,
+    propertyId: propertyIdReducer
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(userAuthApi.middleware),

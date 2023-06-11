@@ -1,29 +1,53 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ImgMediaCard from "../components/PropertyCard";
 import { Box, Button, Container, Grid } from "@mui/material";
 import AddProperty from "./AddProperty";
+import { useSelector } from "react-redux";
+import axios from "axios";
 
-const data = [{
-  title: "2 Marla House, Garden Town",
-  image: 'https://images.pexels.com/photos/323780/pexels-photo-323780.jpeg?auto=compress&cs=tinysrgb&w=600',
-  des: "2 Marla double story House, 1 bed room ",
-  id: 2
-},{
-  title: "3 kanal House, Bahria",
-  image: 'https://images.pexels.com/photos/2102587/pexels-photo-2102587.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-  des: "3 kanal House, double story House, 1 bed room ",
-  id: 2
-},{
-  title: "10 Marla House, Iqbal Town",
-  image: 'https://images.pexels.com/photos/1876045/pexels-photo-1876045.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-  des: "10 Marla House double story House, 1 bed room ",
-  id: 2
-}]
+// const data = [{
+//   title: "2 Marla House, Garden Town",
+//   image: 'https://images.pexels.com/photos/323780/pexels-photo-323780.jpeg?auto=compress&cs=tinysrgb&w=600',
+//   des: "2 Marla double story House, 1 bed room ",
+//   id: 2
+// },{
+//   title: "3 kanal House, Bahria",
+//   image: 'https://images.pexels.com/photos/2102587/pexels-photo-2102587.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+//   des: "3 kanal House, double story House, 1 bed room ",
+//   id: 2
+// },{
+//   title: "10 Marla House, Iqbal Town",
+//   image: 'https://images.pexels.com/photos/1876045/pexels-photo-1876045.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+//   des: "10 Marla House double story House, 1 bed room ",
+//   id: 2
+// }]
+
+
+
 
 
 
 const ListProperty = () => {
   const [displayForm, setDisplayForm] = useState(false);
+  const { token } = useSelector(state => state.auth)
+
+
+
+  const [data , setData ] = useState([])
+
+  const fetchCards = async () => {
+
+    const res = await axios.get("http://localhost:8000/api/dashboard/property/myProperties" ,{
+      headers: {"Authorization" :`Bearer ${token}`}
+    });
+    return res;
+  }
+
+  useEffect(async()=>{
+    const res = await fetchCards();
+    setData(res.data.propertiesArray)
+    // console.log(res.data.propertiesArray)
+  })
 
   const glassMorphismStyle = {
     background: "rgba(255, 255, 255, 0.2)",
@@ -68,6 +92,7 @@ const ListProperty = () => {
               <Grid container spacing={2}>
               { 
               data.map((item  , index)=>{
+                // console.log(item)
                 return (<Grid key={index} item sm={6} xs={12} lg={4}>
                   <ImgMediaCard data={item} />
                 </Grid>)

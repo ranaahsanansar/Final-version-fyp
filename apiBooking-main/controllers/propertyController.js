@@ -141,7 +141,7 @@ class PropertyController {
 
   static getPropertiesOfUser = async (req, res) => {
     const properties = await PropertyModel.find({ownerId: req.user._id})
-    console.log(properties)
+    // console.log(properties)
 
     res.status(201).send({
       status: "success",

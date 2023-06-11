@@ -6,8 +6,26 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { NavLink } from 'react-router-dom';
+import { path } from '../dataVariables';
+import { useDispatch, useSelector } from 'react-redux';
+import { setPropertyId } from '../features/propertyIdSlice';
+import axios from 'axios';
+
 
 export default function ImgMediaCard(props) {
+
+  const {propertyId} = useSelector(state => state.propertyId)
+  const dispatch = useDispatch();
+  const { token } = useSelector(state => state.auth)
+
+
+  const handleDelete = async () => {
+    const url = `http://localhost:8000/api/dashboard/property/delete/${props.data._id}`
+    const res = await axios.delete(url , { headers: {"Authorization" :`Bearer ${token}`}})
+    console.log(res)
+  }
+
+
   // console.log(props.data.image)
   return (
     <Card sx={{ maxWidth: 345 }}>
@@ -15,7 +33,7 @@ export default function ImgMediaCard(props) {
         component="img"
         alt="green iguana"
         height="140"
-        image={props.data.image}
+        image={ `${path}${ props.data.photos[0]}`}
       />
       <CardContent>
         <Typography sx={{
@@ -32,14 +50,14 @@ export default function ImgMediaCard(props) {
         WebkitBoxOrient: 'vertical',
         WebkitLineClamp: 2,
     }} >
-          {props.data.des}
+          {props.data.description}
         </Typography>
       </CardContent>
       <CardActions>
-
-        <Button component={NavLink} to='/details' size="small">View</Button>
+        <Button component={NavLink} to={`/details/${props.data._id}`} size="small">View</Button>
+        {/* <Button onClick={handleClickView} size="small">View</Button> */}
         <Button component={NavLink} to='/dashboard/updateProperty' size="small">Edit</Button>
-        <Button size="small"><Typography sx={{color: 'red'}} >Delete</Typography> </Button>
+        <Button size="small" onClick={handleDelete}  ><Typography sx={{color: 'red'}} >Delete</Typography> </Button>
       </CardActions>
     </Card>
   );

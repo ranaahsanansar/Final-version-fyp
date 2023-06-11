@@ -78,12 +78,25 @@ class PropertyController {
         select: "-password",
       });
       if (property) {
-        res.send(property);
+        // res.send(property);
+        res.send({
+          status: "success",
+          message: "Success",
+          details: property
+        });
       } else {
-        res.send("Not Found");
+        // res.send("Not Found");
+        res.send({
+          status: "failed",
+          message: "Property Not Found",
+        });
+
       }
     } catch (err) {
-      res.send("DB Error" + err);
+      res.send({
+        status: "failed",
+        message: "DB Error",
+      });
     }
   };
 
@@ -125,6 +138,19 @@ class PropertyController {
       res.send("DB Error");
     }
   };
+
+  static getPropertiesOfUser = async (req, res) => {
+    const properties = await PropertyModel.find({ownerId: req.user._id})
+    console.log(properties)
+
+    res.status(201).send({
+      status: "success",
+      message: "Properties are Showen",
+      propertiesArray : properties,
+      path: "public/upload/propertyImage"
+    });
+
+  }
 }
 
 export default PropertyController;

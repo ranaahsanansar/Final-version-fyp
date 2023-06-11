@@ -9,3 +9,18 @@ export const citizenContractAddress = "0xC7d127cE7faD614Af410ac21546a2DbCa5f0841
 
 
 export const ownerShipAddress = "0x70fefc19b5B632996377904f1Ba21897a3d7F0f3";
+
+
+
+
+export const getAllProvienceURL = "http://localhost:8000/api/contracts/getAllProvience"
+
+export const getAllDistricURL = "http://localhost:8000/api/contracts/getDistric/"
+
+
+export const getSocietyURL = "http://localhost:8000/api/contracts/getSociety/"
+export const getAreaURL = "http://localhost:8000/api/contracts/getArea/"
+
+export const getAreaNameURL = "http://localhost:8000/api/contracts/getAreaName/"
+export const getContractURL = "http://localhost:8000/api/contracts/getContracts/"
+

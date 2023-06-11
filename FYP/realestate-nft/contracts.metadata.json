@@ -1,0 +1,1 @@
+{"options":{},"indexes":[{"v":2,"key":{"_id":1},"name":"_id_","ns":"realestate-nft.contracts"},{"v":2,"unique":true,"key":{"areaId":1},"name":"areaId_1","ns":"realestate-nft.contracts","background":true},{"v":2,"unique":true,"key":{"areaContract":1},"name":"areaContract_1","ns":"realestate-nft.contracts","background":true}],"uuid":"bc4b926820514dacb27b8f3e2b7e138b"}

@@ -22,6 +22,7 @@ connectDB(DATABASE_URL)
 app.use(express.json())
 
 // Load Routes
+app.use('/public' , express.static('public') )
 app.use("/api/user", userRoutes)
 app.use("/api/dashboard/property"  , propertyRoutes )
 app.use("/api/contracts" , contractRoutes)

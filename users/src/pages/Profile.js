@@ -52,7 +52,6 @@ const Profile = () => {
     let accounts = await ethereum.request({
       method: "eth_requestAccounts"
     });
-
     if(isConnected){
       dispatch(setIsConnected());
     }else{
@@ -124,7 +123,7 @@ const Profile = () => {
               <Box>
                 <Box>
                   <Grid container spacing={2} >
-                    <Grid item xs={12} sm={3}>
+                    {/* <Grid item xs={12} sm={3}>
                       <Box  sx={{display: "flex" , backgroundColor: 'white' , border: '2px solid gray' , padding: '10px' , borderRadius: '10px' }} >
                         <Box>
                           <Typography
@@ -147,9 +146,9 @@ const Profile = () => {
 
                       </Box>
                       
-                    </Grid>
+                    </Grid> */}
 
-                    <Grid item xs={12} sm={3}>
+                    {/* <Grid item xs={12} sm={3}>
                     <Box  sx={{display: "flex" , backgroundColor:'white' , border: '2px solid gray' , padding: '10px' , borderRadius: '10px' }} >
                       <Box>
                         <Typography
@@ -178,9 +177,9 @@ const Profile = () => {
                       </Box>
                     </Box>
                       
-                    </Grid>
+                    </Grid> */}
 
-                    <Grid item xs={12} sm={3}>
+                    {/* <Grid item xs={12} sm={3}>
                     <Box  sx={{display: "flex" , backgroundColor: 'white' , border: '2px solid gray' , padding: '10px' , borderRadius: '10px' }} >
                       <Box>
                         <Typography
@@ -209,7 +208,7 @@ const Profile = () => {
                       </Box>
                       </Box>
                       
-                    </Grid>
+                    </Grid> */}
 
                     <Grid item xs={12} sm={3}>
                     <Box  sx={{display: "flex" , backgroundColor: 'white' , border: '2px solid gray' , padding: '10px' , borderRadius: '10px' }} >

@@ -1,0 +1,1 @@
+{"options":{},"indexes":[{"v":2,"key":{"_id":1},"name":"_id_","ns":"realestate-nft.districs"},{"v":2,"unique":true,"key":{"name":1},"name":"name_1","ns":"realestate-nft.districs","background":true}],"uuid":"a3b6d8cb5f3043aa8d6003f6d330f012"}

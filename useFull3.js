@@ -1,6 +1,5 @@
 import nodeProviderUrl, { getAllDistricURL, getAllProvienceURL, getAreaNameURL, getAreaURL, getContractURL, getSocietyURL , landInspectorContractAddress , govermentAuthorityContractAddress } from "../../dataVariables";
 
-
 const [areaOptions, setAreaOptions] = useState([])
 const [provinceOptions, setPropvinceOptions] = useState([]);
 const [districOptions, setDistricOptions] = useState([]);
@@ -29,8 +28,6 @@ const handleChangeProvience = (event) => {
 
 };
 
-
-
 const handleChangeDistric = (event) => {
 
     setDistric(event.target.value);
@@ -50,8 +47,6 @@ const handleChangeDistric = (event) => {
     fetchData();
 };
 
-
-
 const handleChangeSociety = (event) => {
     setSociety(event.target.value);
     const fetchData = async () => {
@@ -68,7 +63,6 @@ const handleChangeSociety = (event) => {
     }
     fetchData();
 };
-
 
 const handleChangeBlock = (event) => {
     setBlock(event.target.value);

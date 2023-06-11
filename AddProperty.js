@@ -16,7 +16,6 @@ import {
 } from "@mui/material";
 import TextareaAutosize from "@mui/base/TextareaAutosize";
 import axios from "axios";
-import { useSelector } from "react-redux";
 
 const validationSchema = Yup.object().shape({
   propertyId: Yup.number().required("Id is required"),
@@ -31,11 +30,6 @@ const validationSchema = Yup.object().shape({
 });
 
 const AddProperty = () => {
-
-  const { token } = useSelector(state => state.auth)
-
-
-
   const [propertyType, setPropertyType] = useState("house");
   const [alert, setAlert] = useState({
     status: false,
@@ -64,19 +58,15 @@ const AddProperty = () => {
       let confirm = window.confirm("Are you sure you want to Submit?");
       if (confirm) {
         const formData = new FormData();
-        formData.append("id", values.propertyId);
+        formData.append("propertyId", values.propertyId);
         formData.append("title", values.title);
-        formData.append("priceCoin", values.price);
+        formData.append("price", values.price);
         formData.append("priceDes", values.priceDes);
-        formData.append("locationHead", values.headLocation);
-        formData.append("locationDetails", values.detailsLocation);
+        formData.append("headLocation", values.headLocation);
+        formData.append("detailsLocation", values.detailsLocation);
         formData.append("city", values.city);
         formData.append("propertyType", values.propertyType);
         formData.append("description", values.description);
-
-        // const document = {
-
-        // }
 
         const fileInput = document.querySelector('input[type="file"]');
         for (let i = 0; i < fileInput.files.length; i++) {
@@ -85,12 +75,11 @@ const AddProperty = () => {
 
         try {
           const response = await axios.post(
-            "http://localhost:8000/api/dashboard/property/list-new-property",
+            "/api/list-new-property",
             formData,
             {
               headers: {
                 "Content-Type": "multipart/form-data",
-                'Authorization': `Bearer ${token}`
               },
             }
           );

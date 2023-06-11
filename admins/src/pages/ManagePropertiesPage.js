@@ -6,7 +6,6 @@ import PropertyStayForm from '../components/Froms/PropertyStayForm'
 import CitizenStayForm from '../components/Froms/CitizenStayForm'
 import ReverseTransactionForm from '../components/Froms/ReverseTransactionForm'
 
-
 const ManagePropertiesPage = () => {
     return (
         <>
@@ -20,9 +19,9 @@ const ManagePropertiesPage = () => {
                     <PropertyStayForm />
                 </Box>
 
-                <Box mt={2} >
+                {/* <Box mt={2} >
                     <CitizenStayForm />
-                </Box>
+                </Box> */}
 
                 <Box mt={2} >
                     <ReverseTransactionForm />

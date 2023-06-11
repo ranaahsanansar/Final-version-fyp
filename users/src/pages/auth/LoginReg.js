@@ -3,7 +3,7 @@ import { useState } from 'react';
 import Pic1 from '../../images/pic1.png'
 import Registration from './Registration';
 import UserLogin from './UserLogin';
-import { ShoppingBag } from '@mui/icons-material';
+// import { ShoppingBag } from '@mui/icons-material';
 
 const TabPanel = (props) => {
   const { children, value, index } = props;

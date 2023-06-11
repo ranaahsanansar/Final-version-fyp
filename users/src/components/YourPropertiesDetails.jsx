@@ -23,7 +23,20 @@ import { nodeProviderUrl } from "../dataVariables";
 import TableComponents from "./TableComponents";
 import Chart from "./ChartComponent";
 
+import { getAllDistricURL, getAllProvienceURL, getAreaNameURL, getAreaURL, getContractURL, getSocietyURL, landInspectorContractAddress, govermentAuthorityContractAddress } from "../dataVariables";
+import { useEffect } from "react";
+
 const YourPropertiesDetails = () => {
+
+    const [areaOptions, setAreaOptions] = useState([])
+    const [provinceOptions, setPropvinceOptions] = useState([]);
+    const [districOptions, setDistricOptions] = useState([]);
+    const [societyOtpions, setSocietyOptions] = useState([]);
+
+    const [areaName, setAreaName] = useState("none");
+
+
+
 
     const newPropertyTableColumns = [
         { id: "id", label: "Property ID", minWidth: 170 },
@@ -41,31 +54,130 @@ const YourPropertiesDetails = () => {
 
     const [newPropertyTableRows, setNewPropertyTableRows] = useState([])
     const [reqTableRows, setReqTableRows] = useState([])
-    const [ownerTnxRows , setOwnerTnxRows] = useState([]);
-    const [distric, setDistric] = useState('lahore');
-    const [province, setProvince] = useState('punjab');
+    const [ownerTnxRows, setOwnerTnxRows] = useState([]);
+    const [distric, setDistric] = useState('none');
+    const [province, setProvince] = useState('none');
     const [society, setSociety] = useState('none');
-    const [block, setBlock] = useState('park-view');
+    const [block, setBlock] = useState('none');
     const [propertyId, setPropertyId] = useState('');
     const [cnic, setCnic] = useState('');
     const [contractAddress, setContractAddress] = useState('');
-    const [percentage , setPercentage ] = useState(20)
-    const [remainig , setRemaining ] = useState(80)
-    const [flagChart , setFlagChart] = useState(true)
+    const [percentage, setPercentage] = useState(20)
+    const [remainig, setRemaining] = useState(80)
+    const [flagChart, setFlagChart] = useState(true)
+
+    // const handleChangeProvience = (event) => {
+    //     setProvince(event.target.value);
+    // };
+    // const handleChangeDistric = (event) => {
+    //     setDistric(event.target.value);
+    // };
+    // const handleChangeSociety = (event) => {
+    //     setSociety(event.target.value);
+    // };
+    // const handleChangeBlock = (event) => {
+    //     setBlock(event.target.value);
+    //     // setLockContractAddress(ownerShipAddress);
+    //     setContractAddress('0x70fefc19b5B632996377904f1Ba21897a3d7F0f3')
+    // };
 
     const handleChangeProvience = (event) => {
         setProvince(event.target.value);
+
+        const fetchData = async () => {
+            let url = getAllDistricURL + event.target.value;
+            // console.log("URL")
+            // console.log(url)
+            const data = await fetch(url);
+            // console.log("Data")
+            // console.log(data);
+
+
+            const json = await data.json();
+            setDistricOptions(json)
+        }
+        fetchData();
+
     };
+
     const handleChangeDistric = (event) => {
+
         setDistric(event.target.value);
+
+        const fetchData = async () => {
+            let url = getSocietyURL + event.target.value;
+            // console.log("URL")
+            // console.log(url)
+            const data = await fetch(url);
+            // console.log("Data")
+            // console.log(data);
+
+
+            const json = await data.json();
+            setSocietyOptions(json)
+        }
+        fetchData();
     };
+
     const handleChangeSociety = (event) => {
         setSociety(event.target.value);
+        const fetchData = async () => {
+            let url = getAreaURL + event.target.value;
+            // console.log("URL")
+            // console.log(url)
+            const data = await fetch(url);
+            // console.log("Data")
+            // console.log(data);
+
+
+            const json = await data.json();
+            setAreaOptions(json)
+        }
+        fetchData();
     };
+
     const handleChangeBlock = (event) => {
         setBlock(event.target.value);
-        // setLockContractAddress(ownerShipAddress);
-        setContractAddress('0x70fefc19b5B632996377904f1Ba21897a3d7F0f3')
+        const fetchData = async () => {
+            let url = getAreaNameURL + event.target.value;
+            // console.log("URL")
+            // console.log(url)
+            const data = await fetch(url);
+            const json = await data.json();
+            // console.log("Data")
+            // console.log(json.name);
+            let _name = json.name;
+            // console.log(_name)
+            setAreaName(_name)
+            // console.log("Area Name: ");
+            // console.log(areaName)
+        }
+        fetchData();
+
+        const fetchContracts = async () => {
+            let url = getContractURL + event.target.value;
+            // console.log("URL")
+            // console.log(url)
+            const data = await fetch(url);
+
+            const json = await data.json();
+            // console.log("Data")
+            // console.log(json.name);
+            let _landInspector = json[0].areaContract
+            console.log("Land")
+            console.log(_landInspector)
+            setContractAddress(_landInspector);
+            // setAreaName(_name)
+            // console.log("Area Name: ");
+            // console.log(areaName)
+        }
+        fetchContracts();
+
+
+        // setAreaName(event.target.value);
+
+        // setLockContractAddress(landInspectorContractAddress);
+
     };
 
     const handleCnicChange = (event) => {
@@ -84,12 +196,12 @@ const YourPropertiesDetails = () => {
         return { id, seller, buyer, shares, price }
     }
 
-    
+
 
     const [flagNewProTable, setFlagNewProTable] = useState(false)
     const [flagReqTable, setFlagReqTable] = useState(false);
 
-    const [flagOwnerTransaction , setFlagOwnerTransaction] = useState(false);
+    const [flagOwnerTransaction, setFlagOwnerTransaction] = useState(false);
 
 
     const handleSubmit = async (event) => {
@@ -120,12 +232,11 @@ const YourPropertiesDetails = () => {
         const filtr = getContractData.filters.SellNewPropertyLog(actualData.id)
         const dataResult = await getContractData.queryFilter(filtr)
 
-
         newPropertyTableRows.map((i) => {
             newPropertyTableRows.pop()
         })
 
-        newPropertyTableRows.splice(0 , newPropertyTableRows.length);
+        newPropertyTableRows.splice(0, newPropertyTableRows.length);
 
         dataResult.map((item) => {
             let hexaId = item.args[0]
@@ -136,10 +247,16 @@ const YourPropertiesDetails = () => {
             // let cnic = hexaCnic.toString()
             let hexaShares = item.args[2]
             let remaining = parseInt(hexaShares.toString()) - 100;
-            console.log("Chat Data ")
+            console.log("Shares")
             console.log(hexaShares);
+            console.log("Remaining ")
+
             console.log(remaining);
-            setPercentage( parseInt(hexaShares.toString()) );
+            setPercentage(parseInt(hexaShares.toString()));
+            if(remaining < 0 ){
+                remaining = remaining * -1;
+            }
+            
             setRemaining(remaining)
             // let shares = hexaShares.toString( )
             // console.log(createNewPropertyData(hexaId.toString(), hexaCnic.toString(), hexaShares.toString()))
@@ -162,14 +279,14 @@ const YourPropertiesDetails = () => {
 
         const reqResult = await getContractData.queryFilter(filterReq);
 
-        
 
-        reqTableRows.splice(0 , reqTableRows.length);
+
+        reqTableRows.splice(0, reqTableRows.length);
 
         // console.log("Yaha Sy ")
         // console.log(reqTableRows)
-        
-        
+
+
 
         // console.log("Yaha sy ");
 
@@ -193,30 +310,47 @@ const YourPropertiesDetails = () => {
 
         setFlagOwnerTransaction(false);
 
-        const filterOwnerTnx = getContractData.filters.TransactionRecordLogs(actualData.id , null , null)
+        const filterOwnerTnx = getContractData.filters.TransactionRecordLogs(actualData.id, null, null)
 
         const ownerTnxResult = await getContractData.queryFilter(filterOwnerTnx);
         console.log("Ahsan")
         console.log(ownerTnxResult)
- 
-        ownerTnxRows.splice(0 , ownerTnxRows.length);
 
-        ownerTnxResult.map((item)=>{
+        ownerTnxRows.splice(0, ownerTnxRows.length);
+
+        ownerTnxResult.map((item) => {
             let id = item.args[0].toString();
             let ownerCnic = item.args[1].toString();
             let buyerCnic = item.args[2].toString();
             let shares = item.args[3].toString();
             let prize = item.args[4].toString();
 
-            ownerTnxRows.push(createReqTableData(id , ownerCnic , buyerCnic , shares , prize));
+            ownerTnxRows.push(createReqTableData(id, ownerCnic, buyerCnic, shares, prize));
 
         })
 
         setFlagOwnerTransaction(true);
-
-
-
     }
+
+    useEffect(() => {
+
+        // provinceOptions.push({id: "2" , name: "Ahsan"})
+        var array;
+
+        const fetchData = async () => {
+
+            const data = await fetch(getAllProvienceURL);
+
+            const json = await data.json();
+            setPropvinceOptions(json)
+        }
+        fetchData()
+        // console.log(array);
+        // setPropvinceOptions(array)
+        // console.log(provinceOptions)
+
+    }, [])
+
     return (
         <Box
             sx={{ backgroundColor: 'white', padding: 2, borderRadius: 2 }}
@@ -245,22 +379,27 @@ const YourPropertiesDetails = () => {
                                 id="province"
                                 value={province}
                                 label="province"
-                                name="province"
                                 onChange={handleChangeProvience}
                             >
-                                <MenuItem value="punjab">Punjab</MenuItem>
-                                <MenuItem value="sindh">Sindh</MenuItem>
-                                <MenuItem value="balochistan">Balochistan</MenuItem>
-                                <MenuItem value="KPK">KPK</MenuItem>
-                                <MenuItem value="KPK">Gilgit</MenuItem>
-                                <MenuItem value="KPK">Islammabad</MenuItem>
+                                <MenuItem value="none">None</MenuItem>
+
+                                {
+                                    provinceOptions.map((e) => {
+                                        return (<MenuItem value={e._id}>{e.name}</MenuItem>)
+
+                                    })
+                                }
+                                {/* <MenuItem value="punjab">punjab</MenuItem>
+                  <MenuItem value="sindh">Karachi</MenuItem>
+                  <MenuItem value="balochistan">Sialkot</MenuItem>
+                  <MenuItem value="KPK">KPK</MenuItem> */}
                             </Select>
                         </FormControl>
                     </Grid>
 
                     <Grid item sm={12} xs={12} md={6} lg={6}>
                         <FormControl fullWidth>
-                            <InputLabel id="distric-label">Distric</InputLabel>
+                            <InputLabel id="distric-label">District</InputLabel>
 
                             <Select
                                 fullWidth
@@ -269,12 +408,22 @@ const YourPropertiesDetails = () => {
                                 id="distric"
                                 value={distric}
                                 label="Distric"
-                                name="distric"
                                 onChange={handleChangeDistric}
                             >
-                                <MenuItem value="lahore">Lahore</MenuItem>
-                                <MenuItem value="karachi">Karachi</MenuItem>
-                                <MenuItem value="sialkot">Sialkot</MenuItem>
+
+                                <MenuItem value="none">None</MenuItem>
+
+                                {
+                                    districOptions.map((e) => {
+
+                                        return (<MenuItem value={e._id}>{e.name}</MenuItem>)
+
+                                    })
+                                }
+
+                                {/* <MenuItem value="lahore">Lahore</MenuItem>
+                  <MenuItem value="karachi">Karachi</MenuItem>
+                  <MenuItem value="sialkot">Sialkot</MenuItem> */}
                             </Select>
                         </FormControl>
                     </Grid>
@@ -290,14 +439,21 @@ const YourPropertiesDetails = () => {
                                 id="society"
                                 value={society}
                                 label="society"
-                                name="society"
                                 onChange={handleChangeSociety}
                             >
                                 <MenuItem value="none">None</MenuItem>
-                                <MenuItem value="park-view">Park View</MenuItem>
-                                <MenuItem value="bahria">Bahria</MenuItem>
-                                <MenuItem value="rehman-garden">Rehman Garden</MenuItem>
-                                <MenuItem value="iqbal-town">Iqbal Town</MenuItem>
+                                {
+                                    societyOtpions.map((e) => {
+
+                                        return (<MenuItem value={e._id}>{e.name}</MenuItem>)
+
+                                    })
+                                }
+
+                                {/* <MenuItem value="park-view">Park View</MenuItem>
+                  <MenuItem value="bahria">Bahria</MenuItem>
+                  <MenuItem value="rehman-garden">Rehman Garden</MenuItem>
+                  <MenuItem value="iqbal-town">Iqbal Town</MenuItem> */}
                             </Select>
                         </FormControl>
                     </Grid>
@@ -313,14 +469,20 @@ const YourPropertiesDetails = () => {
                                 id="block"
                                 value={block}
                                 label="block"
-                                name="block"
                                 onChange={handleChangeBlock}
                             >
                                 <MenuItem value="none">None</MenuItem>
-                                <MenuItem value="park-view">A Block</MenuItem>
-                                <MenuItem value="bahria">B Block</MenuItem>
-                                <MenuItem value="rehman-garden">X Block</MenuItem>
-                                <MenuItem value="iqbal-town">Y Block</MenuItem>
+                                {
+                                    areaOptions.map((e) => {
+
+                                        return (<MenuItem value={e._id}>{e.name}</MenuItem>)
+
+                                    })
+                                }
+                                {/* <MenuItem value="bahria-1-A">A Block</MenuItem>
+                  <MenuItem value="bahria">B Block</MenuItem>
+                  <MenuItem value="rehman-garden">X Block</MenuItem>
+                  <MenuItem value="iqbal-town">Y Block</MenuItem> */}
                             </Select>
                         </FormControl>
                     </Grid>
@@ -360,18 +522,18 @@ const YourPropertiesDetails = () => {
                         onClick={handleSubmit}
                     >
                         Fetch
-                    </Button> 
+                    </Button>
                 </Box>
                 {/* ---------------------------------------------------------------------- */}
                 {
                     flagChart ? (<Box bgcolor='white'  >
-                    <Typography fontSize='18px' fontWeight='bold' mb={3} >Shares Sold</Typography>
-                  <Chart percent={percentage} remaning={remainig}/>
-                </Box>) : ""
+                        <Typography fontSize='18px' fontWeight='bold' mb={3} >Shares Sold</Typography>
+                        <Chart percent={percentage} remaning={remainig} />
+                    </Box>) : ""
                 }
-                <Typography>Sold: {percentage}% <Box sx={{backgroundColor: "#0088FE" , borderRadius:'5px'}} width="20px" height="10px" ></Box></Typography>
-        <Typography>Remaning: {remainig}% <Box sx={{backgroundColor: "#00C49F" , borderRadius:'5px'}} width="20px" height="10px" ></Box></Typography>
-                
+                <Typography>Sold: {percentage}% <Box sx={{ backgroundColor: "#0088FE", borderRadius: '5px' }} width="20px" height="10px" ></Box></Typography>
+                <Typography>Remaning: {remainig}% <Box sx={{ backgroundColor: "#00C49F", borderRadius: '5px' }} width="20px" height="10px" ></Box></Typography>
+
                 {
                     flagNewProTable ? (<><Typography fontSize='18px' mt={2} fontWeight='bold' >Inital Transactions of Property </Typography>
                         <TableComponents key="Property Shares" columsArray={newPropertyTableColumns} rowsArray={newPropertyTableRows} /></>) : ""

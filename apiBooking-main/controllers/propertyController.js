@@ -47,6 +47,7 @@ class PropertyController {
           photos: imagesArray,
         });
 
+        console.log(doc)
         var savedProperty = await doc.save();
 
         res.status(201).send({

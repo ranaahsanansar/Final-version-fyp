@@ -6,6 +6,7 @@ const router = express.Router();
 // /api/dashboard/property
 // Midware to Authentic user 
 router.use('/list-new-property' , checkUserAuth ,uploadFile.fields([{ name: 'propertyImage' , maxCount: 10 }]))
+// router.use('/list-new-property' ,uploadFile.fields([{ name: 'propertyImage' , maxCount: 10 }]))
 // router.use('/list-new-property' , uploadFile.fields([{ name: 'propertyImage' , maxCount: 10 }]) )
 
 router.use('/delete/:id' , checkUserAuth )

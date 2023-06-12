@@ -77,6 +77,7 @@ class PropertyController {
         path: "ownerId",
         select: "-password",
       });
+      console.log(property)
       if (property) {
         // res.send(property);
         res.send({
@@ -151,6 +152,8 @@ class PropertyController {
     });
 
   }
+
+
 }
 
 export default PropertyController;

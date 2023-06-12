@@ -19,6 +19,7 @@ router.post('/list-new-property' , PropertyController.listNewProperty )
 router.get('/getProperty/:id' , PropertyController.getPropertyDetails )
 router.delete('/delete/:id' , PropertyController.deleteProperty )
 router.get('/myProperties' , PropertyController.getPropertiesOfUser )
+// router.get('/getProperty/:id' , PropertyController.getPropertyById )
 
 
 export default router

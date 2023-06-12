@@ -32,7 +32,7 @@ function App() {
             <Route path="filter" element={<Filter/>} />
             <Route path="details/:id" element={<PropertiesDetails />} />
             <Route path="contact" element={<Contact />} />
-            <Route path="login" element={!token ? <LoginReg /> : <Navigate to="/dashboard" />} />
+            <Route path="login" element={!token ?<LoginReg /> : <Navigate to="/dashboard" />} />
             <Route path="sendpasswordresetemail" element={<SendPasswordResetEmail />} />
             <Route path="api/user/reset/:id/:token" element={<ResetPassword />} />
           </Route>

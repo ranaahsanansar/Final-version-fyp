@@ -50,6 +50,7 @@ const YourPropertiesDetails = () => {
         { id: "buyer", label: "Buyer", minWidth: 100 },
         { id: "shares", label: "Shares", minWidth: 100 },
         { id: "price", label: "Price", minWidth: 100 },
+        { id: "reqNum", label: "Request Number", minWidth: 100 },
     ];
 
     const [newPropertyTableRows, setNewPropertyTableRows] = useState([])
@@ -192,8 +193,8 @@ const YourPropertiesDetails = () => {
         return { id, cnic, shares };
     }
 
-    function createReqTableData(id, seller, buyer, shares, price) {
-        return { id, seller, buyer, shares, price }
+    function createReqTableData(id, seller, buyer, shares, price , reqNum) {
+        return { id, seller, buyer, shares, price , reqNum }
     }
 
 
@@ -278,6 +279,9 @@ const YourPropertiesDetails = () => {
         // console.log( actualData.cnic);
 
         const reqResult = await getContractData.queryFilter(filterReq);
+console.log("yo yo yo ")
+        console.log(reqResult);
+        // console.log(contractAddress)
 
 
 
@@ -298,8 +302,12 @@ const YourPropertiesDetails = () => {
             let buyerCnic = item.args[2].toString();
             let shares = item.args[3].toString();
             let prize = item.args[4].toString();
+            let reqNum = item.args[6].toString();
 
-            reqTableRows.push(createReqTableData(id, ownerCnic, buyerCnic, shares, prize));
+            console.log("Data for request");
+            console.log(reqNum);
+
+            reqTableRows.push(createReqTableData(id, ownerCnic, buyerCnic, shares, prize , reqNum));
 
             // console.log(id);
         })
@@ -325,7 +333,7 @@ const YourPropertiesDetails = () => {
             let shares = item.args[3].toString();
             let prize = item.args[4].toString();
 
-            ownerTnxRows.push(createReqTableData(id, ownerCnic, buyerCnic, shares, prize));
+            // ownerTnxRows.push(createReqTableData(id, ownerCnic, buyerCnic, shares, prize));
 
         })
 
@@ -364,7 +372,7 @@ const YourPropertiesDetails = () => {
             >
                 <Typography variant="h6"
                     fontWeight="bold"
-                    fontSize="large" mb={2} >Get Property Details</Typography>
+                    fontSize="large" mb={2} >Trace Your requests</Typography>
                 <Grid container spacing={2}>
 
 
@@ -525,7 +533,7 @@ const YourPropertiesDetails = () => {
                     </Button>
                 </Box>
                 {/* ---------------------------------------------------------------------- */}
-                {
+                {/* {
                     flagChart ? (<Box bgcolor='white'  >
                         <Typography fontSize='18px' fontWeight='bold' mb={3} >Shares Sold</Typography>
                         <Chart percent={percentage} remaning={remainig} />
@@ -537,7 +545,7 @@ const YourPropertiesDetails = () => {
                 {
                     flagNewProTable ? (<><Typography fontSize='18px' mt={2} fontWeight='bold' >Inital Transactions of Property </Typography>
                         <TableComponents key="Property Shares" columsArray={newPropertyTableColumns} rowsArray={newPropertyTableRows} /></>) : ""
-                }
+                } */}
                 {
                     flagReqTable ? (
                         <>

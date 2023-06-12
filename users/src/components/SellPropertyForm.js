@@ -21,8 +21,9 @@ import {
 import areaContract from "../artifacts/contracts/OwnerShip.sol/OwnerShip.json";
 import { ethers } from "ethers";
 
-import {nodeProviderUrl} from  "../dataVariables";
 import { ownerShipAddress } from "../dataVariables";
+
+import { nodeProviderUrl, getAllDistricURL, getAllProvienceURL, getAreaNameURL, getAreaURL, getContractURL, getSocietyURL, landInspectorContractAddress, govermentAuthorityContractAddress } from "../dataVariables";
 
 
 
@@ -43,6 +44,13 @@ const SellPropertyForm = () => {
 
     const [lockContractAddress, setLockContractAddress] = useState("");
 
+    const [areaOptions, setAreaOptions] = useState([])
+    const [provinceOptions, setPropvinceOptions] = useState([]);
+    const [districOptions, setDistricOptions] = useState([]);
+    const [societyOtpions, setSocietyOptions] = useState([]);
+
+    const [areaName, setAreaName] = useState("none");
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         const data = new FormData(e.currentTarget);
@@ -52,8 +60,6 @@ const SellPropertyForm = () => {
             society: data.get('society'),
             block: data.get('block'),
             propertyId: data.get('propertyId'),
-            email: data.get("email"),
-            ownerFullName: data.get('ownerFullName'),
             ownerCNIC: data.get('ownerCNIC'),
             sharesAmmount: data.get('sharesAmmount'),
             priceOfShare: data.get('priceOfShare'),
@@ -61,7 +67,7 @@ const SellPropertyForm = () => {
             agree: data.get('agree')
         }
         // console.log(actualData)
-        if (actualData.province && actualData.distric && actualData.society && actualData.block && actualData.propertyId && actualData.ownerFullName && actualData.ownerCNIC && actualData.priceOfShare && actualData.buyerCNIC && actualData.agree) {
+        if (actualData.propertyId && actualData.ownerCNIC && actualData.priceOfShare && actualData.buyerCNIC && actualData.agree) {
 
             const { ethereum } = window;
 
@@ -71,7 +77,7 @@ const SellPropertyForm = () => {
                 ethereum
             )
 
-      const provider = new ethers.providers.JsonRpcProvider(nodeProviderUrl);
+            const provider = new ethers.providers.JsonRpcProvider(nodeProviderUrl);
 
 
             const signer = walletProvider.getSigner();
@@ -84,27 +90,27 @@ const SellPropertyForm = () => {
             console.log("Ok ha")
             console.log(signer)
 
-            let _ownerCnic = parseInt(actualData.ownerCNIC) ;
-            
-            let _propertyId = parseInt(actualData.propertyId) 
+            let _ownerCnic = parseInt(actualData.ownerCNIC);
 
-            let _shareAmmount = parseInt(actualData.sharesAmmount) ;
+            let _propertyId = parseInt(actualData.propertyId)
 
-            let _priceOfShare = parseInt(actualData.priceOfShare); 
+            let _shareAmmount = parseInt(actualData.sharesAmmount);
 
-            let _buyerCnic = parseInt(actualData.buyerCNIC)  ;
+            let _priceOfShare = parseInt(actualData.priceOfShare);
 
-            console.log( _ownerCnic)
-            console.log( _propertyId)
-            console.log( _shareAmmount)
-            console.log( _priceOfShare)
-            console.log( _buyerCnic)
+            let _buyerCnic = parseInt(actualData.buyerCNIC);
+
+            console.log(_ownerCnic)
+            console.log(_propertyId)
+            console.log(_shareAmmount)
+            console.log(_priceOfShare)
+            console.log(_buyerCnic)
             const dataResult = await sendTx.transferOwnerShipRequest(
                 _ownerCnic,
                 _propertyId,
                 _shareAmmount,
                 _priceOfShare,
-                _buyerCnic ,
+                _buyerCnic,
                 { gasLimit: 5000000 }
             );
 
@@ -124,17 +130,17 @@ const SellPropertyForm = () => {
                     type: "success"
                 }
             )
-                 // Get the transaction receipt
-                 const transactionReceipt = await provider.getTransactionReceipt(dataResult.hash);
+            // Get the transaction receipt
+            const transactionReceipt = await provider.getTransactionReceipt(dataResult.hash);
 
-                 // Get the return value from the transaction receipt
-                //  const returnValue = ethers.utils.hexlify(transactionReceipt.logs[0].data);
+            // Get the return value from the transaction receipt
+            //  const returnValue = ethers.utils.hexlify(transactionReceipt.logs[0].data);
 
-                 const returnValue = ethers.utils.defaultAbiCoder.decode(['uint256'], dataResult);
+            const returnValue = ethers.utils.defaultAbiCoder.decode(['uint256'], dataResult);
 
 
-      console.log("1: " + returnValue);
-      console.log("2: " + dataResult);
+            console.log("1: " + returnValue);
+            console.log("2: " + dataResult);
 
             // await dataResult.wait();
 
@@ -172,48 +178,158 @@ const SellPropertyForm = () => {
         }
         if (etherScanAlert.status === true) {
             setTimeout(() => {
-              setEtherScanAlert({
-                status: false,
-                msg: "",
-                url: "",
-                type: ""
-              })
+                setEtherScanAlert({
+                    status: false,
+                    msg: "",
+                    url: "",
+                    type: ""
+                })
             }, 600000)
-          }
+        }
 
     })
 
 
-    const [distric, setDistric] = useState('lahore');
-    const [province, setProvince] = useState('punjab');
+    const [distric, setDistric] = useState('none');
+    const [province, setProvince] = useState('none');
     const [selectPropertyId, setSelectPropertyId] = useState('none');
     const [society, setSociety] = useState('none');
-    const [block, setBlock] = useState('park-view');
+    const [block, setBlock] = useState('none');
 
 
     const [checked, setChecked] = useState(false);
 
 
 
-    const handleChangeProvience = (event) => {
-        setProvince(event.target.value);
-    };
-    const handleChangeDistric = (event) => {
-        setDistric(event.target.value);
-    };
-    const handleChangeBlock = (event) => {
-        setBlock(event.target.value);
-        setLockContractAddress(ownerShipAddress);
-    };
+    
+
+const handleChangeProvience = (event) => {
+    setProvince(event.target.value);
+  
+    const fetchData = async () => {
+      let url = getAllDistricURL + event.target.value;
+      // console.log("URL")
+      // console.log(url)
+      const data = await fetch(url);
+      // console.log("Data")
+      // console.log(data);
+  
+  
+      const json = await data.json();
+      setDistricOptions(json)
+    }
+    fetchData();
+  
+  };
+  
+  const handleChangeDistric = (event) => {
+  
+    setDistric(event.target.value);
+    const fetchData = async () => {
+      let url = getSocietyURL + event.target.value;
+      // console.log("URL")
+      // console.log(url)
+      const data = await fetch(url);
+      // console.log("Data")
+      // console.log(data);
+  
+  
+      const json = await data.json();
+      setSocietyOptions(json)
+    }
+    fetchData();
+  };
+  
+  const handleChangeSociety = (event) => {
+    setSociety(event.target.value);
+    const fetchData = async () => {
+      let url = getAreaURL + event.target.value;
+      // console.log("URL")
+      // console.log(url)
+      const data = await fetch(url);
+      // console.log("Data")
+      // console.log(data);
+  
+  
+      const json = await data.json();
+      setAreaOptions(json)
+    }
+    fetchData();
+  };
+  
+  const handleChangeBlock = (event) => {
+    setBlock(event.target.value);
+    const fetchData = async () => {
+      let url = getAreaNameURL + event.target.value;
+      // console.log("URL")
+      // console.log(url)
+      const data = await fetch(url);
+      const json = await data.json();
+      // console.log("Data")
+      // console.log(json.name);
+      let _name = json.name;
+      // console.log(_name)
+      setAreaName(_name)
+      // console.log("Area Name: ");
+      // console.log(areaName)
+    }
+    fetchData();
+  
+    const fetchContracts = async () => {
+      let url = getContractURL + event.target.value;
+      // console.log("URL")
+      // console.log(url)
+      const data = await fetch(url);
+  
+      const json = await data.json();
+      // console.log("Data")
+      // console.log(json.name);
+      let _landInspector = json[0].landInspector
+      console.log("Land")
+      console.log(_landInspector)
+      setLockContractAddress(_landInspector);
+      // setAreaName(_name)
+      // console.log("Area Name: ");
+      // console.log(areaName)
+    }
+    fetchContracts();
+  
+  
+    // setAreaName(event.target.value);
+  
+    // setLockContractAddress(landInspectorContractAddress);
+  
+  };
+  
+  
     const handleChangePropertyId = (event) => {
         setSelectPropertyId(event.target.value);
     };
-    const handleChangeSociety = (event) => {
-        setSociety(event.target.value);
-    };
+    // const handleChangeSociety = (event) => {
+    //     setSociety(event.target.value);
+    // };
     const handleCheck = (event) => {
         setChecked(event.target.checked);
     };
+
+    useEffect(() => {
+
+        // provinceOptions.push({id: "2" , name: "Ahsan"})
+        var array;
+      
+        const fetchData = async () => {
+      
+          const data = await fetch(getAllProvienceURL);
+      
+          const json = await data.json();
+          setPropvinceOptions(json)
+        }
+        fetchData()
+        // console.log(array);
+        // setPropvinceOptions(array)
+        // console.log(provinceOptions)
+      
+      }, [])
 
     return (
         <Box sx={{ backgroundColor: 'white', borderRadius: 2, padding: 2 }} >
@@ -227,94 +343,122 @@ const SellPropertyForm = () => {
                 <Grid container spacing={2}>
 
                     <Grid item sm={12} xs={12} md={6} lg={6}>
-                        <FormControl fullWidth>
-                            <InputLabel id="province-label">Province</InputLabel>
+                    < FormControl fullWidth >
+                <InputLabel id="province-label">Province</InputLabel>
 
-                            <Select
-                                fullWidth
-                                required
-                                labelId="province-label"
-                                id="province"
-                                name="province"
-                                value={province}
-                                label="province"
-                                onChange={handleChangeProvience}
-                            >
-                                <MenuItem value="punjab">Punjab</MenuItem>
-                                <MenuItem value="sindh">Sindh</MenuItem>
-                                <MenuItem value="balochistan">Balochistan</MenuItem>
-                                <MenuItem value="KPK">KPK</MenuItem>
-                                <MenuItem value="gilgit">Gilgit</MenuItem>
-                                <MenuItem value="islammabad">Islammabad</MenuItem>
-                            </Select>
-                        </FormControl>
+                <Select
+                  fullWidth
+                  required
+                  labelId="province-label"
+                  id="province"
+                  value={province}
+                  label="province"
+                  onChange={handleChangeProvience}
+                >
+                  <MenuItem value="none">None</MenuItem>
+
+                  {
+                    provinceOptions.map((e) => {
+                      return (<MenuItem value={e._id}>{e.name}</MenuItem>)
+
+                    })
+                  }
+                  {/* <MenuItem value="punjab">punjab</MenuItem>
+                  <MenuItem value="sindh">Karachi</MenuItem>
+                  <MenuItem value="balochistan">Sialkot</MenuItem>
+                  <MenuItem value="KPK">KPK</MenuItem> */}
+                </Select>
+              </FormControl >
                     </Grid>
 
                     <Grid item sm={12} xs={12} md={6} lg={6}>
-                        <FormControl fullWidth>
-                            <InputLabel id="distric-label">Distric</InputLabel>
+                    <FormControl fullWidth>
+                <InputLabel id="distric-label">District</InputLabel>
 
-                            <Select
-                                fullWidth
-                                required
-                                labelId="distric-label"
-                                id="distric"
-                                name="distric"
-                                value={distric}
-                                label="Distric"
-                                onChange={handleChangeDistric}
-                            >
-                                <MenuItem value="lahore">Lahore</MenuItem>
-                                <MenuItem value="karachi">Karachi</MenuItem>
-                                <MenuItem value="sialkot">Sialkot</MenuItem>
-                            </Select>
-                        </FormControl>
+                <Select
+                  fullWidth
+                  required
+                  labelId="distric-label"
+                  id="distric"
+                  value={distric}
+                  label="Distric"
+                  onChange={handleChangeDistric}
+                >
+
+                  <MenuItem value="none">None</MenuItem>
+
+                  {
+                    districOptions.map((e) => {
+
+                      return (<MenuItem value={e._id}>{e.name}</MenuItem>)
+
+                    })
+                  }
+
+                  {/* <MenuItem value="lahore">Lahore</MenuItem>
+                  <MenuItem value="karachi">Karachi</MenuItem>
+                  <MenuItem value="sialkot">Sialkot</MenuItem> */}
+                </Select>
+              </FormControl>
                     </Grid>
 
                     <Grid item sm={12} xs={12} md={6} lg={6}>
-                        <FormControl fullWidth>
-                            <InputLabel id="society-label">Society</InputLabel>
+                    <FormControl fullWidth>
+                <InputLabel id="society-label">Society</InputLabel>
 
-                            <Select
-                                fullWidth
-                                required
-                                labelId="society-label"
-                                id="society"
-                                name="society"
-                                value={society}
-                                label="society"
-                                onChange={handleChangeSociety}
-                            >
-                                <MenuItem value="none">None</MenuItem>
-                                <MenuItem value="park-view">Park View</MenuItem>
-                                <MenuItem value="bahria">Bahria</MenuItem>
-                                <MenuItem value="rehman-garden">Rehman Garden</MenuItem>
-                                <MenuItem value="iqbal-town">Iqbal Town</MenuItem>
-                            </Select>
-                        </FormControl>
+                <Select
+                  fullWidth
+                  required
+                  labelId="society-label"
+                  id="society"
+                  value={society}
+                  label="society"
+                  onChange={handleChangeSociety}
+                >
+                  <MenuItem value="none">None</MenuItem>
+                  {
+                    societyOtpions.map((e) => {
+
+                      return (<MenuItem value={e._id}>{e.name}</MenuItem>)
+
+                    })
+                  }
+
+                  {/* <MenuItem value="park-view">Park View</MenuItem>
+                  <MenuItem value="bahria">Bahria</MenuItem>
+                  <MenuItem value="rehman-garden">Rehman Garden</MenuItem>
+                  <MenuItem value="iqbal-town">Iqbal Town</MenuItem> */}
+                </Select>
+              </FormControl>
                     </Grid>
 
                     <Grid item sm={12} xs={12} md={6} lg={6}>
-                        <FormControl fullWidth>
-                            <InputLabel id="block-label">Block</InputLabel>
+                    <FormControl fullWidth>
+                <InputLabel id="block-label">Block</InputLabel>
 
-                            <Select
-                                fullWidth
-                                required
-                                labelId="block-label"
-                                id="block"
-                                name="block"
-                                value={block}
-                                label="block"
-                                onChange={handleChangeBlock}
-                            >
-                                <MenuItem value="none">None</MenuItem>
-                                <MenuItem value="Bahria-1-A">A Block</MenuItem>
-                                <MenuItem value="bahria">B Block</MenuItem>
-                                <MenuItem value="rehman-garden">X Block</MenuItem>
-                                <MenuItem value="iqbal-town">Y Block</MenuItem>
-                            </Select>
-                        </FormControl>
+                <Select
+                  fullWidth
+                  required
+                  labelId="block-label"
+                  id="block"
+                  value={block}
+                  label="block"
+                  onChange={handleChangeBlock}
+                >
+                  <MenuItem value="none">None</MenuItem>
+                  {
+                    areaOptions.map((e) => {
+
+                      return (<MenuItem value={e._id}>{e.name}</MenuItem>)
+
+                    })
+                  }
+                  {/* <MenuItem value="bahria-1-A">A Block</MenuItem>
+                  <MenuItem value="bahria">B Block</MenuItem>
+                  <MenuItem value="rehman-garden">X Block</MenuItem>
+                  <MenuItem value="iqbal-town">Y Block</MenuItem> */}
+                </Select>
+              </FormControl>
                     </Grid>
 
                     <Grid item sm={12} xs={12} md={12} lg={12}>
@@ -349,7 +493,7 @@ const SellPropertyForm = () => {
                             inputProps={{ min: 0 }}
                         />
                     </Grid>
-                    <Grid item sm={12} xs={12} md={6} lg={6}>
+                    {/* <Grid item sm={12} xs={12} md={6} lg={6}>
                         <TextField
                             margin="normal"
                             fullWidth
@@ -360,9 +504,9 @@ const SellPropertyForm = () => {
                             type="String"
                         />
                         <Typography fontSize='small' >You will recive request number through this email</Typography>
-                    </Grid>
+                    </Grid> */}
 
-                    <Grid item sm={12} xs={12} md={6} lg={6}>
+                    {/* <Grid item sm={12} xs={12} md={6} lg={6}>
                         <TextField
                             margin="normal"
                             fullWidth
@@ -372,7 +516,7 @@ const SellPropertyForm = () => {
                             label="Full Name of Owner"
                             type="String"
                         />
-                    </Grid>
+                    </Grid> */}
                     <Grid item sm={12} xs={12} md={6} lg={6}>
                         <TextField
                             margin="normal"

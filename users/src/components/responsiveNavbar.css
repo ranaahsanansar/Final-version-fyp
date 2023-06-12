@@ -21,9 +21,11 @@ header {
 	height: 80px;
 	padding: 0 2rem;
 	/* background-color: var(--mainColor); */
-	background-image: linear-gradient(to right , #AE69B3 , #4868DB);
+	/* background-image: linear-gradient(to right , #AE69B3 , #4868DB); */
+	background-color: #A9D6C6;
 	color: var(--textColor);
 	z-index: 10;
+	border: 3px solid black;
 }
 
 nav a {

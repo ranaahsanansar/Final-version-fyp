@@ -176,8 +176,8 @@ const CitizenApprovalPage = () => {
       <Container  >
 
         <Box mt={2} textAlign="center" >
-          <Typography variant="h3" fontSize="35px" fontWeight="bold" color='white'>
-            Only Goverment Authority
+          <Typography variant="h3" fontSize="35px" fontWeight="bold" color='#060606'>
+            Goverment Authority Only 
           </Typography>
         </Box>
 

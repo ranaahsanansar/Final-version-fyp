@@ -22,7 +22,7 @@ const HeroSection = () => {
     border: "1px solid rgba(255, 255, 255, 0.3)",
   };
   return (
-    <section style={{ backgroundColor: "rgba(207, 203, 203, 0.414)" }}>
+    <section style={{ backgroundColor: "#A9D6C6" , height: '100vh' , alignItems: 'center' , display: 'flex'}}>
       <Container >
         <Box height="100%" display="flex" >
           <Grid container spacing={2} mt='10px' >
@@ -40,16 +40,17 @@ const HeroSection = () => {
                   <Button
                     variant="contained"
                     sx={{
-                      backgroundImage:
-                        "linear-gradient(to right , #AE69B3 , #4868DB)",
+                      // backgroundImage:
+                      //   "linear-gradient(to right , #AE69B3 , #4868DB)",
+                      backgroundColor: "black"
                     }}
                   >
                     <Typography fontWeight="bold">Connect Wallet</Typography>
                   </Button>
                 </NavLink>
                   
-                  <NavLink to='/filter' style={{ textDecoration: 'none' }}>
-                  <Button variant="outlined">Explore Properties</Button>
+                  <NavLink to='/filter' style={{ textDecoration: 'none'  }}>
+                  <Button variant="outlined" sx={{color: 'black' , fontWeight: 'bold'  }} >Explore Properties</Button>
                   </NavLink>
                 </Stack>
               </Stack>

@@ -306,7 +306,7 @@ useEffect(() => {
         borderRadius: "15px", backgroundColor: '#f2f2f2'
       }}
     >
-      <Typography variant="h4" color='primary' fontSize="25px" fontWeight="bold">
+      <Typography variant="h4" color='#060606' fontSize="25px" fontWeight="bold">
         Execute Reverse Case
       </Typography>
       <Divider />

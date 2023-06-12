@@ -258,7 +258,7 @@ const CitizenStayForm = () => {
     <Box width='100%' sx={{
       border: '2px solid gray', padding: 2, borderRadius: '15px', backgroundColor: '#f2f2f2'
     }} >
-      <Typography variant="h4" fontSize='25px' fontWeight='bold' color='primary'>Restricted on Citizen</Typography>
+      <Typography variant="h4" fontSize='25px' fontWeight='bold' color='#060606'>Restricted on Citizen</Typography>
       <Divider />
       <Box mt={3} >
         <Box

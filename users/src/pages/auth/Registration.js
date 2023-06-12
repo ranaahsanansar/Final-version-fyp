@@ -48,7 +48,7 @@ const Registration = () => {
       <TextField margin='normal' required fullWidth id='password_confirmation' name='password_confirmation' label='Confirm Password' type='password' />
       <FormControlLabel control={<Checkbox value={true} color="primary" name="tc" id="tc" />} label="I agree to term and condition." />
       <Box textAlign='center'>
-        <Button type='submit' variant='contained' sx={{ mt: 3, mb: 2, px: 5 }}>Join</Button>
+        <Button type='submit' variant='contained' sx={{ mt: 3, mb: 2, px: 5 , backgroundColor: '#060606'}}>Join</Button>
       </Box>
       {error.status ? <Alert severity={error.type}>{error.msg}</Alert> : ''}
     </Box>

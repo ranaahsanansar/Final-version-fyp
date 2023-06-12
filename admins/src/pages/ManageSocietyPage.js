@@ -11,7 +11,7 @@ const ManageSocietyPage = () => {
     
             <Container>
                 <Box mt={2} textAlign='center' >
-                    <Typography variant='h3' fontSize='35px' fontWeight='bold' color='white'>Only Gov. Authority</Typography>
+                    <Typography variant='h3' fontSize='35px' fontWeight='bold' color='#060606'>Gov. Authority Only</Typography>
                 </Box>
                 {/* Add new Property Form  */}
                 <Box mt={2} >

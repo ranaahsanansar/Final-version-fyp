@@ -35,12 +35,12 @@ const WeOfferSection = () => {
     border: "1px solid rgba(255, 255, 255, 0.3)",
   };
   return (
-    <section style={{ backgroundColor: "rgba(190, 189, 189, 0.436)" }}>
+    <section style={{ backgroundColor: "#B7D0B5" , height: '100vh' , display: 'flex' , alignItems: 'center' }}>
       <Container>
         <Box height="100%" display="flex" alignItems="center" paddingY={3}>
           <Box width="100%">
             <Box marginBottom={5}>
-              <Typography fontSize="32px" fontWeight='bold'>We Offer</Typography>
+              <Typography fontSize="38px" fontWeight='bold'>We Offer</Typography>
             </Box>
 
             <Grid container spacing={2} alignItems='start' >
@@ -62,9 +62,9 @@ const WeOfferSection = () => {
                     style={{ objectFit: "cover" }}
                   />
                   <Box
-                    sx={glassMorphismStyle}
+                    sx={{ backgroundColor: '#060606' }}
                     position="absolute"
-                    bottom="20px"
+                    bottom="0px"
                     width="100%"
                     padding="10px"
                   >

@@ -268,7 +268,7 @@ useEffect(() => {
     <Box width='100%' sx={{
       border: '2px solid gray', padding: 2, borderRadius: '15px', backgroundColor: '#f2f2f2'
     }} >
-      <Typography variant="h4" fontSize='25px' color='primary' fontWeight='bold' >Declare Death of Citizzen</Typography>
+      <Typography variant="h4" fontSize='25px' color='#060606' fontWeight='bold' >Declare Death of Citizzen</Typography>
       <Divider />
       <Box mt={3} >
         <Box

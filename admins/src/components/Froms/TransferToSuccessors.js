@@ -111,8 +111,6 @@ const [areaName, setAreaName] = useState("none");
 
 };
 
-
-
 const handleChangeDistric = (event) => {
 
     setDistric(event.target.value);
@@ -132,8 +130,6 @@ const handleChangeDistric = (event) => {
     fetchData();
 };
 
-
-
 const handleChangeSociety = (event) => {
     setSociety(event.target.value);
     const fetchData = async () => {
@@ -150,7 +146,6 @@ const handleChangeSociety = (event) => {
     }
     fetchData();
 };
-
 
 const handleChangeBlock = (event) => {
     setBlock(event.target.value);
@@ -228,7 +223,7 @@ useEffect(() => {
         borderRadius: "15px", backgroundColor: '#f2f2f2'
       }}
     >
-      <Typography variant="h4" fontSize="25px" fontWeight="bold" color='primary'>
+      <Typography variant="h4" fontSize="25px" fontWeight="bold" color='#060606'>
         Transfer Shares to Successors
       </Typography>
       <Divider />

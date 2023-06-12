@@ -12,7 +12,7 @@ const AddNewPropertyPage = () => {
 
         <Container>
             <Box mt={2} textAlign='center' >
-                <Typography variant='h3' fontSize='35px' fontWeight='bold' color='white' >Only LandInspector</Typography>
+                <Typography variant='h3' fontSize='35px' fontWeight='bold' color='#060606' >LandInspector Only</Typography>
             </Box>
             {/* Add new Property Form  */}
             <Box mt={2} >

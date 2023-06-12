@@ -32,14 +32,14 @@ const Navbar = () => {
 
   return <>
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" color="primary">
+      <AppBar position="static" sx={{ backgroundColor: '#A9D6C6' , border: "3px solid black" }}>
         <Toolbar>
-          <Typography variant='h5' component="div" sx={{ flexGrow: 1 }}>Real Estate Tokenization</Typography>
+          <Typography variant='h5' component="div" sx={{ flexGrow: 1 , color: '#060606' }}>Real Estate Tokenization</Typography>
           
 
           <Stack direction='row' spacing={2} >
           <Typography>{currentAddress}</Typography>
-            <Typography>Connect Wallet</Typography>
+            <Typography  >Connect Wallet</Typography>
             <Box onClick={handleConnectWallet} >
               <AccountBalanceWalletIcon />
             </Box>

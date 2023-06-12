@@ -285,8 +285,8 @@ const SellProperty = () => {
 
 
 
-            {/* <Box>
-              <Stack spacing={2}>
+            <Box sx={{mt: 2}} > 
+              {/* <Stack spacing={2}>
                 <Box sx={[glassMorphismStyle, { borderRadius: 2, padding: 2 }]} >
                   <Typography variant="h3">Selling Records</Typography>
                 </Box>
@@ -295,8 +295,8 @@ const SellProperty = () => {
                 <Box>
                   <SellingRecords />
                 </Box>
-              </Stack>
-            </Box> */}
+              </Stack> */}
+            </Box>
 
           </Stack>
         </Box>

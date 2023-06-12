@@ -17,16 +17,17 @@ function ResponsiveNavbar() {
 
   return (
     <header>
-      <h3>Real Estate</h3>
+      {/* <h3 >Real Estate</h3> */}
+      <Typography color="#060606" fontWeight='bold' fontSize='20px' >Land Ledger</Typography>
       <nav ref={navRef}>
         <Button
           component={NavLink}
 		  onClick={showNavbar}
           to="/"
           style={({ isActive }) => {
-            return { backgroundColor: isActive ? "#6d1b7b" : "" };
+            return { backgroundColor: isActive ? "#060606" : "" , color: isActive ? "white" : "black" };
           }}
-          sx={{ color: "white", textTransform: "none" }}
+          sx={{  textTransform: "none" }}
         >
           Home
         </Button>
@@ -35,7 +36,7 @@ function ResponsiveNavbar() {
 		  onClick={showNavbar}
           to="/filter"
           style={({ isActive }) => {
-            return { backgroundColor: isActive ? "#6d1b7b" : "" };
+            return { backgroundColor: isActive ? "#060606" : ""  , color: isActive ? "white" : "black"};
           }}
           sx={{ color: "white", textTransform: "none" }}
         >
@@ -50,7 +51,7 @@ function ResponsiveNavbar() {
                 to="/dashboard"
 				onClick={showNavbar}
                 style={({ isActive }) => {
-                  return { backgroundColor: isActive ? "#6d1b7b" : "" };
+                  return { backgroundColor: isActive ? "#060606" : ""  , color: isActive ? "white" : "black"};
                 }}
                 sx={{ color: "white", textTransform: "none" }}
               >
@@ -62,7 +63,7 @@ function ResponsiveNavbar() {
 				onClick={showNavbar}
                 to="/login" 
                 style={({ isActive }) => {
-                  return { backgroundColor: isActive ? "#6d1b7b" : "" };
+                  return { backgroundColor: isActive ? "#060606" : "" , color: isActive ? "white" : "black" };
                 }}
                 sx={{ color: "white", textTransform: "none" }}
               >

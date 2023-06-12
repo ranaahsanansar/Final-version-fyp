@@ -54,7 +54,7 @@ const Filter = () => {
       <Container>
         <Box mb={2} >
           <Box marginY={4}>
-          <Typography sx={gradiantText} variant="h5" fontWeight="bold">
+          <Typography sx={{color: '#060606'}} variant="h5" fontWeight="bold">
             Discover Properties
           </Typography>
         </Box>
@@ -185,10 +185,9 @@ const Filter = () => {
                     
                   </Box>
                   <Box display='flex' justifyContent='space-between' >
-                      <Button fontSize='small' sx={gradiantText} >Clear All</Button>
+                      <Button fontSize='small' sx={{color : '#060606'}} >Clear All</Button>
                       <Button sx={{
-                      backgroundImage:
-                        "linear-gradient(to right , #9936a0 ,  #1d399f)",
+                      backgroundColor: '#060606'
                     }} > <Typography color='whitesmoke' fontWeight='bold' fontSize='small' >Apply</Typography> </Button>
 
                       </Box>

@@ -64,14 +64,14 @@ const BuyProperty = () => {
               <BuyPropertyForm />
             </Box>
 
-            <Box>
-              <Stack spacing={2}>
+            <Box sx={{mt:2}} >
+              {/* <Stack spacing={2}>
                 <Box sx={[glassMorphismStyle, { borderRadius: 2, padding: 2 }]} >
                   <Typography variant="h3">Buying Records</Typography>
                 </Box>
 
                 <BuyingRecords />
-              </Stack>
+              </Stack> */}
             </Box>
 
           </Stack>

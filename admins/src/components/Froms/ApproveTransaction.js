@@ -287,7 +287,7 @@ useEffect(() => {
     <Box width='100%' sx={{
       border: '2px solid gray', padding: 2, borderRadius: '15px', backgroundColor: '#f2f2f2'
     }} >
-      <Typography variant="h4" fontSize='25px' fontWeight='bold' color='primary'>Approve Ownership Transaction Request</Typography>
+      <Typography variant="h4" fontSize='25px' fontWeight='bold' color='#060606'>Approve Ownership Transaction Request</Typography>
       <Divider />
       <Box mt={3} >
         <Box

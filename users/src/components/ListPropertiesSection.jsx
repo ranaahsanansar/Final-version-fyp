@@ -54,24 +54,24 @@ const ListPropertiesSection = () => {
   };
 
   return (
-    <section>
+    <section style={{backgroundColor: '#B7D0B5'}} >
       <Container>
         <Box height="100%" width='100%' alignItems="center" paddingY={3}>
-        <Box
-              marginBottom={5}
-              display="flex"
-              justifyContent="space-between"
-              alignItems="center"
-            >
-              <Typography fontSize="32px" fontWeight='bold'>Listed Properties</Typography>
-              <Typography fontSize={18} fontWeight="bold">
-                <a href="#">See All</a>
-              </Typography>
-            </Box>
+          <Box
+            marginBottom={5}
+            display="flex"
+            justifyContent="space-between"
+            alignItems="center"
+          >
+            <Typography fontSize="38px" fontWeight='bold'>Listed Properties</Typography>
+            <Typography fontSize={18} fontWeight="bold">
+              <a href="#">See All</a>
+            </Typography>
+          </Box>
           <Grid container spacing={2} alignItems='start' >
-            
+
             {myData.map((item) => (
-                <Grid item xs={12} md={6} lg={4} >
+              <Grid item xs={12} md={6} lg={4} >
                 <Box
                   position="relative"
                   borderRadius="10px"
@@ -102,67 +102,72 @@ const ListPropertiesSection = () => {
                     <Box
                       display="flex"
                       paddingX={2}
-                      sx={{ backgroundColor: "#AE69B3" }}
+                      sx={{ backgroundColor: "#060606" }}
                       alignItems="center"
+                      justifyContent='center'
                       borderRadius={20}
                     >
-                      <MonetizationOnSharpIcon />
-                      <Typography ml={1} fontWeight="bold" fontSize={22}>
-                        {item.price}
+
+                      <Typography ml={1} fontWeight="bold" color='whitesmoke' fontSize="18px">
+                        RS.{item.price}
                       </Typography>
                     </Box>
                   </Box>
 
                   <Box
-                    sx={glassMorphismStyle}
+                    sx={{ backgroundColor: 'black' }}
                     position="absolute"
                     bottom="20px"
                     width="100%"
                     padding="10px"
                   >
-                    <Stack alignItems="flex-start">
-                      <Typography
-                        color="black"
-                        fontSize={30}
-                        fontWeight={700}
-                        sx={{
-                          display: "-webkit-box",
-                          overflow: "hidden",
-                          WebkitBoxOrient: "vertical",
-                          WebkitLineClamp: 1,
-                        }}
-                      >
-                        {item.title}
-                      </Typography>
-                      <Typography
-                        color="black"
-                        fontSize={18}
-                        fontWeight={400}
-                        sx={{
-                          display: "-webkit-box",
-                          overflow: "hidden",
-                          WebkitBoxOrient: "vertical",
-                          WebkitLineClamp: 1,
-                        }}
-                      >
-                        {item.size}
-                      </Typography>
-                      <NavLink to='/details' style={{ textDecoration: 'none' }} >
-                        <Button sx={{ color: "#440149" }}>
-                       
-                        <Typography fontWeight="bold" fontSize={20}>
-                          Buy Now
+                    <Stack  direction='row' justifyContent='space-between' alignItems='center' >
+                      <Box>
+                        <Typography
+                          color="whitesmoke"
+                          fontSize={30}
+                          fontWeight={700}
+                          sx={{
+                            display: "-webkit-box",
+                            overflow: "hidden",
+                            WebkitBoxOrient: "vertical",
+                            WebkitLineClamp: 1,
+                          }}
+                        >
+                          {item.title}
                         </Typography>
-                      </Button>
+
+                        <Typography
+                          color="whitesmoke"
+                          fontSize={18}
+                          fontWeight={400}
+                          sx={{
+                            display: "-webkit-box",
+                            overflow: "hidden",
+                            WebkitBoxOrient: "vertical",
+                            WebkitLineClamp: 1,
+                          }}
+                        >
+                          {item.size}
+                        </Typography>
+                      </Box>
+
+                      <NavLink to='/details' style={{ textDecoration: 'none' }} >
+                        <Button sx={{ color: "#060606" , borderRadius: "20px" , backgroundColor: "#A9D6C6" }} >
+
+                          <Typography fontWeight="bold" fontSize="18px">
+                            Buy Now
+                          </Typography>
+                        </Button>
                       </NavLink>
-                      
+
                     </Stack>
                   </Box>
                 </Box>
-                </Grid>
-              ))}
-            
-            
+              </Grid>
+            ))}
+
+
           </Grid>
 
           {/* <Box width="100%">

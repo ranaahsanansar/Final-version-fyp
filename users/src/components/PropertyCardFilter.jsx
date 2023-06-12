@@ -55,21 +55,21 @@ const PropertyCardFilter = ({ data }) => {
               <Typography fontWeight="bold" fontSize="large" sx={ [{display: "-webkit-box",
                 overflow: "hidden",
                 WebkitBoxOrient: "vertical",
-                WebkitLineClamp: 1} , gradiantText ] }>
+                WebkitLineClamp: 1 , color: 'black'  } ] }>
                 {data.title}
               </Typography>
               <Box display="flex">
-                <MonetizationOnIcon fontSize="medium" />
+                {/* <MonetizationOnIcon fontSize="medium" /> */}
                 <Typography
                   fontWeight="bold"
                   fontSize="large"
                   sx={ [{display: "-webkit-box",
                 overflow: "hidden",
                 WebkitBoxOrient: "vertical",
-                WebkitLineClamp: 1} , gradiantText ] }
+                WebkitLineClamp: 1, color: '#060606' } ] }
                   ml={1}
                 >
-                  {data.prize}
+                  RS.{data.prize}
                 </Typography>
               </Box>
             </Box>
@@ -92,10 +92,7 @@ const PropertyCardFilter = ({ data }) => {
             </Typography>
             <NavLink  to='/details' style={{ textDecoration: 'none' }} >
               <Button
-              sx={{
-                backgroundImage:
-                  "linear-gradient(to right , #9936a0 ,  #1d399f)",
-              }}
+              sx={{backgroundColor: '#060606'}}
             >
               <Typography color="white" fontWeight="bold">
                 Check Details

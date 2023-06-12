@@ -62,24 +62,24 @@ const ListProperty = () => {
       <Box>
         <Container>
           <Box mt={2}>
-            <Box sx={[glassMorphismStyle, { borderRadius: 2, padding: 2 }]}>
-              <h1>My Listed Properties</h1>
+            <Box sx={[{ borderRadius: 2, padding: 2 , backgroundColor: 'white' }]}>
+              <h1>List new Property/ See listed Properties</h1>
             </Box>
             <Box mt={1}>
               <Button
                 variant="contained"
-                color="secondary"
-                sx={{ my: 2 }}
+                sx={{ my: 2  , backgroundColor: '#060606' }}
                 onClick={() => {
                   setDisplayForm(!displayForm);
                 }}
+                
               >
                 {displayForm ? "Close Form" : "Add New Property"}
               </Button>
             </Box>
             <Box>
               {displayForm ? (
-                <AddProperty />
+                <AddProperty  />
               ) : ("")}
             </Box>
 

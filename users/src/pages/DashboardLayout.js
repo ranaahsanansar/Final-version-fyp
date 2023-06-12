@@ -68,7 +68,7 @@ const DashboardLayout = () => {
           lg={2}
           md={2}
           sx={{
-            backgroundColor: "#3b444b",
+            backgroundColor: "#060606",
             p: 2,
             color: "white",
             display: { xs: "none", sm: "none", md: "block" },
@@ -95,9 +95,9 @@ const DashboardLayout = () => {
               variant="contained"
               to="/"
               style={({ isActive }) => {
-                return { backgroundColor: isActive ? "#6d1b7b" : "" };
+                return { backgroundColor: isActive ? "white" : "#A9D6C6" };
               }}
-              sx={{ color: "white", textTransform: "none", width: "100%" }}
+              sx={{ color: "black", textTransform: "none", width: "100%" }}
             >
               Home
             </Button>
@@ -106,9 +106,9 @@ const DashboardLayout = () => {
               variant="contained"
               to="profile"
               style={({ isActive }) => {
-                return { backgroundColor: isActive ? "#6d1b7b" : "" };
+                return { backgroundColor: isActive ? "white" : "#A9D6C6" };
               }}
-              sx={{ color: "white", textTransform: "none", width: "100%" }}
+              sx={{ color: "black", textTransform: "none", width: "100%" }}
             >
               Profile
             </Button>
@@ -117,9 +117,9 @@ const DashboardLayout = () => {
               variant="contained"
               to="listproperty"
               style={({ isActive }) => {
-                return { backgroundColor: isActive ? "#6d1b7b" : "" };
+                return { backgroundColor: isActive ? "white" : "#A9D6C6" };
               }}
-              sx={{ color: "white", textTransform: "none", width: "100%" }}
+              sx={{ color: "black", textTransform: "none", width: "100%" }}
             >
               List Property
             </Button>
@@ -128,9 +128,9 @@ const DashboardLayout = () => {
               variant="contained"
               to="buyPropertyBlockchain"
               style={({ isActive }) => {
-                return { backgroundColor: isActive ? "#6d1b7b" : "" };
+                return { backgroundColor: isActive ? "white" : "#A9D6C6" };
               }}
-              sx={{ color: "white", textTransform: "none", width: "100%" }}
+              sx={{ color: "black", textTransform: "none", width: "100%" }}
             >
               Buy Property
             </Button>
@@ -139,9 +139,9 @@ const DashboardLayout = () => {
               variant="contained"
               to="sellPropertyBlockchain"
               style={({ isActive }) => {
-                return { backgroundColor: isActive ? "#6d1b7b" : "" };
+                return { backgroundColor: isActive ? "white" : "#A9D6C6" };
               }}
-              sx={{ color: "white", textTransform: "none", width: "100%" }}
+              sx={{ color: "black", textTransform: "none", width: "100%" }}
             >
               Sell Property
             </Button>
@@ -150,9 +150,9 @@ const DashboardLayout = () => {
               variant="contained"
               to="changePassword"
               style={({ isActive }) => {
-                return { backgroundColor: isActive ? "#6d1b7b" : "" };
+                return { backgroundColor: isActive ? "white" : "#A9D6C6" };
               }}
-              sx={{ color: "white", textTransform: "none", width: "100%" }}
+              sx={{ color: "black", textTransform: "none", width: "100%" }}
             >
               Change Password
             </Button>
@@ -160,7 +160,7 @@ const DashboardLayout = () => {
               
               variant="contained"
               onClick={handleLogout}
-              sx={{ color: "white", textTransform: "none", width: "100%" }}
+              sx={{ color: "black", textTransform: "none", width: "100%" , backgroundColor: '#A9D6C6' }}
             >
               Logout
             </Button>
@@ -179,7 +179,7 @@ const DashboardLayout = () => {
         <Grid item sm={12} lg={10} md={10} xs={12}
         sx={{height: {lg: '90vh', md: '90vh' , sm: '90vh' , xs: '90vh'},
         // backgroundColor : "#353839",
-        backgroundImage: 'linear-gradient(to left , #AE69B3 , #4868DB)',
+        backgroundColor: "#A9D6C6",
         overflow: 'scroll' , '&::-webkit-scrollbar': {
           display: "none"
       },

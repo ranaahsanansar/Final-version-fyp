@@ -316,7 +316,7 @@ useEffect(() => {
         borderRadius: "15px", backgroundColor: '#f2f2f2'
       }}
     >
-      <Typography variant="h4" fontSize="25px" fontWeight="bold" color='primary'>
+      <Typography variant="h4" fontSize="25px" fontWeight="bold" color='#060606'>
         Signature to Reverse Case
       </Typography>
       <Divider />

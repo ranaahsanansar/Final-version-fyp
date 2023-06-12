@@ -287,7 +287,7 @@ useEffect(() => {
         backgroundColor: '#f2f2f2'
       }}
     >
-      <Typography variant="h4" fontSize="25px" fontWeight="bold" color='primary'>
+      <Typography variant="h4" fontSize="25px" fontWeight="bold" color='#060606'>
         Reverse of Ownership
       </Typography>
       <Divider />

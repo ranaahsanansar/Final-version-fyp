@@ -22,46 +22,46 @@ const HeroSection = () => {
     border: "1px solid rgba(255, 255, 255, 0.3)",
   };
   return (
-    <Box sx={{ backgroundColor: "#A9D6C6", height: {md: '100vh' , lg: '100vh'} , alignItems: 'center' , display: 'flex'}}>
+    <Box sx={{ backgroundColor: "#A9D6C6", height: { md: '100vh', lg: '100vh' }, alignItems: 'center', display: 'flex' }}>
       <Container   >
         <Box height="100%" display="flex" alignItems='center' justifyContent='center'  >
           <Grid container spacing={3} mt='10px' >
-            <Grid item  xs={12} md={6} lg={6}  display="flex" alignItems='center' justifyContent='center'   >
-            <Box padding={2} borderRadius={5} sx={glassMorphismStyle}>
-              <Stack spacing={2}>
-                <Typography fontSize="32px" fontWeight='bold' className="lato-font" >
-                Pakistan's First Block-chain Powered Real-Estate Marketplace.
-                </Typography>
-                <Typography fontSize='22px' className="lato-font"  >
-                Our innovative digital platform leverages the power of blockchain technology to provide a secure, transparent, and efficient way to buy and sell properties in Pakistan. Find the property of your dreams and close the deal without any intermediaries.
-                </Typography>
-                <Stack direction="row" spacing={3}>
-                <NavLink to='/login' style={{ textDecoration: 'none' }}>
-                  <Button
-                    variant="contained"
-                    sx={{
-                      // backgroundImage:
-                      //   "linear-gradient(to right , #AE69B3 , #4868DB)",
-                      backgroundColor: "#F3E5AB"
-                    }}
-                  >
-                    <Typography fontWeight="bold" className="lato-font" color='black' >Connect Wallet</Typography>
-                  </Button>
-                </NavLink>
-                  
-                  <NavLink to='/filter' style={{ textDecoration: 'none'  }}>
-                  <Button variant="outlined" sx={{color: 'black' , fontWeight: 'bold'  }} className="lato-font"  >Explore Properties</Button>
-                  </NavLink>
+            <Grid item xs={12} md={6} lg={6} display="flex" alignItems='center' justifyContent='center'   >
+              <Box padding={2} borderRadius={5} >
+                <Stack spacing='24px'>
+                  <Typography fontSize="46px" fontWeight='bold' className="lato-font" >
+                    Digitalizing Real Estate of Pakistan
+                  </Typography>
+                  <Typography fontSize='17px' className="lato-font"  >
+                    Discover a New Era of Real Estate. Seamlessly Buy, Sell, and invest in Properties Across Pakistan with our Cutting-Edge Decentralized Marketplace
+                  </Typography>
+                  <Stack direction="row" spacing={3}>
+                    <NavLink to='/login' style={{ textDecoration: 'none' }}>
+                      <Button
+                        variant="contained"
+                        sx={{
+                          // backgroundImage:
+                          //   "linear-gradient(to right , #AE69B3 , #4868DB)",
+                          backgroundColor: "#F3E5AB", paddingX: '24px', paddingY: '12px',
+                        }}
+                      >
+                        <Typography fontWeight="bold" className="lato-font" color='black' >Connect Wallet</Typography>
+                      </Button>
+                    </NavLink>
+
+                    <NavLink to='/filter' style={{ textDecoration: 'none' }}>
+                      <Button variant="outlined" sx={{ color: 'black', border: '1px solid black', fontWeight: 'bold', paddingX: '24px', paddingY: '12px' }} className="lato-font"  >Explore Properties</Button>
+                    </NavLink>
+                  </Stack>
                 </Stack>
-              </Stack>
-            </Box>
+              </Box>
             </Grid>
             <Grid item xs={12} md={6} lg={6} >
-            <Box>
-              <img src="/images/main.png" width="100%" />
-            </Box>
+              <Box>
+                <img src="/images/main.png" width="100%" />
+              </Box>
             </Grid>
-            
+
           </Grid>
 
           <Box

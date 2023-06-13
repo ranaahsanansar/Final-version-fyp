@@ -27,7 +27,7 @@ function ResponsiveNavbar() {
           style={({ isActive }) => {
             return { backgroundColor: isActive ? "#F3E5AB" : "" , color: isActive ? "black" : "black" };
           }}
-          sx={{  textTransform: "none" }}
+          sx={{  textTransform: "none" , marginX:'20px', fontWeight:'bold',}}
         >
           Home
         </Button>
@@ -38,7 +38,7 @@ function ResponsiveNavbar() {
           style={({ isActive }) => {
             return { backgroundColor: isActive ? "#F3E5AB" : ""  , color:  "black"};
           }}
-          sx={{ color: "white", textTransform: "none" }}
+          sx={{ color: "white", textTransform: "none"  , marginX:'20px', fontWeight:'bold', }}
         >
           Explore
         </Button>
@@ -53,7 +53,7 @@ function ResponsiveNavbar() {
                 style={({ isActive }) => {
                   return { backgroundColor: isActive ? "#F3E5AB" : ""  , color:  "black"};
                 }}
-                sx={{ color: "white", textTransform: "none" }}
+                sx={{ color: "white", textTransform: "none"  , marginX:'16px', fontWeight:'bold',}}
               >
                 Dashboard
               </Button>
@@ -65,7 +65,7 @@ function ResponsiveNavbar() {
                 style={({ isActive }) => {
                   return { backgroundColor: isActive ? "#F3E5AB" : "" , color:"black" };
                 }}
-                sx={{ color: "white", textTransform: "none" }}
+                sx={{ color: "white", textTransform: "none" , fontWeight:'bold',}}
               >
                 Login/Registration
               </Button>

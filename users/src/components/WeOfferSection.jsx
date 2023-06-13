@@ -69,7 +69,7 @@ const WeOfferSection = () => {
                     padding="10px"
                   >
                     <Typography
-                      variant="h3"
+                      sx={{ fontSize: '20px' , fontWeight: 'bold' }}
                       color="black"
                       fontWeight={500}
                       className="lato-font" 

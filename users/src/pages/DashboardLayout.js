@@ -134,6 +134,17 @@ const DashboardLayout = () => {
             >
               Buy Property
             </Button>
+            {/* <Button
+              component={NavLink}
+              variant="contained"
+              to="approvalRequest"
+              style={({ isActive }) => {
+                return { backgroundColor: isActive ? "white" : "#A9D6C6" };
+              }}
+              sx={{ color: "black", textTransform: "none", width: "100%" }}
+            >
+              Apply for Approval
+            </Button> */}
             <Button
               component={NavLink}
               variant="contained"

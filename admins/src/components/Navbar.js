@@ -39,9 +39,9 @@ const Navbar = () => {
 
           <Stack direction='row' spacing={2} >
           <Typography>{currentAddress}</Typography>
-            <Typography  >Connect Wallet</Typography>
+            <Typography color='black' >Connect Wallet</Typography>
             <Box onClick={handleConnectWallet} >
-              <AccountBalanceWalletIcon />
+              <AccountBalanceWalletIcon style={{color: 'black'}}  />
             </Box>
 
           </Stack>

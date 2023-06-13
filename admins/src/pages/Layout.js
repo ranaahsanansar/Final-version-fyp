@@ -8,7 +8,7 @@ const Layout = () => {
     <Navbar />
     <Box>
       <Grid container sx={{height: '90vh'}} >
-        <Grid item lg={2} md={2} sm={2} sx={{ height: '100%' , backgroundColor: '#060606' , overflow: 'scroll' , '&::-webkit-scrollbar': {
+        <Grid item lg={2} md={2} sm={2} sx={{ height: '100%' , backgroundColor: '#F3E5AB' , overflow: 'scroll' , '&::-webkit-scrollbar': {
           display: "none"
       },
       '&::-webkit-scrollbar-thumb': {
@@ -19,7 +19,7 @@ const Layout = () => {
             <Box height='100%'>
               <Stack >
                 <Box my={2} padding={2} >
-                  <Typography variant="h4" fontWeight='bold' fontSize='lg' color='whitesmoke' >Admins</Typography>
+                  <Typography variant="h4" fontWeight='bold' fontSize='lg' color='black' >Admins</Typography>
                 </Box>
                 <Box mx={2} >
                   <Stack spacing={2}>
@@ -27,43 +27,60 @@ const Layout = () => {
                     component={NavLink} 
                     to='/'
                     sx={{ backgroundColor: "#A9D6C6" , color: '#060606'}}
-                    variant='contained' >Property Details</Button>
-                  <Typography variant="h6"  fontSize='medium' color='whitesmoke' >LandInspector</Typography>
+                    variant='contained' style={({ isActive }) => {
+                      return { backgroundColor: isActive ? "white" : "#A9D6C6" };
+                    }} >Property Details</Button>
+                  <Typography variant="h6"  fontSize='medium' color='black' >LandInspector</Typography>
                     <Button
                     component={NavLink} 
                     to='/add-property'
-                    sx={{ backgroundColor: "#A9D6C6" , color: '#060606'}}
-                    variant='contained' >Add Property</Button>
+                    sx={{ backgroundColor: "#A9D6C6"  ,  color: '#060606'}}
+                    variant='contained' 
+                    style={({ isActive }) => {
+                      return { backgroundColor: isActive ? "white" : "#A9D6C6" };
+                    }}
+                    >Add Property</Button>
                     
                     <Button
                     component={NavLink} 
                     to='/transaction'
                     sx={{ backgroundColor: "#A9D6C6" , color: '#060606'}}
-                    variant='contained' >Transactions</Button>
-                    <Typography variant="h6"  fontSize='medium' color='whitesmoke' >Gov. Authority</Typography>
+                    variant='contained' style={({ isActive }) => {
+                      return { backgroundColor: isActive ? "white" : "#A9D6C6" };
+                    }}  >Transactions</Button>
+                    <Typography variant="h6"  fontSize='medium' color='black' >Gov. Authority</Typography>
                     <Button
                     component={NavLink}
                     to='/citizen-approval'
                     sx={{ backgroundColor: "#A9D6C6" , color: '#060606'}}
-                    variant='contained' >Citizen Approval</Button>
+                    variant='contained' style={({ isActive }) => {
+                      return { backgroundColor: isActive ? "white" : "#A9D6C6" };
+                    }}  >Citizen Approval</Button>
                     <Button
                     component={NavLink}
                     to='/manage-citizen'
                     sx={{ backgroundColor: "#A9D6C6" , color: '#060606'}}
-                    variant='contained' >Manage Citizen</Button>
+                    variant='contained' style={({ isActive }) => {
+                      return { backgroundColor: isActive ? "white" : "#A9D6C6" };
+                    }}  >Manage Citizen</Button>
                   
                     <Button
                     component={NavLink} 
                     to='/manage-society'
                     sx={{ backgroundColor: "#A9D6C6" , color: '#060606'}}
-                    variant='contained' >Manage Society</Button>
+                    variant='contained' style={({ isActive }) => {
+                      return { backgroundColor: isActive ? "white" : "#A9D6C6" };
+                    }}  >Manage Society</Button>
                     
-                    <Typography variant="h6"  fontSize='medium' color='whitesmoke' >High Court</Typography>
+                    <Typography variant="h6"  fontSize='medium' color='black' >High Court</Typography>
                     <Button
                     component={NavLink} 
                     to='/manage-properties'
-                    sx={{ backgroundColor: "#A9D6C6" , color: '#060606'}}
-                    variant='contained' >Manage</Button>
+                    sx={{ backgroundColor: "#A9D6C6" , color: '#060606' }}
+                    variant='contained' style={({ isActive }) => {
+                      return { backgroundColor: isActive ? "white" : "#A9D6C6" };
+                    }}  >Manage</Button>
+                    <Box mt={2} ></Box>
                   </Stack>
                 </Box>
               </Stack>

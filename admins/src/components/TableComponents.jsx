@@ -77,9 +77,9 @@ export default function TableComponents( { columsArray , rowsArray} ) {
                 <TableCell
                   key={index}
                   align={column.align}
-                  style={{ minWidth: column.minWidth , backgroundColor: '#000000' }}
+                  style={{ minWidth: column.minWidth , backgroundColor: '#F3E5AB' }}
                 >
-                  <Typography fontWeight='bold' sx={gradiantText} >
+                  <Typography fontWeight='bold' sx={{color: 'black'}} >
                     {column.label}
                   </Typography>
                   

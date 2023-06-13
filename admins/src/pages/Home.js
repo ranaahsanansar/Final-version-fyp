@@ -531,7 +531,7 @@ const Home = () => {
                     <Button
                         type="submit"
                         variant="contained"
-                        sx={{ mt: 3, mb: 2, px: 5 }}
+                        sx={{ mt: 3, mb: 2, px: 5 , backgroundColor: '#F3E5AB' , color: 'black'}}
                         onClick={handleSubmit}
                     >
                         Fetch
@@ -546,14 +546,14 @@ const Home = () => {
                     flagNewProTable ? (<><Typography fontSize='18px' mt={2} fontWeight='bold' >Inital Transactions of Property </Typography>
                         <TableComponents key="Property Shares" columsArray={newPropertyTableColumns} rowsArray={newPropertyTableRows} /></>) : ""
                 }
-                {
+                {/* {
                     flagReqTable ? (
                         <>
                             <Typography fontSize='18px' fontWeight='bold' mt={2} >Transaction Requests</Typography>
                             <TableComponents key="request" columsArray={reqTableColums} rowsArray={reqTableRows} />
                         </>
                     ) : ""
-                }
+                } */}
                 {
                     flagOwnerTransaction ? (
                         <>

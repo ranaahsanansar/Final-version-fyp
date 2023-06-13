@@ -178,7 +178,7 @@ const ApprovalRequestForm = () => {
                         {/* Heading Buying Property  */}
                         <Box>
                             <Stack spacing={2}>
-                                <Box sx={[glassMorphismStyle, { borderRadius: 2, padding: 2 }]} >
+                                <Box sx={[ { borderRadius: 2, padding: 2 , backgroundColor: 'white' }]} >
                                     <Typography variant="h3">Send Request for Citizen Approval</Typography>
                                 </Box>
 

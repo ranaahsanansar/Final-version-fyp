@@ -17,31 +17,46 @@ const myData = [
   {
     title: "Gulberg",
     size: "10 Marla, 3 floor",
-    price: "3",
+    price: "10,000,000",
     image:
       "https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb",
   },
   {
     title: "Madina Park",
     size: "1 kanal, 2 story",
-    price: "5",
+    price: "50,000,000",
     image:
       "https://images.pexels.com/photos/323780/pexels-photo-323780.jpeg?auto=compress&cs=tinysrgb&",
   },
   {
     title: "Buptiya",
     size: "2 kanal",
-    price: "4",
+    price: "40,000,000",
     image:
       "https://images.pexels.com/photos/1396132/pexels-photo-1396132.jpeg?auto=compress&cs=tinysrgb&",
   },
   {
     title: "Defence",
     size: "1 kanal",
-    price: "7",
+    price: "20,000,000",
     image:
       "https://images.pexels.com/photos/1115804/pexels-photo-1115804.jpeg?auto=compress&cs=tinysrgb&w=600",
   },
+  {
+    title: "Defence",
+    size: "1 kanal",
+    price: "20,000,000",
+    image:
+      "https://images.pexels.com/photos/1115804/pexels-photo-1115804.jpeg?auto=compress&cs=tinysrgb&w=600",
+  },
+  {
+    title: "Defence",
+    size: "1 kanal",
+    price: "20,000,000",
+    image:
+      "https://images.pexels.com/photos/1115804/pexels-photo-1115804.jpeg?auto=compress&cs=tinysrgb&w=600",
+  },
+
 ];
 
 const ListPropertiesSection = () => {
@@ -64,9 +79,9 @@ const ListPropertiesSection = () => {
             alignItems="center"
           >
             <Typography fontSize="38px" fontWeight='bold' className="lato-font" >Listed Properties</Typography>
-            <Typography fontSize={18} fontWeight="bold">
+            {/* <Typography fontSize={18} fontWeight="bold">
               <a href="#">See All</a>
-            </Typography>
+            </Typography> */}
           </Box>
           <Grid container spacing={2} alignItems='start' >
 
@@ -117,7 +132,7 @@ const ListPropertiesSection = () => {
                   <Box
                     sx={{ backgroundColor: 'black' }}
                     position="absolute"
-                    bottom="20px"
+                    bottom="0px"
                     width="100%"
                     padding="10px"
                   >
@@ -125,13 +140,14 @@ const ListPropertiesSection = () => {
                       <Box>
                         <Typography
                           color="whitesmoke"
-                          fontSize={30}
+                          
                           fontWeight={700}
                           sx={{
                             display: "-webkit-box",
                             overflow: "hidden",
                             WebkitBoxOrient: "vertical",
                             WebkitLineClamp: 1,
+                            fontSize:'20px'
                           }}
                           className="lato-font" 
                         >
@@ -140,13 +156,14 @@ const ListPropertiesSection = () => {
 
                         <Typography
                           color="whitesmoke"
-                          fontSize={18}
+                        
                           fontWeight={400}
                           sx={{
                             display: "-webkit-box",
                             overflow: "hidden",
                             WebkitBoxOrient: "vertical",
                             WebkitLineClamp: 1,
+                            fontSize:'16px'
                           }}
                           className="lato-font" 
                         >
@@ -155,10 +172,11 @@ const ListPropertiesSection = () => {
                       </Box>
 
                       <NavLink to='/details' style={{ textDecoration: 'none' }} >
-                        <Button sx={{ color: "#060606" , borderRadius: "20px" , backgroundColor: "#F3E5AB" }} >
+                        <Button sx={{ color: "#060606" , borderRadius: "20px" , backgroundColor: "#F3E5AB" , paddingX: '24px' }} >
 
-                          <Typography fontWeight="bold" fontSize="18px" className="lato-font" >
+                          <Typography fontWeight="bold" fontSize="14px" className="lato-font" >
                             Buy Now
+                      
                           </Typography>
                         </Button>
                       </NavLink>

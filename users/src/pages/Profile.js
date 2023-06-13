@@ -93,7 +93,8 @@ const Profile = () => {
         <Container>
           <Box mt={2}>
             <Stack spacing={2}>
-              <Box sx={ [glassMorphismStyle , {borderRadius: 2, padding: 2 }] }>
+              <Box sx={ [ {borderRadius: 2, padding: 2 , backgroundColor: 'white' , display: 'flex' , alignItems: 'center' , justifyContent:'space-between' }] }>
+                <Box>
                 <h1>Rana Ahsan Ansar</h1>
                 {
                   isConnected ? (<Typography  sx={{
@@ -110,13 +111,16 @@ const Profile = () => {
                   }
                 }}>{currentAddress}</Typography>) : (<Typography>Connect your crypto Wallet to communicate with Blockchain</Typography>)
                 }
+                </Box>
+                
+                
                  
                 <Box
                   onClick={() => {
                     handleConnectWallet()
                   }}
                 >
-                  <AccountBalanceWalletIcon />
+                  <AccountBalanceWalletIcon style={{fontSize: '50px'}} />
                 </Box>
               </Box>
 
@@ -211,7 +215,7 @@ const Profile = () => {
                     </Grid> */}
 
                     <Grid item xs={12} sm={3}>
-                    <Box  sx={{display: "flex" , backgroundColor: 'white' , border: '2px solid gray' , padding: '10px' , borderRadius: '10px' }} >
+                    {/* <Box  sx={{display: "flex" , backgroundColor: 'white' , border: '2px solid gray' , padding: '10px' , borderRadius: '10px' }} >
                       <Box>
                         <Typography
                           variant="h6"
@@ -249,7 +253,7 @@ const Profile = () => {
                           </Typography>
                         )}
                       </Box>
-                      </Box>
+                      </Box> */}
                       
                     </Grid>
                   </Grid>

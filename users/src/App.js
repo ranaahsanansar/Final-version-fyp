@@ -18,6 +18,7 @@ import Filter from "./pages/Filter";
 import PropertiesDetails from "./pages/PropertiesDetails";
 import UpdateProperty from "./pages/UpdateProperty";
 import ApprovalRequestForm from "./components/ApprovalRequestForm";
+import './App.css';
 
 
 

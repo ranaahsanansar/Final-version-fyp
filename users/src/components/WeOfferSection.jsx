@@ -35,12 +35,12 @@ const WeOfferSection = () => {
     border: "1px solid rgba(255, 255, 255, 0.3)",
   };
   return (
-    <section style={{ backgroundColor: "#B7D0B5" , height: '100vh' , display: 'flex' , alignItems: 'center' }}>
+    <Box sx={{ backgroundColor: "#B7D0B5" , height: {lg: '100vh'  } , display: 'flex' , alignItems: 'center' }}>
       <Container>
         <Box height="100%" display="flex" alignItems="center" paddingY={3}>
           <Box width="100%">
             <Box marginBottom={5}>
-              <Typography fontSize="38px" fontWeight='bold'>We Offer</Typography>
+              <Typography fontSize="38px" className="lato-font"  fontWeight='bold'>We Offer</Typography>
             </Box>
 
             <Grid container spacing={2} alignItems='start' >
@@ -62,7 +62,7 @@ const WeOfferSection = () => {
                     style={{ objectFit: "cover" }}
                   />
                   <Box
-                    sx={{ backgroundColor: '#060606' }}
+                    sx={{ backgroundColor: '#F3E5AB' }}
                     position="absolute"
                     bottom="0px"
                     width="100%"
@@ -70,8 +70,9 @@ const WeOfferSection = () => {
                   >
                     <Typography
                       variant="h3"
-                      color="whitesmoke"
+                      color="black"
                       fontWeight={500}
+                      className="lato-font" 
                     >
                       {item.title}
                     </Typography>
@@ -126,7 +127,7 @@ const WeOfferSection = () => {
           </Box>
         </Box>
       </Container>
-    </section>
+    </Box>
   );
 };
 

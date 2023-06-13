@@ -92,9 +92,9 @@ const PropertyCardFilter = ({ data }) => {
             </Typography>
             <NavLink  to='/details' style={{ textDecoration: 'none' }} >
               <Button
-              sx={{backgroundColor: '#060606'}}
+              sx={{backgroundColor: '#F3E5AB'}}
             >
-              <Typography color="white" fontWeight="bold">
+              <Typography color="black" fontWeight="bold">
                 Check Details
               </Typography>
             </Button>

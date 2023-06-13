@@ -68,13 +68,24 @@ const ListProperty = () => {
             <Box mt={1}>
               <Button
                 variant="contained"
-                sx={{ my: 2  , backgroundColor: '#060606' }}
+                sx={{ my: 2  , backgroundColor: '#F3E5AB' ,color:"black"}}
                 onClick={() => {
+                  if(displayForm){
+                    let sure = window.confirm("Are you sure you want to close this form?");
+                    if(sure){
+                      setDisplayForm(!displayForm);
+                      return
+                    }else{
+                      return
+                    }
+                  }
                   setDisplayForm(!displayForm);
+                  
+                  
                 }}
                 
               >
-                {displayForm ? "Close Form" : "Add New Property"}
+                {displayForm ? "Close Form" : "Post an Ad"}
               </Button>
             </Box>
             <Box>

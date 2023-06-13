@@ -37,10 +37,10 @@ const BuyProperty = () => {
             {/* Heading Buying Property  */}
             <Box>
               <Stack spacing={2}>
-                <Box sx={[glassMorphismStyle, { borderRadius: 2, padding: 2 }]} >
+                <Box sx={[{ borderRadius: 2, padding: 2 , backgroundColor: 'whitesmoke' }]} >
                   <Typography variant="h3">Buy Property</Typography>
                 </Box>
-                <Box sx={[glassMorphismStyle, { borderRadius: 2, padding: 2 }]} >
+                <Box sx={[{ borderRadius: 2, padding: 2 , backgroundColor: 'whitesmoke'}]} >
                   <Typography fontWeight="bold">
                     How to Buy property through Blockchain
                   </Typography>

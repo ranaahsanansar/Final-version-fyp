@@ -28,7 +28,7 @@ const LoginReg = () => {
         backgroundImage: `url(${Pic1})`,
         backgroundRepeat: 'no-repeat',
         backgroundSize: 'cover',
-        // backgroundPosition: 'center',
+        backgroundPosition: 'center',
         display: { xs: 'none', sm: 'block' }
       }}> 
       </Grid>

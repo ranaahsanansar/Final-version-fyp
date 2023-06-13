@@ -22,17 +22,17 @@ const HeroSection = () => {
     border: "1px solid rgba(255, 255, 255, 0.3)",
   };
   return (
-    <section style={{ backgroundColor: "#A9D6C6" , height: '100vh' , alignItems: 'center' , display: 'flex'}}>
-      <Container >
-        <Box height="100%" display="flex" >
-          <Grid container spacing={2} mt='10px' >
-            <Grid item  xs={12} md={6} lg={6}>
+    <Box sx={{ backgroundColor: "#A9D6C6", height: {md: '100vh' , lg: '100vh'} , alignItems: 'center' , display: 'flex'}}>
+      <Container   >
+        <Box height="100%" display="flex" alignItems='center' justifyContent='center'  >
+          <Grid container spacing={3} mt='10px' >
+            <Grid item  xs={12} md={6} lg={6}  display="flex" alignItems='center' justifyContent='center'   >
             <Box padding={2} borderRadius={5} sx={glassMorphismStyle}>
               <Stack spacing={2}>
-                <Typography fontSize="32px" fontWeight='bold'>
+                <Typography fontSize="32px" fontWeight='bold' className="lato-font" >
                 Pakistan's First Block-chain Powered Real-Estate Marketplace.
                 </Typography>
-                <Typography fontSize='22px' >
+                <Typography fontSize='22px' className="lato-font"  >
                 Our innovative digital platform leverages the power of blockchain technology to provide a secure, transparent, and efficient way to buy and sell properties in Pakistan. Find the property of your dreams and close the deal without any intermediaries.
                 </Typography>
                 <Stack direction="row" spacing={3}>
@@ -42,15 +42,15 @@ const HeroSection = () => {
                     sx={{
                       // backgroundImage:
                       //   "linear-gradient(to right , #AE69B3 , #4868DB)",
-                      backgroundColor: "black"
+                      backgroundColor: "#F3E5AB"
                     }}
                   >
-                    <Typography fontWeight="bold">Connect Wallet</Typography>
+                    <Typography fontWeight="bold" className="lato-font" color='black' >Connect Wallet</Typography>
                   </Button>
                 </NavLink>
                   
                   <NavLink to='/filter' style={{ textDecoration: 'none'  }}>
-                  <Button variant="outlined" sx={{color: 'black' , fontWeight: 'bold'  }} >Explore Properties</Button>
+                  <Button variant="outlined" sx={{color: 'black' , fontWeight: 'bold'  }} className="lato-font"  >Explore Properties</Button>
                   </NavLink>
                 </Stack>
               </Stack>
@@ -101,7 +101,7 @@ const HeroSection = () => {
           </Box>
         </Box>
       </Container>
-    </section>
+    </Box>
   );
 };
 

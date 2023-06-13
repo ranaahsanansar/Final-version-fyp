@@ -280,7 +280,7 @@ const AddProperty = () => {
         </Grid>
 
         <Box textAlign="center">
-          <Button type="submit" variant="contained" sx={{ mt: 3, mb: 2, px: 5 , backgroundColor: '#060606' }}>
+          <Button type="submit" variant="contained" sx={{ mt: 3, mb: 2, px: 5 , backgroundColor: '#F3E5AB' , color: 'black' }}>
             Submit
           </Button>
         </Box>

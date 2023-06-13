@@ -48,7 +48,7 @@ const ChangePassword = () => {
         <TextField margin="normal" required fullWidth name="password" label="New Password" type="password" id="password" />
         <TextField margin="normal" required fullWidth name="password_confirmation" label="Confirm New Password" type="password" id="password_confirmation" />
         <Box textAlign='center'>
-          <Button type="submit" variant="contained" sx={{ mt: 3, mb: 2, px: 5 }}> Update </Button>
+          <Button type="submit" variant="contained" sx={{ mt: 3, mb: 2, px: 5 , backgroundColor: "#F3E5AB" , color: "black"}}> Update </Button>
         </Box>
         {error.status ? <Alert severity={error.type}>{error.msg}</Alert> : ""}
       </Box>

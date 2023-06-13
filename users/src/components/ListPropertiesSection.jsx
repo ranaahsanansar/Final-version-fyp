@@ -63,7 +63,7 @@ const ListPropertiesSection = () => {
             justifyContent="space-between"
             alignItems="center"
           >
-            <Typography fontSize="38px" fontWeight='bold'>Listed Properties</Typography>
+            <Typography fontSize="38px" fontWeight='bold' className="lato-font" >Listed Properties</Typography>
             <Typography fontSize={18} fontWeight="bold">
               <a href="#">See All</a>
             </Typography>
@@ -102,13 +102,13 @@ const ListPropertiesSection = () => {
                     <Box
                       display="flex"
                       paddingX={2}
-                      sx={{ backgroundColor: "#060606" }}
+                      sx={{ backgroundColor: "#F3E5AB" }}
                       alignItems="center"
                       justifyContent='center'
                       borderRadius={20}
                     >
 
-                      <Typography ml={1} fontWeight="bold" color='whitesmoke' fontSize="18px">
+                      <Typography ml={1}  className="lato-font"  fontWeight="bold" color='black' fontSize="18px">
                         RS.{item.price}
                       </Typography>
                     </Box>
@@ -133,6 +133,7 @@ const ListPropertiesSection = () => {
                             WebkitBoxOrient: "vertical",
                             WebkitLineClamp: 1,
                           }}
+                          className="lato-font" 
                         >
                           {item.title}
                         </Typography>
@@ -147,15 +148,16 @@ const ListPropertiesSection = () => {
                             WebkitBoxOrient: "vertical",
                             WebkitLineClamp: 1,
                           }}
+                          className="lato-font" 
                         >
                           {item.size}
                         </Typography>
                       </Box>
 
                       <NavLink to='/details' style={{ textDecoration: 'none' }} >
-                        <Button sx={{ color: "#060606" , borderRadius: "20px" , backgroundColor: "#A9D6C6" }} >
+                        <Button sx={{ color: "#060606" , borderRadius: "20px" , backgroundColor: "#F3E5AB" }} >
 
-                          <Typography fontWeight="bold" fontSize="18px">
+                          <Typography fontWeight="bold" fontSize="18px" className="lato-font" >
                             Buy Now
                           </Typography>
                         </Button>

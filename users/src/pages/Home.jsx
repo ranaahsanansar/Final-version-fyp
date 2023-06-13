@@ -36,12 +36,14 @@ const Home = () => {
 
       {/* How it works */}
 
-      <section
-        style={{
+      <Box
+      component='section'
+        sx={{
           backgroundColor: "#A9D6C6",
-          height: '100vh',
           display: 'flex',
-          alignItems: 'center'
+          alignItems: 'center',
+          alignItems: 'center',
+          height: {md: 'auto' , lg: '100vh' , sm: 'auto' },
         }}
         
       >
@@ -49,7 +51,7 @@ const Home = () => {
           <Box height="100%" display="flex" alignItems="center" paddingY={3}>
             <Box width="100%">
               <Box marginBottom={5}>
-                <Typography fontSize="38px" fontWeight='bold'>How it works</Typography>
+                <Typography fontSize="38px" fontWeight='bold' className="lato-font" >How it works</Typography>
               </Box>
 
               <Grid container spacing={2} alignItems='start'  >
@@ -57,7 +59,7 @@ const Home = () => {
                 <Grid item xs={12} md={6} lg={4} >
                 <Box
                   height="300px"
-                  sx={{backgroundColor: '#060606'}}
+                  sx={{backgroundColor: '#F3E5AB'}}
                   padding={2} 
                   borderRadius={5}
                   marginY={2}
@@ -65,12 +67,12 @@ const Home = () => {
                 >
                   <Stack spacing={1}>
                     <Box display="flex" justifyContent="space-between">
-                      <Typography color='whitesmoke' >Step 1</Typography>
-                      <AccountBalanceWalletIcon style={{ color:'whitesmoke' }} fontSize="large" />
+                      <Typography className="lato-font"  color='black' >Step 1</Typography>
+                      <AccountBalanceWalletIcon style={{ color:'black' }} fontSize="large" />
                     </Box>
                     <Box>
                       {" "}
-                      <Typography variant="h6"  color='whitesmoke'  fontWeight="bold">
+                      <Typography variant="h6"  className="lato-font"  color='black'  fontWeight="bold">
                         Connect Wallet
                       </Typography>{" "}
                     </Box>
@@ -83,7 +85,7 @@ const Home = () => {
                           WebkitBoxOrient: "vertical",
                           WebkitLineClamp: 6,
                         }}
-                        color='whitesmoke' 
+                        color='black' 
                       >
                         To get started, you'll need to connect your digital wallet to our platform. This is a simple and secure process that allows you to interact with our smart contracts and participate in real estate transactions.
                       </Typography>{" "}
@@ -95,7 +97,7 @@ const Home = () => {
                 <Grid item xs={12} md={6} lg={4} >
                 <Box
                   height="300px"
-                  sx={{backgroundColor: '#060606'}}
+                  sx={{backgroundColor: '#F3E5AB'}}
                   padding={2}
                   borderRadius={5}
                   marginY={2}
@@ -103,19 +105,19 @@ const Home = () => {
                 >
                   <Stack spacing={1}>
                     <Box display="flex" justifyContent="space-between">
-                      <Typography color='whitesmoke' >Step 2</Typography>
-                      <FingerprintIcon style={{ color:'whitesmoke' }} fontSize="large" />
+                      <Typography color='black' >Step 2</Typography>
+                      <FingerprintIcon style={{ color:'black' }} fontSize="large" />
                     </Box>
                     <Box>
                       {" "}
-                      <Typography variant="h6" color='whitesmoke'  fontWeight="bold">
+                      <Typography variant="h6" color='black'  fontWeight="bold">
                         {" "}
                         Verification
                       </Typography>{" "}
                     </Box>
                     <Box>
                       <Typography
-                       color='whitesmoke' 
+                       color='black' 
                         sx={{
                           display: "-webkit-box",
                           overflow: "hidden",
@@ -133,7 +135,7 @@ const Home = () => {
                 <Grid item xs={12} md={6} lg={4} >
                 <Box
                   height="300px"
-                  sx={{backgroundColor: '#060606'}}
+                  sx={{backgroundColor: '#F3E5AB'}}
                   padding={2}
                   borderRadius={5}
                   marginY={2}
@@ -141,13 +143,13 @@ const Home = () => {
                 >
                   <Stack spacing={1}>
                     <Box display="flex" justifyContent="space-between">
-                      <Typography color='whitesmoke' >Step 3</Typography>
+                      <Typography color='black' >Step 3</Typography>
 
-                      <SellIcon style={{ color:'whitesmoke' }} fontSize="large" />
+                      <SellIcon style={{ color:'black' }} fontSize="large" />
                     </Box>
                     <Box>
                       {" "}
-                      <Typography color='whitesmoke'  variant="h6" fontWeight="bold">
+                      <Typography color='black'  variant="h6" fontWeight="bold">
                         Sell with smart Contract
                       </Typography>{" "}
                     </Box>
@@ -160,7 +162,7 @@ const Home = () => {
                           WebkitBoxOrient: "vertical",
                           WebkitLineClamp: 6,
                         }}
-                        color='whitesmoke' 
+                        color='black' 
                       >
                         Our smart contracts enhance security and efficiency in real estate transactions. They enable seamless transfer of property ownership and eliminate the need for intermediaries. Experience the future of real estate transactions with us.
                       </Typography>{" "}
@@ -299,7 +301,7 @@ const Home = () => {
             </Box>
           </Box>
         </Container>
-      </section>
+      </Box>
     </>
   );
 };

@@ -68,7 +68,7 @@ const DashboardLayout = () => {
           lg={2}
           md={2}
           sx={{
-            backgroundColor: "#060606",
+            backgroundColor: "#F3E5AB",
             p: 2,
             color: "white",
             display: { xs: "none", sm: "none", md: "block" },
@@ -85,7 +85,7 @@ const DashboardLayout = () => {
         >
           <Box sx={{ mb: '20px' }}>
             {/* <Typography variant="h3">Dashboard</Typography> */}
-            <h1>Dashboard</h1>
+            <h1 style={{ color: 'black'}} >Dashboard</h1>
           </Box>
           
 

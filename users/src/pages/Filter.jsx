@@ -187,8 +187,8 @@ const Filter = () => {
                   <Box display='flex' justifyContent='space-between' >
                       <Button fontSize='small' sx={{color : '#060606'}} >Clear All</Button>
                       <Button sx={{
-                      backgroundColor: '#060606'
-                    }} > <Typography color='whitesmoke' fontWeight='bold' fontSize='small' >Apply</Typography> </Button>
+                      backgroundColor: '#F3E5AB'
+                    }} > <Typography color='black' fontWeight='bold' fontSize='small' >Apply</Typography> </Button>
 
                       </Box>
                   

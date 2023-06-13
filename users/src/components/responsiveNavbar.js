@@ -25,7 +25,7 @@ function ResponsiveNavbar() {
 		  onClick={showNavbar}
           to="/"
           style={({ isActive }) => {
-            return { backgroundColor: isActive ? "#060606" : "" , color: isActive ? "white" : "black" };
+            return { backgroundColor: isActive ? "#F3E5AB" : "" , color: isActive ? "black" : "black" };
           }}
           sx={{  textTransform: "none" }}
         >
@@ -36,7 +36,7 @@ function ResponsiveNavbar() {
 		  onClick={showNavbar}
           to="/filter"
           style={({ isActive }) => {
-            return { backgroundColor: isActive ? "#060606" : ""  , color: isActive ? "white" : "black"};
+            return { backgroundColor: isActive ? "#F3E5AB" : ""  , color:  "black"};
           }}
           sx={{ color: "white", textTransform: "none" }}
         >
@@ -51,7 +51,7 @@ function ResponsiveNavbar() {
                 to="/dashboard"
 				onClick={showNavbar}
                 style={({ isActive }) => {
-                  return { backgroundColor: isActive ? "#060606" : ""  , color: isActive ? "white" : "black"};
+                  return { backgroundColor: isActive ? "#F3E5AB" : ""  , color:  "black"};
                 }}
                 sx={{ color: "white", textTransform: "none" }}
               >
@@ -63,7 +63,7 @@ function ResponsiveNavbar() {
 				onClick={showNavbar}
                 to="/login" 
                 style={({ isActive }) => {
-                  return { backgroundColor: isActive ? "#060606" : "" , color: isActive ? "white" : "black" };
+                  return { backgroundColor: isActive ? "#F3E5AB" : "" , color:"black" };
                 }}
                 sx={{ color: "white", textTransform: "none" }}
               >

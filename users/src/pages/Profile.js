@@ -119,8 +119,10 @@ const Profile = () => {
                   onClick={() => {
                     handleConnectWallet()
                   }}
+                  sx={{ border: '1px solid black' , fontWeight:'bold' ,paddingX: '32px', paddingY: '14px' , borderRadius: '5px' , backgroundColor:'#F3E5AB'}}
                 >
-                  <AccountBalanceWalletIcon style={{fontSize: '50px'}} />
+                  <Typography>Connect Wallet</Typography> 
+                  {/* <AccountBalanceWalletIcon style={{fontSize: '50px'}} /> */}
                 </Box>
               </Box>
 

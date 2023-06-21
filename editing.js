@@ -9,6 +9,7 @@ import {
   Divider,
   FormControl,
   FormControlLabel,
+  FormHelperText,
   Grid,
   InputLabel,
   MenuItem,
@@ -20,6 +21,8 @@ import {
 
 import areaContract from "../artifacts/contracts/OwnerShip.sol/OwnerShip.json";
 import { ethers } from "ethers";
+import { useFormik } from 'formik';
+
 
 import { ownerShipAddress } from "../dataVariables";
 
@@ -29,18 +32,51 @@ import { nodeProviderUrl, getAllDistricURL, getAllProvienceURL, getAreaNameURL, 
 
 const SellPropertyForm = () => {
 
-  const [formData, setFormData] = useState({
-    propertyId: "",
-    ownerCNIC: "",
-    priceOfShare: "" ,
-    buyerCNIC: ""
-  });
-
-  const [formErrors, setFormErrors] = useState({
-    propertyId: "",
-    ownerCNIC: "",
-    priceOfShare: "",
-    buyerCNIC: ""
+  const formik = useFormik({
+    initialValues: {
+      province: '',
+      district: '',
+      society: '',
+      block: '',
+      propertyId: '',
+      ownerCNIC: '',
+      sharesAmount: '',
+      priceOfShare: '',
+      buyerCNIC: '',
+      agree: false,
+    },
+    validate: (values) => {
+      const errors = {};
+      if (!values.propertyId) {
+        errors.propertyId = 'Property ID is required';
+      }
+      if (!values.ownerCNIC) {
+        errors.ownerCNIC = 'Owner CNIC is required';
+      } else if (isNaN(values.ownerCNIC)) {
+        errors.ownerCNIC = 'Owner CNIC must be a number';
+      }
+      if (!values.priceOfShare) {
+        errors.priceOfShare = 'Price of Share is required';
+      } else if (isNaN(values.priceOfShare)) {
+        errors.priceOfShare = 'Price of Share must be a number';
+      }
+      if (!values.buyerCNIC) {
+        errors.buyerCNIC = 'Buyer CNIC is required';
+      } else if (isNaN(values.buyerCNIC)) {
+        errors.buyerCNIC = 'Buyer CNIC must be a number';
+      }
+      if (!values.agree) {
+        errors.agree = 'Agreeing to the terms is required';
+      }
+      return errors;
+    },
+    onSubmit: (values) => {
+      // Place your existing submission logic here
+      // Use values.propertyId, values.ownerCNIC, etc. to access the form values
+      console.log("hye")
+      console.log(values)
+      handleSubmit(values)
+    },
   });
 
 
@@ -49,64 +85,6 @@ const SellPropertyForm = () => {
     msg: "",
     type: ""
   });
-
-  const validateForm = () => {
-    let valid = true;
-    const errors = {};
-
-    if (formData.propertyId == "" ) {
-      errors.propertyId = "Property ID is required";
-      valid = false;
-    }else if( formData.propertyId < 1){
-      errors.propertyId = "ID must not be less then 1";
-      valid = false;
-    }
-
-    if (formData.ownerCNIC == "" ) {
-      errors.ownerCNIC = "Owner CNIC is required";
-      valid = false;
-    }else if (formData.ownerCNIC < 1){
-      errors.ownerCNIC = "Value must not be less then 1";
-      valid = false;
-    }
-
-    if (formData.priceOfShare == "" ) {
-      errors.priceOfShare = "Price of Share is required";
-      valid = false;
-    }else if (formData.priceOfShare < 1){
-      errors.priceOfShare = "Value must not be less then 1";
-      valid = false;
-    }
-
-    if (formData.buyerCNIC == "" ) {
-      errors.buyerCNIC = "Buyer CNIC is required";
-      valid = false;
-    }else if (formData.buyerCNIC < 1){
-      errors.buyerCNIC = "Value must not be less then 1";
-      valid = false;
-    }
-
-    let checkValidID = formData.propertyId.toString();
-        if(checkValidID.length != 12){
-            errors.propertyId = "ID must be valid 12 digits Uniqe Identification number";
-          valid = false;
-        }
-        let checkValidCnic = formData.ownerCNIC.toString();
-        if(checkValidCnic.length != 13 ){
-            errors.ownerCNIC = "Cnicn Must be Valid";
-          valid = false;
-        }
-
-    // if (!formData.agree) {
-    //   errors.agree = "You must agree to the terms and conditions";
-    //   valid = false;
-    // }
-
-    setFormErrors(errors);
-
-    return valid;
-  };
-
 
   const [etherScanAlert, setEtherScanAlert] = useState({
     status: false,
@@ -124,35 +102,26 @@ const SellPropertyForm = () => {
 
   const [areaName, setAreaName] = useState("none");
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const data = new FormData(e.currentTarget);
-    
-    // formData.propertyId
-    console.log("Form Data")
-    console.log(formData.propertyId)
-    console.log(formData.ownerCNIC)
-    console.log(formData.priceOfShare)
-    console.log(formData.buyerCNIC)
-    console.log(formData.agree)
-
-
+  const handleSubmit = async (values) => {
+    // e.preventDefault();
+    // const data = new FormData(e.currentTarget);
+    console.log(values)
     const actualData = {
-      province: data.get('province'),
-      distric: data.get('distric'),
-      society: data.get('society'),
-      block: data.get('block'),
-      propertyId: data.get('propertyId'),
-      ownerCNIC: data.get('ownerCNIC'),
-      sharesAmmount: data.get('sharesAmmount'),
-      priceOfShare: data.get('priceOfShare'),
-      buyerCNIC: data.get('buyerCNIC'),
-      agree: data.get('agree')
+      // province: data.get('province'),
+      // distric: data.get('distric'),
+      // society: data.get('society'),
+      // block: data.get('block'),
+      propertyId: values.propertyId,
+      ownerCNIC: values.ownerCNIC,
+      sharesAmmount: values.sharesAmount,
+      priceOfShare: values.priceOfShare,
+      buyerCNIC: values.buyerCNIC,
+      agree: values.agree
     }
+
+    console.log(values.propertyId)
     // console.log(actualData)
-console.log(validateForm())
-    // if (actualData.propertyId && actualData.ownerCNIC && actualData.priceOfShare && actualData.buyerCNIC && actualData.agree) {
-    if (validateForm() && actualData.agree) {
+    if (actualData.propertyId && actualData.ownerCNIC && actualData.priceOfShare && actualData.buyerCNIC && actualData.agree) {
 
       const { ethereum } = window;
 
@@ -415,14 +384,6 @@ console.log(validateForm())
     // console.log(provinceOptions)
 
   }, [])
-  const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [name]: type === "checkbox" ? checked : value
-    }));
-  };
 
   return (
     <Box sx={{ backgroundColor: 'white', borderRadius: 2, padding: 2 }} >
@@ -431,7 +392,8 @@ console.log(validateForm())
         noValidate
         sx={{ mt: 1 }}
         id="buyProperty-form"
-        onSubmit={handleSubmit}
+        onSubmit={formik.handleSubmit}
+        // onSubmit={handleSubmit}
       >
         <Grid container spacing={2}>
 
@@ -585,20 +547,17 @@ console.log(validateForm())
                             onChange={handleChangePropertyId}
                             inputProps={{ min: 0 }}
                         /> */}
-            <TextField
-              margin="normal"
-              fullWidth
-              required
-              id="propertyId"
-              name="propertyId"
-              label="Property ID"
-              type="number"
-              value={formData.propertyId}
-              onChange={handleChange}
-              inputProps={{ min: 0 }}
-              error={Boolean(formErrors.propertyId)}
-              helperText={formErrors.propertyId}
-            />
+           <TextField
+            fullWidth
+            required
+            id="propertyId"
+            name="propertyId"
+            label="Property ID"
+            value={formik.values.propertyId}
+            onChange={formik.handleChange}
+            error={formik.touched.propertyId && Boolean(formik.errors.propertyId)}
+            helperText={formik.touched.propertyId && formik.errors.propertyId}
+          />
 
           </Grid>
           {/* <Grid item sm={12} xs={12} md={6} lg={6}>
@@ -626,25 +585,32 @@ console.log(validateForm())
                         />
                     </Grid> */}
           <Grid item sm={12} xs={12} md={6} lg={6}>
-          <TextField
+            {/* <TextField
               margin="normal"
               fullWidth
               required
               id="ownerCNIC"
               name="ownerCNIC"
-              label="Seller CNIC"
+              label="CNIC of Owner"
               type="number"
-              value={formData.ownerCNIC}
-              onChange={handleChange}
               inputProps={{ min: 0 }}
-              error={Boolean(formErrors.ownerCNIC)}
-              helperText={formErrors.ownerCNIC}
+            /> */}
+            <TextField
+              fullWidth
+              required
+              id="ownerCNIC"
+              name="ownerCNIC"
+              label="Seller Cnic"
+              value={formik.values.ownerCNIC}
+              onChange={formik.handleChange}
+              error={formik.touched.ownerCNIC && Boolean(formik.errors.ownerCNIC)}
+              helperText={formik.touched.ownerCNIC && formik.errors.ownerCNIC}
             />
           </Grid>
 
 
           <Grid item sm={12} xs={12} md={6} lg={6}>
-            <TextField
+            {/* <TextField
               margin="normal"
               fullWidth
               required
@@ -653,26 +619,45 @@ console.log(validateForm())
               label="Ammount of Shares"
               type="number"
               inputProps={{ min: 0 }}
+            /> */}
+            <TextField
+              fullWidth
+              required
+              id="sharesAmount"
+              name="sharesAmount"
+              label="Shares Amount"
+              value={formik.values.sharesAmount}
+              onChange={formik.handleChange}
+              error={formik.touched.sharesAmount && Boolean(formik.errors.sharesAmount)}
+              helperText={formik.touched.sharesAmount && formik.errors.sharesAmount}
             />
           </Grid>
           <Grid item sm={12} xs={12} md={6} lg={6}>
-          <TextField
+            {/* <TextField
               margin="normal"
               fullWidth
               required
               id="priceOfShare"
               name="priceOfShare"
-              label="Price"
+              label="Price of One Share"
               type="number"
-              value={formData.priceOfShare}
-              onChange={handleChange}
               inputProps={{ min: 0 }}
-              error={Boolean(formErrors.priceOfShare)}
-              helperText={formErrors.priceOfShare}
+            /> */}
+            <TextField
+              fullWidth
+              required
+              id="priceOfShare"
+              name="priceOfShare"
+              label="price"
+              value={formik.values.priceOfShare}
+              onChange={formik.handleChange}
+              error={formik.touched.priceOfShare && Boolean(formik.errors.priceOfShare)}
+              helperText={formik.touched.priceOfShare && formik.errors.priceOfShare}
             />
+            
           </Grid>
           <Grid item sm={12} xs={12} md={6} lg={6}>
-          <TextField
+            {/* <TextField
               margin="normal"
               fullWidth
               required
@@ -680,12 +665,20 @@ console.log(validateForm())
               name="buyerCNIC"
               label="Buyer CNIC"
               type="number"
-              value={formData.buyerCNIC}
-              onChange={handleChange}
               inputProps={{ min: 0 }}
-              error={Boolean(formErrors.buyerCNIC)}
-              helperText={formErrors.buyerCNIC}
+            /> */}
+            <TextField
+              fullWidth
+              required
+              id="buyerCNIC"
+              name="buyerCNIC"
+              label="Buyer CNIC"
+              value={formik.values.buyerCNIC}
+              onChange={formik.handleChange}
+              error={formik.touched.buyerCNIC && Boolean(formik.errors.buyerCNIC)}
+              helperText={formik.touched.buyerCNIC && formik.errors.buyerCNIC}
             />
+            
           </Grid>
           <Grid item sm={12} xs={12} md={12} lg={12}>
             <FormControlLabel
@@ -703,8 +696,9 @@ console.log(validateForm())
         </Grid>
         <Box textAlign="center">
           <Button
-            type="submit"
+          type="submit"
             variant="contained"
+            
             sx={{ mt: 3, mb: 2, px: 5, backgroundColor: "#F3E5AB", color: "black" }}
           >
             Submit
@@ -713,6 +707,9 @@ console.log(validateForm())
         {alert.status ? <Alert severity={alert.type} sx={{ mt: 3 }}>{alert.msg}</Alert> : ''}
 
         {etherScanAlert.status ? <><Alert severity={etherScanAlert.type} sx={{ mt: 3 }}>{etherScanAlert.msg}<a href={etherScanAlert.url} target="_blank" > Click Me</a> </Alert>  </> : ''}
+
+
+
       </Box>
     </Box>
   )

@@ -23,6 +23,8 @@ import nodeProviderUrl, { getAllDistricURL, getAllProvienceURL, getAreaNameURL, 
 import { landInspectorContractAddress } from "../../dataVariables";
 
 
+
+
 const AddPropertyForm = () => {
 
 

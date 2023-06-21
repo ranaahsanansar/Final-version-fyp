@@ -1,3 +1,4 @@
+
 import {
     Alert,
     Box,
@@ -27,6 +28,67 @@ import { getAllDistricURL, getAllProvienceURL, getAreaNameURL, getAreaURL, getCo
 import { useEffect } from "react";
 
 const YourPropertiesDetails = () => {
+
+    const [formData, setFormData] = useState({
+        propertyId: "",
+        ownerCNIC: "",
+      });
+    
+      const [formErrors, setFormErrors] = useState({
+        propertyId: "",
+        ownerCNIC: "",
+      });
+
+      const validateForm = () => {
+        let valid = true;
+        const errors = {};
+    
+        if (formData.propertyId == "" ) {
+          errors.propertyId = "Property ID is required";
+          valid = false;
+        }else if( formData.propertyId < 1){
+          errors.propertyId = "ID must not be less then 1";
+          valid = false;
+        }
+
+        let checkValidID = formData.propertyId.toString();
+        if(checkValidID.length != 12){
+            errors.propertyId = "ID must be valid 12 digits Uniqe Identification number";
+          valid = false;
+        }
+    
+        if (formData.ownerCNIC == "" ) {
+          errors.ownerCNIC = "Owner CNIC is required";
+          valid = false;
+        }else if (formData.ownerCNIC < 1){
+          errors.ownerCNIC = "Value must not be less then 1";
+          valid = false;
+        }
+
+        let checkValidCnic = formData.ownerCNIC.toString();
+        if(checkValidCnic.length != 13 ){
+            errors.ownerCNIC = "Cnicn Must be Valid";
+          valid = false;
+        }
+    
+        // if (!formData.agree) {
+        //   errors.agree = "You must agree to the terms and conditions";
+        //   valid = false;
+        // }
+    
+        setFormErrors(errors);
+    
+        return valid;
+      };
+      const handleChange = (e) => {
+        const { name, value, type, checked } = e.target;
+    
+        setFormData((prevFormData) => ({
+          ...prevFormData,
+          [name]: type === "checkbox" ? checked : value
+        }));
+      };
+    
 
     const [areaOptions, setAreaOptions] = useState([])
     const [provinceOptions, setPropvinceOptions] = useState([]);
@@ -67,32 +129,16 @@ const YourPropertiesDetails = () => {
     const [remainig, setRemaining] = useState(80)
     const [flagChart, setFlagChart] = useState(true)
 
-    // const handleChangeProvience = (event) => {
-    //     setProvince(event.target.value);
-    // };
-    // const handleChangeDistric = (event) => {
-    //     setDistric(event.target.value);
-    // };
-    // const handleChangeSociety = (event) => {
-    //     setSociety(event.target.value);
-    // };
-    // const handleChangeBlock = (event) => {
-    //     setBlock(event.target.value);
-    //     // setLockContractAddress(ownerShipAddress);
-    //     setContractAddress('0x70fefc19b5B632996377904f1Ba21897a3d7F0f3')
-    // };
+
 
     const handleChangeProvience = (event) => {
         setProvince(event.target.value);
 
         const fetchData = async () => {
             let url = getAllDistricURL + event.target.value;
-            // console.log("URL")
-            // console.log(url)
-            const data = await fetch(url);
-            // console.log("Data")
-            // console.log(data);
 
+            const data = await fetch(url);
+         
 
             const json = await data.json();
             setDistricOptions(json)
@@ -107,11 +153,9 @@ const YourPropertiesDetails = () => {
 
         const fetchData = async () => {
             let url = getSocietyURL + event.target.value;
-            // console.log("URL")
-            // console.log(url)
+          
             const data = await fetch(url);
-            // console.log("Data")
-            // console.log(data);
+            
 
 
             const json = await data.json();
@@ -124,11 +168,7 @@ const YourPropertiesDetails = () => {
         setSociety(event.target.value);
         const fetchData = async () => {
             let url = getAreaURL + event.target.value;
-            // console.log("URL")
-            // console.log(url)
             const data = await fetch(url);
-            // console.log("Data")
-            // console.log(data);
 
 
             const json = await data.json();
@@ -141,43 +181,27 @@ const YourPropertiesDetails = () => {
         setBlock(event.target.value);
         const fetchData = async () => {
             let url = getAreaNameURL + event.target.value;
-            // console.log("URL")
-            // console.log(url)
+            
             const data = await fetch(url);
             const json = await data.json();
-            // console.log("Data")
-            // console.log(json.name);
+       
             let _name = json.name;
-            // console.log(_name)
             setAreaName(_name)
-            // console.log("Area Name: ");
-            // console.log(areaName)
         }
         fetchData();
 
         const fetchContracts = async () => {
             let url = getContractURL + event.target.value;
-            // console.log("URL")
-            // console.log(url)
             const data = await fetch(url);
 
             const json = await data.json();
-            // console.log("Data")
-            // console.log(json.name);
             let _landInspector = json[0].areaContract
             console.log("Land")
             console.log(_landInspector)
             setContractAddress(_landInspector);
-            // setAreaName(_name)
-            // console.log("Area Name: ");
-            // console.log(areaName)
         }
         fetchContracts();
 
-
-        // setAreaName(event.target.value);
-
-        // setLockContractAddress(landInspectorContractAddress);
 
     };
 
@@ -211,6 +235,10 @@ const YourPropertiesDetails = () => {
         setFlagNewProTable(false)
         setFlagChart(false)
 
+        if(validateForm() != true ){
+            return
+        }
+
         const actualData = {
             id: propertyId,
             cnic: cnic
@@ -242,10 +270,7 @@ const YourPropertiesDetails = () => {
         dataResult.map((item) => {
             let hexaId = item.args[0]
             console.log(hexaId.toString())
-            // let id = hexaId.toString()
-            // console.log(id)
             let hexaCnic = item.args[1]
-            // let cnic = hexaCnic.toString()
             let hexaShares = item.args[2]
             let remaining = parseInt(hexaShares.toString()) - 100;
             console.log("Shares")
@@ -259,8 +284,6 @@ const YourPropertiesDetails = () => {
             }
             
             setRemaining(remaining)
-            // let shares = hexaShares.toString( )
-            // console.log(createNewPropertyData(hexaId.toString(), hexaCnic.toString(), hexaShares.toString()))
 
             newPropertyTableRows.push(createNewPropertyData(hexaId.toString(), hexaCnic.toString(), hexaShares.toString()))
         })
@@ -274,27 +297,12 @@ const YourPropertiesDetails = () => {
         setFlagReqTable(false);
 
         const filterReq = getContractData.filters.TransactionRequestLogs(null, actualData.cnic, null)
-        // console.log("Yaha sy ");
-
-        // console.log( actualData.cnic);
 
         const reqResult = await getContractData.queryFilter(filterReq);
 console.log("yo yo yo ")
         console.log(reqResult);
-        // console.log(contractAddress)
-
-
 
         reqTableRows.splice(0, reqTableRows.length);
-
-        // console.log("Yaha Sy ")
-        // console.log(reqTableRows)
-
-
-
-        // console.log("Yaha sy ");
-
-        // console.log(reqResult);
 
         reqResult.map((item) => {
             let id = item.args[0].toString();
@@ -496,7 +504,7 @@ console.log("yo yo yo ")
                     </Grid>
 
                     <Grid item sm={12} xs={12} md={6} lg={6}>
-                        <TextField
+                        {/* <TextField
                             margin="normal"
                             fullWidth
                             required
@@ -505,10 +513,24 @@ console.log("yo yo yo ")
                             label="Property ID"
                             type="number"
                             onChange={hadnleChangeId}
-                        />
+                        /> */}
+                        <TextField
+              margin="normal"
+              fullWidth
+              required
+              id="propertyId"
+              name="propertyId"
+              label="Property ID"
+              type="number"
+              value={formData.propertyId}
+              onChange={handleChange}
+              inputProps={{ min: 0 }}
+              error={Boolean(formErrors.propertyId)}
+              helperText={formErrors.propertyId}
+            />
                     </Grid>
                     <Grid item sm={12} xs={12} md={6} lg={6}>
-                        <TextField
+                        {/* <TextField
                             margin="normal"
                             fullWidth
                             required
@@ -517,7 +539,21 @@ console.log("yo yo yo ")
                             label="CNIC of Owner"
                             type="number"
                             onChange={handleCnicChange}
-                        />
+                        /> */}
+                        <TextField
+              margin="normal"
+              fullWidth
+              required
+              id="ownerCNIC"
+              name="ownerCNIC"
+              label="Seller CNIC"
+              type="number"
+              value={formData.ownerCNIC}
+              onChange={handleChange}
+              inputProps={{ min: 0 }}
+              error={Boolean(formErrors.ownerCNIC)}
+              helperText={formErrors.ownerCNIC}
+            />
                     </Grid>
 
                 </Grid>
@@ -569,3 +605,4 @@ console.log("yo yo yo ")
 }
 
 export default YourPropertiesDetails
+

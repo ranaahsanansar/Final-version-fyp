@@ -1,6 +1,6 @@
 import PropertyModel from "../models/Property.js";
 import fs from "fs";
-import path  from "path";
+import path from "path";
 
 class PropertyController {
   static listNewProperty = async (req, res) => {
@@ -14,6 +14,7 @@ class PropertyController {
       locationHead,
       locationDetails,
       city,
+      shares
     } = req.body;
     const propertyImagesArray = req.files["propertyImage"];
     // console.log(propertyImagesArray)
@@ -24,11 +25,11 @@ class PropertyController {
     // console.log(imagesArray)
     if (
       (title && description && priceCoin,
-      priceDes,
-      propertyType,
-      locationHead,
-      locationDetails,
-      city)
+        priceDes,
+        propertyType,
+        locationHead,
+        locationDetails,
+        city)
     ) {
       try {
         const doc = new PropertyModel({
@@ -45,6 +46,7 @@ class PropertyController {
           },
           city: city,
           photos: imagesArray,
+          shares: shares
         });
 
         console.log(doc)
@@ -116,7 +118,7 @@ class PropertyController {
           const property = await PropertyModel.findByIdAndDelete(id);
           // console.log(property);
           if (property) {
-            
+
             res.send({
               status: "success",
               message: "Property Listed for sale",
@@ -141,19 +143,105 @@ class PropertyController {
   };
 
   static getPropertiesOfUser = async (req, res) => {
-    const properties = await PropertyModel.find({ownerId: req.user._id})
+    const properties = await PropertyModel.find({ ownerId: req.user._id })
     // console.log(properties)
 
     res.status(201).send({
       status: "success",
       message: "Properties are Showen",
-      propertiesArray : properties,
+      propertiesArray: properties,
       path: "public/upload/propertyImage"
     });
 
   }
 
+  static getAllListedProperty = async (req, res) => {
+    try {
+      const properties = await PropertyModel.find();
+      console.log(properties)
+
+      res.status(200).send({
+        status: "success",
+        propertiesArray: properties,
+      })
+    } catch (err) {
+
+      res.status(200).send({
+        status: 'error',
+        message: "Error in DB",
+        error: err
+      })
+    }
+
+
+  }
+
+  static getFilterProperty = async (req, res) => {
+    try {
+      const { cityParam, type } = req.params;
+      console.log(type)
+      console.log(cityParam)
+      if (type == "none" && cityParam != "none") {
+        console.log("1")
+        const properties = await PropertyModel.find({
+          city: cityParam
+        });
+        console.log(properties)
+        res.status(200).send({
+          status: "success",
+          propertiesArray: properties,
+        })
+      } else if (cityParam == "none" && type != "none") {
+        console.log("2")
+        const properties = await PropertyModel.find({
+          propertyType: type
+        });
+        console.log(properties)
+        res.status(200).send({
+          status: "success",
+          propertiesArray: properties,
+        })
+      } else if (cityParam != "none" && type != "none"){
+        const properties = await PropertyModel.find({
+          city: cityParam,
+          propertyType: type
+        });
+        console.log(properties)
+        console.log("3")
+
+        res.status(200).send({
+          status: "success",
+          propertiesArray: properties,
+        })
+      }else {
+        const properties = await PropertyModel.find();
+        console.log(properties)
+        console.log("4")
+
+        res.status(200).send({
+          status: "success",
+          propertiesArray: properties,
+        })
+      }
+      // const properties = await PropertyModel.find({
+      //   city: cityParam , 
+      //   propertyType: type
+      // });
+
+      // console.log(properties)
+
+      // res.status(200).send({
+      //   status: "success",
+      //   propertiesArray: properties,
+      // })
+    } catch (err) {
+      res.status(200).send({
+        status: 'error',
+        message: "Error in DB",
+        error: err
+      })
+    }
+  }
 
 }
-
 export default PropertyController;

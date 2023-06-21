@@ -16,8 +16,10 @@ import React from "react";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import { NavLink } from "react-router-dom";
+import { path } from "../dataVariables";
 
 const PropertyCardFilter = ({ data }) => {
+  // console.log(data)
   const gradiantText = {
     backgroundcolor: "primary",
     backgroundImage: `linear-gradient(to left, #5514B4, #9d149d)`,
@@ -39,7 +41,8 @@ const PropertyCardFilter = ({ data }) => {
       <Box display="flex">
         <Box width={{ xs: '40%' , sm:'40%' , md:'30%' , lg: '30%' }} height="inherit" display="flex">
           <img
-            src={data.img}
+            src={path+data.photos[0]}
+            // src={data.img}
             // style={{ objectFit: "cover" , backgroundSize: 'cover' }}
             width="100%"
             height="100%"
@@ -69,7 +72,7 @@ const PropertyCardFilter = ({ data }) => {
                 WebkitLineClamp: 1, color: '#060606' } ] }
                   ml={1}
                 >
-                  RS.{data.prize}
+                  RS.{data.price}
                 </Typography>
               </Box>
             </Box>
@@ -78,7 +81,7 @@ const PropertyCardFilter = ({ data }) => {
               <Typography fontSize="small" sx={{display: "-webkit-box",
                 overflow: "hidden",
                 WebkitBoxOrient: "vertical",
-                WebkitLineClamp: 1} } >{data.loc}</Typography>
+                WebkitLineClamp: 1} } >{data.location.head}</Typography>
             </Box>
             <Typography
               sx={{
@@ -88,13 +91,13 @@ const PropertyCardFilter = ({ data }) => {
                 WebkitLineClamp: 2,
               }}
             >
-              {data.body}
+              {data.description}
             </Typography>
-            <NavLink  to='/details' style={{ textDecoration: 'none' }} >
+            <NavLink  to={`/details/${data._id}`} style={{ textDecoration: 'none' }} >
               <Button
               sx={{backgroundColor: '#F3E5AB'}}
             >
-              <Typography color="black" fontWeight="bold">
+              <Typography  color="black" fontWeight="bold">
                 Check Details
               </Typography>
             </Button>

@@ -10,7 +10,7 @@ import {
   RadioGroup,
   Select,
   Typography,
-  Container,Stack
+  Container, Stack
 } from "@mui/material";
 import { Box } from "@mui/system";
 import React from "react";
@@ -18,18 +18,61 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import PropertyCardFilter from "../components/PropertyCardFilter";
 import { cardData } from "../data";
+import { useState } from "react";
+import { useEffect } from "react";
+import axios from "axios";
+import { citites } from "../cities";
 
 
 const Filter = () => {
+
+  const [list, setList] = useState([]);
+
+  const fetchProperties = async (req, res) => {
+    const url = "http://localhost:8000/api/dashboard/property/allProperties";
+
+    const exiosResponse = await axios.get(url);
+    // console.log(exiosResponse.data.propertiesArray)
+    setList(exiosResponse.data.propertiesArray)
+  }
+
+  useEffect(() => {
+    fetchProperties();
+  }, [])
+
+
   const [sequence, setSequence] = React.useState("random");
   const handleSequenceChange = (event) => {
     setSequence(event.target.value);
   };
+  const [city, setCity] = useState("none")
+  const handleChangeCity = (event) => {
+    setCity(event.target.value)
+  }
 
-  const [propertyType, setPropertyType] = React.useState("");
+  const [propertyType, setPropertyType] = React.useState("none");
   const hadnlePropertyTypeChange = (event) => {
     setPropertyType(event.target.value);
   };
+
+  const handleFilterApply = async (req, res) => {
+    // console.log("Type" + propertyType)
+    const url = `http://localhost:8000/api/dashboard/property/filterProperty/${city}/${propertyType}`;
+    console.log("URL" + url)
+    try {
+      const exiosResponse = await axios.get(url);
+      setList(exiosResponse.data.propertiesArray)
+      // console.log("Response")
+      console.log(exiosResponse)
+    } catch (err) {
+      console.log('Can not fetch ');
+    }
+
+
+    // console.log(exiosResponse.data.propertiesArray)
+
+  }
+
   const gradiantText = {
     backgroundcolor: "primary",
     backgroundImage: `linear-gradient(to left, #5514B4, #9d149d)`,
@@ -47,6 +90,10 @@ const Filter = () => {
     border: "1px solid rgba(255, 255, 255, 0.3)",
   };
 
+  const handleClear = () => {
+    setCity("none")
+    setPropertyType("none")
+  }
 
 
   return (
@@ -54,35 +101,35 @@ const Filter = () => {
       <Container>
         <Box mb={2} >
           <Box marginY={4}>
-          <Typography sx={{color: '#060606'}} variant="h5" fontWeight="bold">
-            Discover Properties
-          </Typography>
-        </Box>
+            <Typography sx={{ color: '#060606' }} variant="h5" fontWeight="bold">
+              Discover Properties
+            </Typography>
+          </Box>
 
-        <Box >
-          <Grid
-            container
-            spacing={2}
-            direction={{
-              xs: "column-reverse",
-              sm: "row",
-              md: "row",
-              lg: "row",
-            }}
-          >
-            {/* Left Grid  */}
-            <Grid item xs={12} sm={8} md={8} lg={8}>
-              <Box pt={1}>
+          <Box >
+            <Grid
+              container
+              spacing={2}
+              direction={{
+                xs: "column-reverse",
+                sm: "row",
+                md: "row",
+                lg: "row",
+              }}
+            >
+              {/* Left Grid  */}
+              <Grid item xs={12} sm={8} md={8} lg={8}>
+                <Box pt={1}>
 
 
-                <Box
-                  display="flex"
-                  mb={2}
-                  alignItems="center"
-                  justifyContent="space-between"
-                >
-                  <Typography>Showing all Properties</Typography>
-                  <FormControl>
+                  <Box
+                    display="flex"
+                    mb={2}
+                    alignItems="center"
+                    justifyContent="space-between"
+                  >
+                    <Typography>Showing all Properties</Typography>
+                    {/* <FormControl>
                     <InputLabel id="sortLable">Sort</InputLabel>
                     <Select
                       labelId="sorting"
@@ -95,28 +142,28 @@ const Filter = () => {
                       <MenuItem value="high-low">High to low</MenuItem>
                       <MenuItem value="random">Random</MenuItem>
                     </Select>
-                  </FormControl>
+                  </FormControl> */}
+                  </Box>
+
+                  <Box height='90%'  >
+                    <Stack spacing={2} >
+                      {/* {cardData.map( (item) => <PropertyCardFilter data={item} /> )} */}
+                      {list.map((item) => <PropertyCardFilter data={item} />)}
+                    </Stack>
+                  </Box>
+
                 </Box>
+              </Grid>
 
-                <Box height='90%'  >
-                <Stack spacing={2} >
-                    {cardData.map( (item) => <PropertyCardFilter data={item} /> )}
-                </Stack>
-                </Box>
+              {/* Right Grid  */}
+              <Grid item xs={12} sm={4} md={4} lg={4}>
+                <Box
+                  sx={{ background: "rgba(190, 186, 186, 0.256)" }}
+                  padding={2}
+                  borderRadius="10px"
+                >
+                  <Stack>
 
-
-              </Box>
-            </Grid>
-
-            {/* Right Grid  */}
-            <Grid item xs={12} sm={4} md={4} lg={4}>
-              <Box
-                sx={{ background: "rgba(190, 186, 186, 0.256)" }}
-                padding={2}
-                borderRadius="10px"
-              >
-                <Stack>
-                  
                     <Box mb={2}>
                       <FormLabel id="demo-controlled-radio-buttons-group">
                         Property Type
@@ -125,7 +172,14 @@ const Filter = () => {
                         aria-labelledby="demo-controlled-radio-buttons-group"
                         name="controlled-radio-buttons-group"
                         onChange={hadnlePropertyTypeChange}
+                        value={propertyType}
                       >
+                         <FormControlLabel
+                          value="none"
+                          control={<Radio />}
+                          label="none"
+                          sx={{ display: 'none' }}
+                        />
                         <FormControlLabel
                           value="apartment"
                           control={<Radio />}
@@ -137,37 +191,41 @@ const Filter = () => {
                           label="House"
                         />
                         <FormControlLabel
-                          value="Plot"
+                          value="plot"
                           control={<Radio />}
-                          label="plot"
+                          label="Plot"
                         />
                       </RadioGroup>
-                      
-                    </Box>
-                  <Box mb={2}>
-                    {/* <Typography>City</Typography> */}
-                    {/* Options */}
-                    
-                    <FormControl  >
-                      <InputLabel id="sortLable">City</InputLabel>
-                      <Select
-                      labelId="sorting"
-                      id="sortInput"
-                      value={sequence}
-                      label="City"
-                      onChange={handleSequenceChange}
-                    >
-                      <MenuItem value="low-high">Lahore</MenuItem>
-                      <MenuItem value="high-low">Islamabad</MenuItem>
-                      <MenuItem value="random">Karachi</MenuItem>
-                    </Select>
-                    </FormControl>
-                    
-                  </Box>
 
-                  <Box mb={2}>
-                    {/* <Typography>Area</Typography> */}
-                    {/* Options */}
+                    </Box>
+                    <Box mb={2}>
+                      {/* <Typography>City</Typography> */}
+                      {/* Options */}
+
+                      <FormControl  >
+                        <InputLabel id="sortLable">City</InputLabel>
+                        <Select
+                          labelId="sorting"
+                          id="sortInput"
+                          value={city}
+                          label="City"
+                          onChange={handleChangeCity}
+                        >
+                          <MenuItem value="none">None</MenuItem>
+                          {/* <MenuItem value="high-low">Islamabad</MenuItem>
+                      <MenuItem value="random">Karachi</MenuItem> */}
+                          {
+                            citites.map((item) => {
+                              return <MenuItem value={item.name}>{item.name}</MenuItem>
+                            })
+                          }
+                        </Select>
+                      </FormControl>
+
+                    </Box>
+
+                    {/* <Box mb={2}>
+                    
                     <FormControl>
                       <InputLabel id="sortLable">Area</InputLabel>
                     <Select
@@ -183,23 +241,23 @@ const Filter = () => {
                     </Select>
                     </FormControl>
                     
-                  </Box>
-                  <Box display='flex' justifyContent='space-between' >
-                      <Button fontSize='small' sx={{color : '#060606'}} >Clear All</Button>
+                  </Box> */}
+                    <Box display='flex' justifyContent='space-between' >
+                      <Button fontSize='small' sx={{ color: '#060606' }} onClick={handleClear}  >Clear All</Button>
                       <Button sx={{
-                      backgroundColor: '#F3E5AB'
-                    }} > <Typography color='black' fontWeight='bold' fontSize='small' >Apply</Typography> </Button>
+                        backgroundColor: '#F3E5AB'
+                      }} > <Typography color='black' fontWeight='bold' fontSize='small' onClick={handleFilterApply} >Apply</Typography> </Button>
 
-                      </Box>
-                  
+                    </Box>
 
-                </Stack>
-              </Box>
+
+                  </Stack>
+                </Box>
+              </Grid>
             </Grid>
-          </Grid>
+          </Box>
         </Box>
-        </Box>
-        
+
       </Container>
     </>
   );

@@ -5,6 +5,8 @@ import AddProperty from "./AddProperty";
 import { useSelector } from "react-redux";
 import axios from "axios";
 
+import { citites } from "../cities";
+
 // const data = [{
 //   title: "2 Marla House, Garden Town",
 //   image: 'https://images.pexels.com/photos/323780/pexels-photo-323780.jpeg?auto=compress&cs=tinysrgb&w=600',

@@ -29,8 +29,8 @@ const propertySchema = new mongoose.Schema({
 
   priceDes: {
     type: String,
-    required: true,
     trim: true,
+    default: "Pirce is negotiable"
   },
 
   propertyType: {
@@ -50,6 +50,10 @@ const propertySchema = new mongoose.Schema({
   photos: {
     type: [String],
   },
+  shares: {
+    type: Number,
+    default: 100
+  }
 });
 const PropertyModel = mongoose.model("Property", propertySchema);
 

@@ -166,19 +166,33 @@ const PropertiesDetails = () => {
     const fetchdetails = property.data.details
 
 
-    const compeletData = {
-      title: "Apartment Complex",
-      locationTitle: "4th floor Gulberg Plaza",
-      descriptio: "Located a 5-minute walk from Al rehman garden gate 2, Tower Street Apartments has accommodations with air conditioning and free WiFi. The units come with hardwood floors and feature a fully equipped kitchenette with a microwave, a flat-screen TV, and a private bathroom with shower and a hairdryer. A fridge is also offered, as well as an electric tea pot and a coffee machine. Popular points of interest near the apartment include Cloth Hall, Main Market Square and Town Hall Tower. The nearest airport is John Paul II International Kraków–Balice, 16.1 km from Tower Street Apartments, and the property offers a paid airport shuttle service.",
-      price: "20,000",
-      minitDescription: "Property is already approved and listed on blockchain. Per sheare price is 20,000. Price is negotiable.",
-      locationBold: "293 4th Floor, Gulberg Plaza,Lahore Pakistan",
-      locationBody: "House no.2, Street no. 12, New garden town near Himayat-e-Islam Collage, band road, Lahore.",
-      selleName: "Rana Ahsan Ansar",
-      sellerEmail: "asn.cs21@gmail.com",
-      sharesForSale: 20,
-      sellerPhone: "03091045145"
-  }
+  //   const compeletData = {
+  //     title: "Apartment Complex",
+  //     locationTitle: "4th floor Gulberg Plaza",
+  //     des: "Located a 5-minute walk from Al rehman garden gate 2, Tower Street Apartments has accommodations with air conditioning and free WiFi. The units come with hardwood floors and feature a fully equipped kitchenette with a microwave, a flat-screen TV, and a private bathroom with shower and a hairdryer. A fridge is also offered, as well as an electric tea pot and a coffee machine. Popular points of interest near the apartment include Cloth Hall, Main Market Square and Town Hall Tower. The nearest airport is John Paul II International Kraków–Balice, 16.1 km from Tower Street Apartments, and the property offers a paid airport shuttle service.",
+  //     price: "20,000",
+  //     minitDescription: "Property is already approved and listed on blockchain. Per sheare price is 20,000. Price is negotiable.",
+  //     locationBold: "293 4th Floor, Gulberg Plaza,Lahore Pakistan",
+  //     locationBody: "House no.2, Street no. 12, New garden town near Himayat-e-Islam Collage, band road, Lahore.",
+  //     selleName: "Rana Ahsan Ansar",
+  //     sellerEmail: "asn.cs21@gmail.com",
+  //     sharesForSale: 20,
+  //     sellerPhone: "03091045145"
+  // }
+
+  const compeletData = {
+    title: fetchdetails.title,
+    locationTitle: fetchdetails.location.head,
+    des: fetchdetails.description,
+    price: fetchdetails.price,
+    minitDescription: fetchdetails.priceDes,
+    locationBold: fetchdetails.location.head,
+    locationBody: fetchdetails.location.details,
+    selleName: fetchdetails.ownerId.name,
+    sellerEmail: fetchdetails.ownerId.email,
+    sharesForSale: fetchdetails.shares,
+    sellerPhone: "03091045145"
+}
 
     const imagesArray = []
 
@@ -204,15 +218,18 @@ const PropertiesDetails = () => {
 
     setImagesData(imagesArray);
 
+ 
 
     setPropertyDetils(compeletData)
+//     console.log(fetchdetails.des)
+// console.log(compeletData.des)
 
   }
 
   useEffect(async () => {
     await fetchProperty(idState)
     // console.log(propertyDetails)
-    console.log(imagesData)
+    // console.log(imagesData)
   }, [])
   return (
     <>
@@ -334,8 +351,12 @@ const PropertiesDetails = () => {
                   <Typography sx={gradiantText} variant="h6" fontWeight="bold">
                     Description
                   </Typography>
-                  <Typography>
-                    {propertyDetails.description}
+                  <Typography color='black' >
+                    {
+                     propertyDetails.des
+                      // return propertyDetails.description
+                    }
+                    
                   </Typography>
                 </Box>
               </Stack>
@@ -354,7 +375,7 @@ const PropertiesDetails = () => {
                     <Box display="flex" alignItems="center">
                       <MonetizationOnRoundedIcon />
                       <Typography fontWeight="bold" mr={1} variant="h6">
-                        20,000
+                        {propertyDetails.price}
                       </Typography>
                       {/* <span
                         style={{

@@ -1,261 +1,151 @@
-import citizenContract from "../artifacts/contracts/Citizens.sol/Citizens.json";
-import { ethers } from "ethers";
+import { TextField, FormControlLabel, Checkbox, Button, Box, Alert } from '@mui/material';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useRegisterUserMutation } from '../../services/userAuthApi';
+import { storeToken } from '../../services/LocalStorageService';
 
-import nodeProviderUrl from "../dataVariables";
+const Registration = () => {
+  const [error, setError] = useState({
+    status: false,
+    msg: "",
+    type: ""
+  });
+  const navigate = useNavigate();
+  const [registerUser, { isLoading }] = useRegisterUserMutation();
 
-const [etherScanAlert, setEtherScanAlert] = useState({
-  status: false,
-  msg: "",
-  url: "",
-  type: ""
-});
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const data = new FormData(e.currentTarget);
+    const actualData = {
+      name: data.get('name'),
+      email: data.get('email'),
+      password: data.get('password'),
+      password_confirmation: data.get('password_confirmation'),
+      tc: data.get('tc'),
+    };
 
-const [lockContractAddress, setLockContractAddress] = useState("");
-{
-
-  const { ethereum } = window;
-
-  let contractAddress = lockContractAddress;
-
-
-  const nodeProvider = new ethers.providers.JsonRpcProvider(
-    nodeProviderUrl
-  )
-  const getContractData = new ethers.Contract(
-    contractAddress,
-    govAuthorityContract.abi,
-    nodeProvider
-  )
-
-  const walletProvider = new ethers.providers.Web3Provider(
-    ethereum
-  )
-
-  const signer = walletProvider.getSigner();
-
-  const sendTx = new ethers.Contract(
-    contractAddress,
-    govAuthorityContract.abi,
-    signer
-  )
-  console.log("Ok ha")
-
-  const dataResult = await sendTx.rejectCitizen(applicantCnic, "only", { gasLimit: 5000000 });
-
-  let txHash = dataResult.hash
-  let scanUrl = "https://sepolia.etherscan.io/tx/" + txHash;
-
-
-
-  setEtherScanAlert(
-    {
-      status: true,
-      msg: "View Transaction on EtherScan",
-      url: scanUrl,
-      type: "success"
+    if (actualData.name.trim() === "") {
+      setError({ status: true, msg: "Name is required", type: 'error' });
+      return;
     }
-  )
 
-  await dataResult.wait();
-
-  console.log(dataResult)
-}
-
-{ etherScanAlert.status ? <><Alert severity={etherScanAlert.type} sx={{ mt: 3 }}>{etherScanAlert.msg}<a href={etherScanAlert.url} target="_blank" > Click Me</a> </Alert>  </> : '' }
-
-useEffect(() => {
-
-  if (etherScanAlert.status === true) {
-    setTimeout(() => {
-      setEtherScanAlert({
-        status: false,
-        msg: "",
-        url: "",
-        type: ""
-      })
-    }, 60000)
-  }
-
-
-
-  
-})
-// =====================================================================================================
-
-import { getAllProvienceURL } from "../../dataVariables";
-
-
-
-
-const [provinceOptions, setPropvinceOptions] = useState([])
-
-useEffect(() => {
-
-  // provinceOptions.push({id: "2" , name: "Ahsan"})
-  const fetchData = async () => {
-
-    const data = await fetch(getAllProvienceURL);
-
-    const json = await data.json();
-    setPropvinceOptions(json)
-  }
-  fetchData()
-  // console.log(array);
-  // setPropvinceOptions(array)
-
-
-}, [])
-
-{
-  provinceOptions.map((e) => {
-
-    return (<MenuItem value={e._id}>{e.name}</MenuItem>)
-
-  })
-}
-
-
-// ====================================================
-
-const [districOptions, setDistricOptions] = useState([])
-
-
-
-// handle CHange PRovince 
-const fetchData = async () => {
-  let url = getAllDistricURL + event.target.value;
-  console.log("URL")
-  console.log(url)
-  const data = await fetch(url);
-  console.log("Data")
-  console.log(data);
-
-
-  const json = await data.json();
-  setDistricOptions(json)
-}
-fetchData();
-
-
-
-{
-  districOptions.map((e) => {
-
-    return (<MenuItem value={e._id}>{e.name}</MenuItem>)
-
-  })
-}
-
-
-
-// ==============================================
-
-const [societyOtpions, setSocietyOptions] = useState([])
-
-
-const handleChangeDistric = (event) => {
-
-  setDistric(event.target.value);
-
-  const fetchData = async () => {
-    let url = getSocietyURL + event.target.value;
-    // console.log("URL")
-    // console.log(url)
-    const data = await fetch(url);
-    // console.log("Data")
-    // console.log(data);
-
-
-    const json = await data.json();
-    setSocietyOptions(json)
-  }
-  fetchData();
-};
-
-
-{
-  societyOtpions.map((e) => {
-
-    return (<MenuItem value={e._id}>{e.name}</MenuItem>)
-
-  })
-}
-
-// ===================================================
-
-const [areaOptions, setAreaOptions] = useState([])
-
-
-  const handleChangeSociety = (event) => {
-    setSociety(event.target.value);
-    const fetchData = async () => {
-      let url = getAreaURL + event.target.value;
-      // console.log("URL")
-      // console.log(url)
-      const data = await fetch(url);
-      // console.log("Data")
-      // console.log(data);
-
-
-      const json = await data.json();
-      setAreaOptions(json)
+    if (!/^[a-zA-Z\s]+$/.test(actualData.name)) {
+      setError({ status: true, msg: "Invalid name format. Only letters and spaces are allowed.", type: 'error' });
+      return;
     }
-    fetchData();
+
+    if (actualData.email.trim() === "") {
+      setError({ status: true, msg: "Email is required", type: 'error' });
+      return;
+    }
+
+    if (!/\S+@\S+\.\S+/.test(actualData.email)) {
+      setError({ status: true, msg: "Invalid email format", type: 'error' });
+      return;
+    }
+
+    if (actualData.password.trim() === "") {
+      setError({ status: true, msg: "Password is required", type: 'error' });
+      return;
+    }
+
+    if (actualData.password.length < 8) {
+      setError({ status: true, msg: "Password must be at least 8 characters long", type: 'error' });
+      return;
+    }
+
+    if (actualData.password !== actualData.password_confirmation) {
+      setError({ status: true, msg: "Password and Confirm Password don't match", type: 'error' });
+      return;
+    }
+
+    if (!actualData.tc) {
+      setError({ status: true, msg: "Please agree to the terms and conditions", type: 'error' });
+      return;
+    }
+
+    try {
+      const res = await registerUser(actualData);
+      console.log(res);
+      if (res.data.status === "success") {
+        storeToken(res.data.token);
+        navigate('/dashboard');
+      }
+      if (res.data.status === "failed") {
+        setError({ status: true, msg: res.data.message, type: 'error' });
+      }
+    } catch (error) {
+      setError({ status: true, msg: "An error occurred during registration", type: 'error' });
+    }
   };
 
-  {
-    areaOptions.map((e) => {
+  return (
+    <>
+      <Box component='form' validate sx={{ mt: 1 }} id='registration-form'  onSubmit={handleSubmit}>
+        <TextField
+          margin='normal'
+          type='text'
+          required
+          fullWidth
+          id='name'
+          name='name'
+          label='Name'
+          error={error.status && error.type === 'error'}
+          helperText={error.status && error.type === 'error' && error.msg}
+          inputProps={{ maxLength: 50 }}
+        />
+        <TextField
+          margin='normal'
+          type='email'
+          required
+          fullWidth
+          id='email'
+          name='email'
+          label='Email Address'
+          error={error.status && error.type === 'error'}
+          helperText={error.status && error.type === 'error' && error.msg}
+        />
+        <TextField
+          margin='normal'
+          required
+          fullWidth
+          id='password'
+          name='password'
+          label='Password'
+          type='password'
+          error={error.status && error.type === 'error'}
+          helperText={error.status && error.type === 'error' && error.msg}
+          inputProps={{ minLength: 8 }}
+        />
+        <TextField
+          margin='normal'
+          required
+          fullWidth
+          id='password_confirmation'
+          name='password_confirmation'
+          label='Confirm Password'
+          type='password'
+          error={error.status && error.type === 'error'}
+          helperText={error.status && error.type === 'error' && error.msg}
+          inputProps={{ minLength: 8 }}
+        />
+        <FormControlLabel
+          control={<Checkbox value={true} color="primary" name="tc" id="tc" />}
+          label="I agree to terms and conditions."
+        />
+        <Box textAlign='center'>
+          <Button
+            type='submit'
+            variant='contained'
+            sx={{ mt: 3, mb: 2, px: 5, backgroundColor: '#F3E5AB', color: 'black' }}
+          >
+            Join
+          </Button>
+        </Box>
+        {error.status && <Alert severity={error.type}>{error.msg}</Alert>}
+      </Box>
+    </>
+  );
+};
 
-      return (<MenuItem value={e._id}>{e.name}</MenuItem>)
-
-    })
-  }
-
-
-  // ===================================================
-// 
-
-  // get area nameSs
-  const fetchData = async () => {
-    let url = getAreaNameURL + event.target.value;
-    // console.log("URL")
-    // console.log(url)
-    const data = await fetch(url);
-    
-    const json = await data.json();
-    // console.log("Data")
-    // console.log(json.name);
-    let _name = json.name
-    console.log(_name)
-    setAreaName(_name)
-    // console.log("Area Name: ");
-    // console.log(areaName)
-  }
-  fetchData();
-
-
-  =================================
-
-
-
-  const fetchContracts = async () => {
-    let url = getContractURL + event.target.value;
-    // console.log("URL")
-    // console.log(url)
-    const data = await fetch(url);
-    
-    const json = await data.json();
-    // console.log("Data")
-    // console.log(json.name);
-    let _landInspector = json[0].landInspector
-    console.log("Land")
-    console.log(_landInspector)
-    setLockContractAddress(_landInspector);
-    // setAreaName(_name)
-    // console.log("Area Name: ");
-    // console.log(areaName)
-  }
-  fetchContracts();
-
-
-
+export default Registration;

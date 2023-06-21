@@ -19,6 +19,8 @@ router.post('/list-new-property' , PropertyController.listNewProperty )
 router.get('/getProperty/:id' , PropertyController.getPropertyDetails )
 router.delete('/delete/:id' , PropertyController.deleteProperty )
 router.get('/myProperties' , PropertyController.getPropertiesOfUser )
+router.get('/allProperties' , PropertyController.getAllListedProperty )
+router.get('/filterProperty/:cityParam/:type' , PropertyController.getFilterProperty )
 // router.get('/getProperty/:id' , PropertyController.getPropertyById )
 
 

@@ -24,3 +24,4 @@ export const getAreaURL = "http://localhost:8000/api/contracts/getArea/"
 export const getAreaNameURL = "http://localhost:8000/api/contracts/getAreaName/"
 export const getContractURL = "http://localhost:8000/api/contracts/getContracts/"
 
+

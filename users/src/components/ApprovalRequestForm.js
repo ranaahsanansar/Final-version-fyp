@@ -1,3 +1,4 @@
+
 import {
     Alert,
     Box,
@@ -16,11 +17,26 @@ import {
 } from "@mui/material";
 import BuyingRecords from "../components/BuyingRecords";
 
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
+
+
 
 import React, { useEffect, useState } from "react";
 import citizenContract from "../artifacts/contracts/Citizens.sol/Citizens.json";
 import { ethers } from "ethers";
 import { citizenContractAddress } from "../dataVariables";
+
+
+const validationSchema = Yup.object({
+    citizenName: Yup.string().required('Full Name is required'),
+    citizenCNIC: Yup.number().required('CNIC is required'),
+    fatherName: Yup.string().required("Father's Name is required"),
+    phone: Yup.number().required('Phone number is required'),
+    email: Yup.string().email('Invalid email').required('Email is required'),
+    agree: Yup.boolean().oneOf([true], 'You must agree to the terms and conditions'),
+  });
+  
 
 
 const ApprovalRequestForm = () => {
@@ -41,12 +57,7 @@ const ApprovalRequestForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const data = new FormData(e.currentTarget);
-        // await ethereum.request({
-        //     method: "wallet_requestPermissions",
-        //     params: [{
-        //       eth_accounts: {}
-        //     }]
-        //   }); 
+       
         const actualData = {
             citzenName: data.get('citizenName'),
             cnic: data.get('citizenCNIC'),

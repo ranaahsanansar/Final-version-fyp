@@ -17,24 +17,63 @@ import {
 import TextareaAutosize from "@mui/base/TextareaAutosize";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import { citites } from "../cities";
+
 
 const validationSchema = Yup.object().shape({
-  propertyId: Yup.number().required("Id is required"),
+  propertyId: Yup.number().test(
+    "is-twelve-digits",
+    "Property ID must be exactly 12 digits",
+    (value) => {
+      if (value && String(value).length === 12) {
+        return true;
+      }
+      return false;
+    }
+  ),
   title: Yup.string().required("Ad Title is required"),
-  price: Yup.number().required("Price Per Share is required"),
-  priceDes: Yup.string().required("Price Description is required"),
+  price: Yup.number().required("Price is required").test(
+    "is-twentty-digits",
+    "Price in invalid",
+    (value) => {
+      if (value > 0) {
+        return true;
+      }
+      return false;
+    }
+  ),
+  priceDes: Yup.string(),
   headLocation: Yup.string().required("Exact Location is required"),
   detailsLocation: Yup.string().required("Nearest Land Mark is required"),
   city: Yup.string().required("City is required"),
   propertyType: Yup.string().required("Property Type is required"),
-  description: Yup.string().required("Property Details is required"),
+  description: Yup.string().required("Property Details is required").test(
+    "is-twenty-digits",
+    "Description must be atleast 20 character long",
+    (value) => {
+      if (value && String(value).length > 20) {
+        return true;
+      }
+      return false;
+    }
+  ),
+  share: Yup.number().required("Share is required").test(
+    "is-twenty-digits",
+    "Value must be between 0 to 101",
+    (value) => {
+      if (value > 0 && value < 101) {
+        return true;
+      }
+      return false;
+    }
+  )
 });
 
 const AddProperty = () => {
 
   const { token } = useSelector(state => state.auth)
 
-
+  const [citiesState , setCitiesState] = useState(citites)
 
   const [propertyType, setPropertyType] = useState("house");
   const [alert, setAlert] = useState({
@@ -58,6 +97,7 @@ const AddProperty = () => {
       city: "",
       propertyType: "",
       description: "",
+      share: ""
     },
     validationSchema,
     onSubmit: async (values) => {
@@ -73,16 +113,17 @@ const AddProperty = () => {
         formData.append("city", values.city);
         formData.append("propertyType", values.propertyType);
         formData.append("description", values.description);
-
+        formData.append('shares' , values.share)
+  
         // const document = {
-
+  
         // }
-
+  
         const fileInput = document.querySelector('input[type="file"]');
         for (let i = 0; i < fileInput.files.length; i++) {
           formData.append("propertyImage", fileInput.files[i]);
         }
-
+  
         try {
           const response = await axios.post(
             "http://localhost:8000/api/dashboard/property/list-new-property",
@@ -94,7 +135,7 @@ const AddProperty = () => {
               },
             }
           );
-
+  
           setAlert({
             status: true,
             msg: response.data.message,
@@ -110,6 +151,8 @@ const AddProperty = () => {
       }
     },
   });
+
+
 
   return (
     <Box sx={{ backgroundColor: "white", padding: 2, borderRadius: 2 }}>
@@ -152,7 +195,7 @@ const AddProperty = () => {
               required
               id="price"
               name="price"
-              label="Price Per Share"
+              label="Price"
               value={formik.values.price}
               onChange={formik.handleChange}
               error={formik.touched.price && Boolean(formik.errors.price)}
@@ -219,9 +262,14 @@ const AddProperty = () => {
                 onChange={formik.handleChange}
                 error={formik.touched.city && Boolean(formik.errors.city)}
               >
-                <MenuItem value="house">Lahore</MenuItem>
+                {/* <MenuItem value="house">Lahore</MenuItem>
                 <MenuItem value="appartment">Karachi</MenuItem>
-                <MenuItem value="plot">Quetta</MenuItem>
+                <MenuItem value="plot">Quetta</MenuItem> */}
+                {
+                  citites.map((item)=>{
+                    return <MenuItem value={item.name}>{item.name}</MenuItem>
+                  })
+                }
               </Select>
               {formik.touched.city && formik.errors.city && (
                 <Box sx={{ color: "red" }}>{formik.errors.city}</Box>
@@ -243,13 +291,28 @@ const AddProperty = () => {
                 error={formik.touched.propertyType && Boolean(formik.errors.propertyType)}
               >
                 <MenuItem value="house">House</MenuItem>
-                <MenuItem value="appartment">Appartment</MenuItem>
+                <MenuItem value="apartment">Appartment</MenuItem>
                 <MenuItem value="plot">Plot</MenuItem>
               </Select>
               {formik.touched.propertyType && formik.errors.propertyType && (
                 <Box sx={{ color: "red" }}>{formik.errors.propertyType}</Box>
               )}
             </FormControl>
+          </Grid>
+          
+          <Grid item sm={6} md={6} lg={4} xs={12}>
+            <TextField
+              margin="normal"
+              fullWidth
+              required
+              id="share"
+              name="share"
+              label="share"
+              value={formik.values.share}
+              onChange={formik.handleChange}
+              error={formik.touched.share && Boolean(formik.errors.share)}
+              helperText={formik.touched.share && formik.errors.share}
+            />
           </Grid>
 
           <Grid item sm={12} md={12} lg={12} xs={12}>

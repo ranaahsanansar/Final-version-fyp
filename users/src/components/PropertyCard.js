@@ -22,7 +22,7 @@ export default function ImgMediaCard(props) {
   const handleDelete = async () => {
     const url = `http://localhost:8000/api/dashboard/property/delete/${props.data._id}`
     const res = await axios.delete(url , { headers: {"Authorization" :`Bearer ${token}`}})
-    console.log(res)
+    // console.log(res)
   }
 
 
@@ -56,7 +56,7 @@ export default function ImgMediaCard(props) {
       <CardActions>
         <Button component={NavLink} to={`/details/${props.data._id}`} size="small">View</Button>
         {/* <Button onClick={handleClickView} size="small">View</Button> */}
-        <Button component={NavLink} to='/dashboard/updateProperty' size="small">Edit</Button>
+        {/* <Button component={NavLink} to='/dashboard/updateProperty' size="small">Edit</Button> */}
         <Button size="small" onClick={handleDelete}  ><Typography sx={{color: 'red'}} >Delete</Typography> </Button>
       </CardActions>
     </Card>

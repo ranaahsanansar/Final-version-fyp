@@ -25,8 +25,26 @@ import nodeProviderUrl, { getAllDistricURL, getAllProvienceURL, getAreaNameURL, 
 
 
 const validationSchema = Yup.object().shape({
-  propertyId: Yup.number().required("Property ID is required"),
-  ownerCNIC: Yup.number().required("CNIC of Owner is required"),
+  propertyId: Yup.number().required("Property ID is required").test(
+    "is-twelve-digits",
+    "Property ID must be exactly 12 digits",
+    (value) => {
+      if (value && String(value).length === 12) {
+        return true;
+      }
+      return false;
+    }
+  ),
+  ownerCNIC: Yup.number().required("CNIC of Owner is required").test(
+    "is-twelve-digits",
+    "cnic must be valid",
+    (value) => {
+      if (value && String(value).length === 13) {
+        return true;
+      }
+      return false;
+    }
+  ),
   sharesAmmount: Yup.number().required("Amount of Shares is required"),
   reqNumber: Yup.number().required("Request Number is required"),
   agree: Yup.boolean()
@@ -504,14 +522,14 @@ const handleChangeBlock = (event) => {
             >
               Submit
             </Button>
-            <Button
+            {/* <Button
               type="reset"
               variant="outlined"
               color="secondary"
               onClick={formik.handleReset}
             >
               Reset
-            </Button>
+            </Button> */}
           </Stack>
         </Grid>
       </Grid>

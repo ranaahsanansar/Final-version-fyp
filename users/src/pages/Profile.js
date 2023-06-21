@@ -112,16 +112,17 @@ const Profile = () => {
                 }}>{currentAddress}</Typography>) : (<Typography>Connect your crypto Wallet to communicate with Blockchain</Typography>)
                 }
                 </Box>
-                
-                
                  
                 <Box
                   onClick={() => {
                     handleConnectWallet()
                   }}
-                  sx={{ border: '1px solid black' , fontWeight:'bold' ,paddingX: '32px', paddingY: '14px' , borderRadius: '5px' , backgroundColor:'#F3E5AB'}}
+
+                  sx={{ border: '1px solid black' , fontWeight:'bold' ,paddingX: '32px', paddingY: '14px' , borderRadius: '5px' , backgroundColor:'#F3E5AB' }}
                 >
-                  <Typography>Connect Wallet</Typography> 
+                  <Typography onClick={() => {
+                    handleConnectWallet()
+                  }} >Connect Wallet</Typography> 
                   {/* <AccountBalanceWalletIcon style={{fontSize: '50px'}} /> */}
                 </Box>
               </Box>

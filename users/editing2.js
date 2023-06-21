@@ -32,15 +32,17 @@ const SellPropertyForm = () => {
   const [formData, setFormData] = useState({
     propertyId: "",
     ownerCNIC: "",
-    priceOfShare: "" ,
-    buyerCNIC: ""
+    priceOfShare: "",
+    buyerCNIC: "",
+    agree: false
   });
 
   const [formErrors, setFormErrors] = useState({
     propertyId: "",
     ownerCNIC: "",
     priceOfShare: "",
-    buyerCNIC: ""
+    buyerCNIC: "",
+    agree: ""
   });
 
 
@@ -54,53 +56,30 @@ const SellPropertyForm = () => {
     let valid = true;
     const errors = {};
 
-    if (formData.propertyId == "" ) {
+    if (formData.propertyId === "") {
       errors.propertyId = "Property ID is required";
       valid = false;
-    }else if( formData.propertyId < 1){
-      errors.propertyId = "ID must not be less then 1";
-      valid = false;
     }
 
-    if (formData.ownerCNIC == "" ) {
+    if (formData.ownerCNIC === "") {
       errors.ownerCNIC = "Owner CNIC is required";
       valid = false;
-    }else if (formData.ownerCNIC < 1){
-      errors.ownerCNIC = "Value must not be less then 1";
-      valid = false;
     }
 
-    if (formData.priceOfShare == "" ) {
+    if (formData.priceOfShare === "") {
       errors.priceOfShare = "Price of Share is required";
       valid = false;
-    }else if (formData.priceOfShare < 1){
-      errors.priceOfShare = "Value must not be less then 1";
-      valid = false;
     }
 
-    if (formData.buyerCNIC == "" ) {
+    if (formData.buyerCNIC === "") {
       errors.buyerCNIC = "Buyer CNIC is required";
       valid = false;
-    }else if (formData.buyerCNIC < 1){
-      errors.buyerCNIC = "Value must not be less then 1";
-      valid = false;
     }
 
-    let checkValidID = formData.propertyId.toString();
-        if(checkValidID.length != 12){
-            errors.propertyId = "ID must be valid 12 digits Uniqe Identification number";
-          valid = false;
-        }
-        let checkValidCnic = formData.ownerCNIC.toString();
-        if(checkValidCnic.length != 13 ){
-            errors.ownerCNIC = "Cnicn Must be Valid";
-          valid = false;
-        }
-
-    // if (!formData.agree) {
-    //   errors.agree = "You must agree to the terms and conditions";
-    //   valid = false;
-    // }
+    if (!formData.agree) {
+      errors.agree = "You must agree to the terms and conditions";
+      valid = false;
+    }
 
     setFormErrors(errors);
 
@@ -127,16 +106,6 @@ const SellPropertyForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
-    
-    // formData.propertyId
-    console.log("Form Data")
-    console.log(formData.propertyId)
-    console.log(formData.ownerCNIC)
-    console.log(formData.priceOfShare)
-    console.log(formData.buyerCNIC)
-    console.log(formData.agree)
-
-
     const actualData = {
       province: data.get('province'),
       distric: data.get('distric'),
@@ -150,9 +119,7 @@ const SellPropertyForm = () => {
       agree: data.get('agree')
     }
     // console.log(actualData)
-console.log(validateForm())
-    // if (actualData.propertyId && actualData.ownerCNIC && actualData.priceOfShare && actualData.buyerCNIC && actualData.agree) {
-    if (validateForm() && actualData.agree) {
+    if (actualData.propertyId && actualData.ownerCNIC && actualData.priceOfShare && actualData.buyerCNIC && actualData.agree) {
 
       const { ethereum } = window;
 
@@ -626,19 +593,15 @@ console.log(validateForm())
                         />
                     </Grid> */}
           <Grid item sm={12} xs={12} md={6} lg={6}>
-          <TextField
+            <TextField
               margin="normal"
               fullWidth
               required
               id="ownerCNIC"
               name="ownerCNIC"
-              label="Seller CNIC"
+              label="CNIC of Owner"
               type="number"
-              value={formData.ownerCNIC}
-              onChange={handleChange}
               inputProps={{ min: 0 }}
-              error={Boolean(formErrors.ownerCNIC)}
-              helperText={formErrors.ownerCNIC}
             />
           </Grid>
 
@@ -656,23 +619,19 @@ console.log(validateForm())
             />
           </Grid>
           <Grid item sm={12} xs={12} md={6} lg={6}>
-          <TextField
+            <TextField
               margin="normal"
               fullWidth
               required
               id="priceOfShare"
               name="priceOfShare"
-              label="Price"
+              label="Price of One Share"
               type="number"
-              value={formData.priceOfShare}
-              onChange={handleChange}
               inputProps={{ min: 0 }}
-              error={Boolean(formErrors.priceOfShare)}
-              helperText={formErrors.priceOfShare}
             />
           </Grid>
           <Grid item sm={12} xs={12} md={6} lg={6}>
-          <TextField
+            <TextField
               margin="normal"
               fullWidth
               required
@@ -680,11 +639,7 @@ console.log(validateForm())
               name="buyerCNIC"
               label="Buyer CNIC"
               type="number"
-              value={formData.buyerCNIC}
-              onChange={handleChange}
               inputProps={{ min: 0 }}
-              error={Boolean(formErrors.buyerCNIC)}
-              helperText={formErrors.buyerCNIC}
             />
           </Grid>
           <Grid item sm={12} xs={12} md={12} lg={12}>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Container, Grid, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import styled from "styled-components";
@@ -12,54 +12,72 @@ import SellIcon from "@mui/icons-material/Sell";
 
 import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 import { NavLink } from "react-router-dom";
+import axios from "axios";
+import { path } from "../dataVariables";
+import { SignalCellularNullOutlined } from "@mui/icons-material";
 
-const myData = [
-  {
-    title: "Gulberg",
-    size: "10 Marla, 3 floor",
-    price: "10,000,000",
-    image:
-      "https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb",
-  },
-  {
-    title: "Madina Park",
-    size: "1 kanal, 2 story",
-    price: "50,000,000",
-    image:
-      "https://images.pexels.com/photos/323780/pexels-photo-323780.jpeg?auto=compress&cs=tinysrgb&",
-  },
-  {
-    title: "Buptiya",
-    size: "2 kanal",
-    price: "40,000,000",
-    image:
-      "https://images.pexels.com/photos/1396132/pexels-photo-1396132.jpeg?auto=compress&cs=tinysrgb&",
-  },
-  {
-    title: "Defence",
-    size: "1 kanal",
-    price: "20,000,000",
-    image:
-      "https://images.pexels.com/photos/1115804/pexels-photo-1115804.jpeg?auto=compress&cs=tinysrgb&w=600",
-  },
-  {
-    title: "Defence",
-    size: "1 kanal",
-    price: "20,000,000",
-    image:
-      "https://images.pexels.com/photos/1115804/pexels-photo-1115804.jpeg?auto=compress&cs=tinysrgb&w=600",
-  },
-  {
-    title: "Defence",
-    size: "1 kanal",
-    price: "20,000,000",
-    image:
-      "https://images.pexels.com/photos/1115804/pexels-photo-1115804.jpeg?auto=compress&cs=tinysrgb&w=600",
-  },
+// const myData = [
+//   {
+//     title: "Gulberg",
+//     size: "10 Marla, 3 floor",
+//     price: "10,000,000",
+//     image:
+//       "https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb",
+//   },
+//   {
+//     title: "Madina Park",
+//     size: "1 kanal, 2 story",
+//     price: "50,000,000",
+//     image:
+//       "https://images.pexels.com/photos/323780/pexels-photo-323780.jpeg?auto=compress&cs=tinysrgb&",
+//   },
+//   {
+//     title: "Buptiya",
+//     size: "2 kanal",
+//     price: "40,000,000",
+//     image:
+//       "https://images.pexels.com/photos/1396132/pexels-photo-1396132.jpeg?auto=compress&cs=tinysrgb&",
+//   },
+//   {
+//     title: "Defence",
+//     size: "1 kanal",
+//     price: "20,000,000",
+//     image:
+//       "https://images.pexels.com/photos/1115804/pexels-photo-1115804.jpeg?auto=compress&cs=tinysrgb&w=600",
+//   },
+//   {
+//     title: "Defence",
+//     size: "1 kanal",
+//     price: "20,000,000",
+//     image:
+//       "https://images.pexels.com/photos/1115804/pexels-photo-1115804.jpeg?auto=compress&cs=tinysrgb&w=600",
+//   },
+//   {
+//     title: "Defence",
+//     size: "1 kanal",
+//     price: "20,000,000",
+//     image:
+//       "https://images.pexels.com/photos/1115804/pexels-photo-1115804.jpeg?auto=compress&cs=tinysrgb&w=600",
+//   },
 
-];
+// ];
 
 const ListPropertiesSection = () => {
+
+  const [list, setList] = useState([]);
+
+  const fetchProperties = async (req, res) => {
+    const url = "http://localhost:8000/api/dashboard/property/allProperties";
+
+    const exiosResponse = await axios.get(url);
+    // console.log(exiosResponse.data.propertiesArray)
+    setList(exiosResponse.data.propertiesArray)
+  }
+
+  useEffect(() => {
+    fetchProperties();
+  }, [])
+
   const glassMorphismStyle = {
     /* From https://css.glass */
     background: "rgba(255, 255, 255, 0.2)",
@@ -69,7 +87,7 @@ const ListPropertiesSection = () => {
   };
 
   return (
-    <section style={{backgroundColor: '#B7D0B5'}} >
+    <section style={{ backgroundColor: '#B7D0B5' }} >
       <Container>
         <Box height="100%" width='100%' alignItems="center" paddingY={3}>
           <Box
@@ -85,107 +103,114 @@ const ListPropertiesSection = () => {
           </Box>
           <Grid container spacing={2} alignItems='start' >
 
-            {myData.map((item) => (
-              <Grid item xs={12} md={6} lg={4} >
-                <Box
-                  position="relative"
-                  borderRadius="10px"
-                  overflow="hidden"
-                  height='350px'
-                  mb={2}
-                  sx={{ boxShadow: " 0 4px 30px rgba(0, 0, 0, 0.207)" }}
-                >
-                  <img
-                    src={item.image}
-                    alt="house"
-                    width="100%"
-                    height="100%"
-                  />
+            {list.map((item, index) => {
+              console.log(item._id)
+              if (index < 6) {
+                  return (
+                  <Grid item xs={12} md={6} lg={4} key={index} >
+                    <Box
+                      position="relative"
+                      borderRadius="10px"
+                      overflow="hidden"
+                      height='350px'
+                      mb={2}
+                      sx={{ boxShadow: " 0 4px 30px rgba(0, 0, 0, 0.207)" }}
+                    >
+                      <img
+                        src={path + item.photos[0]}
+                        alt="house"
+                        width="100%"
+                        height="100%"
+                      />
 
-                  <Box
-                    position="absolute"
-                    display="flex"
-                    top="20px"
-                    width="100%"
-                    alignItems="center"
-                    justifyContent="space-between"
-                    padding="10px"
-                  >
-                    {/* <Box paddingX={2}>
+                      <Box
+                        position="absolute"
+                        display="flex"
+                        top="20px"
+                        width="100%"
+                        alignItems="center"
+                        justifyContent="space-between"
+                        padding="10px"
+                      >
+                        {/* <Box paddingX={2}>
                       <FavoriteBorderIcon fontSize="medium" />
                     </Box> */}
-                    <Box
-                      display="flex"
-                      paddingX={2}
-                      sx={{ backgroundColor: "#F3E5AB" }}
-                      alignItems="center"
-                      justifyContent='center'
-                      borderRadius={20}
-                    >
-
-                      <Typography ml={1}  className="lato-font"  fontWeight="bold" color='black' fontSize="18px">
-                        RS.{item.price}
-                      </Typography>
-                    </Box>
-                  </Box>
-
-                  <Box
-                    sx={{ backgroundColor: 'black' }}
-                    position="absolute"
-                    bottom="0px"
-                    width="100%"
-                    padding="10px"
-                  >
-                    <Stack  direction='row' justifyContent='space-between' alignItems='center' >
-                      <Box>
-                        <Typography
-                          color="whitesmoke"
-                          
-                          fontWeight={700}
-                          sx={{
-                            display: "-webkit-box",
-                            overflow: "hidden",
-                            WebkitBoxOrient: "vertical",
-                            WebkitLineClamp: 1,
-                            fontSize:'20px'
-                          }}
-                          className="lato-font" 
+                        <Box
+                          display="flex"
+                          paddingX={2}
+                          sx={{ backgroundColor: "#F3E5AB" }}
+                          alignItems="center"
+                          justifyContent='center'
+                          borderRadius={20}
                         >
-                          {item.title}
-                        </Typography>
 
-                        <Typography
-                          color="whitesmoke"
-                        
-                          fontWeight={400}
-                          sx={{
-                            display: "-webkit-box",
-                            overflow: "hidden",
-                            WebkitBoxOrient: "vertical",
-                            WebkitLineClamp: 1,
-                            fontSize:'16px'
-                          }}
-                          className="lato-font" 
-                        >
-                          {item.size}
-                        </Typography>
+                          <Typography ml={1} className="lato-font" fontWeight="bold" color='black' fontSize="18px">
+                            RS.{item.price}
+                          </Typography>
+                        </Box>
                       </Box>
 
-                      <NavLink to='/details' style={{ textDecoration: 'none' }} >
-                        <Button sx={{ color: "#060606" , borderRadius: "20px" , backgroundColor: "#F3E5AB" , paddingX: '24px' }} >
+                      <Box
+                        sx={{ backgroundColor: 'black' }}
+                        position="absolute"
+                        bottom="0px"
+                        width="100%"
+                        padding="10px"
+                      >
+                        <Stack direction='row' justifyContent='space-between' alignItems='center' >
+                          <Box>
+                            <Typography
+                              color="whitesmoke"
 
-                          <Typography fontWeight="bold" fontSize="14px" className="lato-font" >
-                            Buy Now
-                      
-                          </Typography>
-                        </Button>
-                      </NavLink>
+                              fontWeight={700}
+                              sx={{
+                                display: "-webkit-box",
+                                overflow: "hidden",
+                                WebkitBoxOrient: "vertical",
+                                WebkitLineClamp: 1,
+                                fontSize: '20px'
+                              }}
+                              className="lato-font"
+                            >
+                              {item.title}
+                            </Typography>
 
-                    </Stack>
-                  </Box>
-                </Box>
-              </Grid>
-            ))}
+                            <Typography
+                              color="whitesmoke"
+
+                              fontWeight={400}
+                              sx={{
+                                display: "-webkit-box",
+                                overflow: "hidden",
+                                WebkitBoxOrient: "vertical",
+                                WebkitLineClamp: 1,
+                                fontSize: '16px'
+                              }}
+                              className="lato-font"
+                            >
+                              {item.location.head}
+                            </Typography>
+                          </Box>
+
+                          <NavLink to={`/details/${item._id}`} style={{ textDecoration: 'none' }} >
+                            <Button sx={{ color: "#060606", borderRadius: "20px", backgroundColor: "#F3E5AB", paddingX: '24px' }} >
+
+                              <Typography fontWeight="bold" fontSize="14px" className="lato-font"  >
+                                Buy Now
+
+                              </Typography>
+                            </Button>
+                          </NavLink>
+
+                        </Stack>
+                      </Box>
+                    </Box>
+                  </Grid>)
+              }else {
+                return null;
+              }
+            }
+            )}
 
 
           </Grid>

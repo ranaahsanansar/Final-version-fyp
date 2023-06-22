@@ -24,6 +24,131 @@ import nodeProviderUrl, { getAllDistricURL, getAllProvienceURL, getAreaNameURL, 
 
 const TransferNewOwnership = () => {
 
+
+  const [formData, setFormData] = useState({
+    propertyId: "",
+    ownerCNIC: "",
+    shares: "",
+    price: ""
+  });
+
+  const [formErrors, setFormErrors] = useState({
+    propertyId: "",
+    ownerCNIC: "",
+    shares: "",
+    price: ""
+  });
+
+
+  const validateForm = () => {
+    let valid = true;
+    const errors = {};
+
+
+
+    if (formData.propertyId == "") {
+      errors.propertyId = "Property ID is required";
+      valid = false;
+    } else if (formData.propertyId < 1) {
+      errors.propertyId = "ID must not be less then 1";
+      valid = false;
+    }
+
+    if (formData.ownerCNIC == "") {
+      errors.ownerCNIC = "Owner CNIC is required";
+      valid = false;
+    } else if (formData.ownerCNIC < 1) {
+      errors.ownerCNIC = "Value must not be less then 1";
+      valid = false;
+    }
+
+    if (formData.shares == "") {
+      errors.shares = "Shares is required";
+      valid = false;
+    } else if (formData.shares < 1  ) {
+      errors.shares = "Value must between 1 to 100";
+      valid = false;
+    }else if (formData.shares > 100){
+      errors.shares = "Value must between 1 to 100";
+      valid = false;
+    }
+
+    if (formData.price == "") {
+      errors.price = "Price is required";
+      valid = false;
+    } else if (formData.price < 1) {
+      errors.price = "Value must not be less then 1";
+      valid = false;
+    }
+
+    let checkValidID = formData.propertyId.toString();
+    if (checkValidID.length != 12) {
+      errors.propertyId = "ID must be valid 12 digits Uniqe Identification number";
+      valid = false;
+    }
+    let checkValidCnic = formData.ownerCNIC.toString();
+    if (checkValidCnic.length != 13) {
+      errors.ownerCNIC = "Cnicn Must be Valid";
+      valid = false;
+    }
+
+
+    if (block == 'none') {
+      setAlert({
+        status: true,
+        msg: "All fields are required",
+        type: "error"
+      })
+      valid = false;
+    }
+
+    if (province == "none") {
+      setAlert({
+        status: true,
+        msg: "All fields are required",
+        type: "error"
+      })
+      valid = false;
+    }
+    if (distric == 'none') {
+      setAlert({
+        status: true,
+        msg: "All fields are required",
+        type: "error"
+      })
+      valid = false;
+    }
+    if (society == 'none') {
+      setAlert({
+        status: true,
+        msg: "All fields are required",
+        type: "error"
+      })
+      valid = false;
+    }
+
+    // if (!formData.agree) {
+    //   errors.agree = "You must agree to the terms and conditions";
+    //   valid = false;
+    // }
+
+    setFormErrors(errors);
+
+    return valid;
+  };
+
+
+  const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
+
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: type === "checkbox" ? checked : value
+    }));
+  };
+
+  // ----------------------------
+
   const [etherScanAlert, setEtherScanAlert] = useState({
     status: false,
     msg: "",
@@ -87,6 +212,9 @@ const TransferNewOwnership = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!validateForm()) {
+      return
+    }
     let confirm = window.confirm("Are you sure want to Submit?");
     if (confirm) {
 
@@ -94,10 +222,10 @@ const TransferNewOwnership = () => {
 
       let contractAddress = lockContractAddress;
       let societyName = areaName;
-      let id = propertyId;
-      let applicantCnic = cnic;
-      let sharesAmmount = shares;
-      let _propertyAmmount = propertyAmmount;
+      let id = formData.propertyId;
+      let applicantCnic = formData.ownerCNIC;
+      let sharesAmmount = formData.shares;
+      let _propertyAmmount = formData.price;
 
       const walletProvider = new ethers.providers.Web3Provider(
         ethereum
@@ -402,7 +530,7 @@ const TransferNewOwnership = () => {
             </Grid>
 
             <Grid item lg={4} md={4} sm={4}>
-            <FormControl fullWidth>
+              <FormControl fullWidth>
                 <InputLabel id="block-label">Block</InputLabel>
 
                 <Select
@@ -442,8 +570,9 @@ const TransferNewOwnership = () => {
               />
             </Grid> */}
 
+
             <Grid item lg={4} md={4} sm={4}>
-              <TextField
+              {/* <TextField
                 fullWidth
                 id="propertyID"
                 name="propertyID"
@@ -451,11 +580,26 @@ const TransferNewOwnership = () => {
                 type='number'
                 variant="outlined"
                 onChange={handleChangePropertyId}
+              /> */}
+
+              <TextField
+
+                fullWidth
+                required
+                id="propertyId"
+                name="propertyId"
+                label="Property ID"
+                type="number"
+                value={formData.propertyId}
+                onChange={handleChange}
+                inputProps={{ min: 0 }}
+                error={Boolean(formErrors.propertyId)}
+                helperText={formErrors.propertyId}
               />
             </Grid>
 
             <Grid item lg={4} md={4} sm={4}>
-              <TextField
+              {/* <TextField
                 fullWidth
                 id="newOwnerCnic"
                 name="newOwnerCnic"
@@ -464,10 +608,23 @@ const TransferNewOwnership = () => {
                 type="Number"
                 placeholder="3520200000000"
                 onChange={handleChangeCnic}
+              /> */}
+              <TextField
+                fullWidth
+                required
+                id="ownerCNIC"
+                name="ownerCNIC"
+                label="Client CNIC"
+                type="number"
+                value={formData.ownerCNIC}
+                onChange={handleChange}
+                inputProps={{ min: 0 }}
+                error={Boolean(formErrors.ownerCNIC)}
+                helperText={formErrors.ownerCNIC}
               />
             </Grid>
             <Grid item lg={4} md={4} sm={4}>
-              <TextField
+              {/* <TextField
                 fullWidth
                 id="sharesAmount"
                 name="sharesAmount"
@@ -478,10 +635,23 @@ const TransferNewOwnership = () => {
                 inputProps={{ min: 0, max: 100 }}
                 onChange={handleChangeShares}
 
+              /> */}
+              <TextField
+                fullWidth
+                required
+                id="shares"
+                name="shares"
+                label="Shares Amount"
+                type="number"
+                value={formData.shares}
+                onChange={handleChange}
+                inputProps={{ min: 0 }}
+                error={Boolean(formErrors.shares)}
+                helperText={formErrors.shares}
               />
             </Grid>
             <Grid item lg={4} md={4} sm={4}>
-              <TextField
+              {/* <TextField
                 fullWidth
                 id="propertyAmmount"
                 name="propertyAmmount"
@@ -490,6 +660,19 @@ const TransferNewOwnership = () => {
                 type="number"
                 onChange={handleChangePropertyAmmount}
 
+              /> */}
+              <TextField
+                fullWidth
+                required
+                id="price"
+                name="price"
+                label="Price"
+                type="number"
+                value={formData.price}
+                onChange={handleChange}
+                inputProps={{ min: 0 }}
+                error={Boolean(formErrors.price)}
+                helperText={formErrors.price}
               />
             </Grid>
           </Grid>

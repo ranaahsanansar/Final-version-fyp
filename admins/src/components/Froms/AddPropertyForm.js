@@ -22,10 +22,90 @@ import nodeProviderUrl, { getAllDistricURL, getAllProvienceURL, getAreaNameURL, 
 
 import { landInspectorContractAddress } from "../../dataVariables";
 
-
-
-
 const AddPropertyForm = () => {
+
+  // Validation 
+  const [formData, setFormData] = useState({
+    propertyId: "",
+  });
+
+  const [formErrors, setFormErrors] = useState({
+    propertyId: "",
+  });
+
+
+  const validateForm = () => {
+    let valid = true;
+    const errors = {};
+
+    if (formData.propertyId == "") {
+      errors.propertyId = "Property ID is required";
+      valid = false;
+    } else if (formData.propertyId < 1) {
+      errors.propertyId = "ID must not be less then 1";
+      valid = false;
+    }
+
+    let checkValidID = formData.propertyId.toString();
+    if (checkValidID.length != 12) {
+      errors.propertyId = "ID must be valid 12 digits Uniqe Identification number";
+      valid = false;
+    }
+
+    if (block == 'none' ){
+      setAlert({
+        status: true,
+        msg: "All fields are required",
+        type: "error"
+      })
+      valid = false ;
+    } 
+
+    if (province == "none"  ){
+      setAlert({
+        status: true,
+        msg: "All fields are required",
+        type: "error"
+      })
+      valid = false ;
+    }
+    if (distric == 'none' ){
+      setAlert({
+        status: true,
+        msg: "All fields are required",
+        type: "error"
+      })
+      valid = false ;
+    }
+    if (society == 'none' ){
+      setAlert({
+        status: true,
+        msg: "All fields are required",
+        type: "error"
+      })
+      valid = false ;
+    }
+
+    // if (!formData.agree) {
+    //   errors.agree = "You must agree to the terms and conditions";
+    //   valid = false;
+    // }
+
+    setFormErrors(errors);
+
+    return valid;
+  };
+
+
+  const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
+
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: type === "checkbox" ? checked : value
+    }));
+  };
+
 
 
   const [etherScanAlert, setEtherScanAlert] = useState({
@@ -93,12 +173,15 @@ const AddPropertyForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!validateForm()) {
+      return
+    }
     let confirm = window.confirm("Are you sure want to Submit?");
     if (confirm) {
 
       const { ethereum } = window;
       let contractAddress = lockContractAddress;
-      let _propertyId = propertyId;
+      let _propertyId = formData.propertyId;
       let societyName = areaName;
 
       console.log("Society Name" + societyName)
@@ -242,7 +325,7 @@ const AddPropertyForm = () => {
       // console.log("URL")
       // console.log(url)
       const data = await fetch(url);
-      
+
       const json = await data.json();
       // console.log("Data")
       // console.log(json.name);
@@ -258,7 +341,7 @@ const AddPropertyForm = () => {
 
 
     // setAreaName(event.target.value);
- 
+
     // setLockContractAddress(landInspectorContractAddress);
 
   };
@@ -266,7 +349,7 @@ const AddPropertyForm = () => {
   const handChangePropertyId = (e) => {
     setPropertyId(e.target.value);
   }
-  
+
   return (
     <Box
       width="100%"
@@ -413,8 +496,8 @@ const AddPropertyForm = () => {
               />
             </Grid> */}
 
-            <Grid item lg={4} md={4} sm={4}>
-              <TextField
+            <Grid item lg={12} md={12} sm={12}>
+              {/* <TextField
                 fullWidth
                 id="propertyId"
                 name="propertyId"
@@ -422,7 +505,22 @@ const AddPropertyForm = () => {
                 variant="outlined"
                 value={propertyId}
                 onChange={handChangePropertyId}
-              />
+              /> */}
+                <TextField
+                  margin="normal"
+                  fullWidth
+                  required
+                  id="propertyId"
+                  name="propertyId"
+                  label="Property ID"
+                  type="number"
+                  value={formData.propertyId}
+                  onChange={handleChange}
+                  inputProps={{ min: 0 }}
+                  error={Boolean(formErrors.propertyId)}
+                  helperText={formErrors.propertyId}
+                />
+
             </Grid>
           </Grid>
           <Box textAlign="center">

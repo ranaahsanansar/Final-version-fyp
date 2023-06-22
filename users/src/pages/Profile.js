@@ -7,7 +7,7 @@ import {
   Stack,
   Typography, 
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 import { useDispatch, useSelector } from "react-redux";
 import { setAddress } from "../features/connectWallet";
@@ -87,6 +87,10 @@ const Profile = () => {
 
   }
 
+  useEffect(() => {
+    
+  })
+
   return (
     <>
       <Box>
@@ -118,7 +122,7 @@ const Profile = () => {
                     handleConnectWallet()
                   }}
 
-                  sx={{ border: '1px solid black' , fontWeight:'bold' ,paddingX: '32px', paddingY: '14px' , borderRadius: '5px' , backgroundColor:'#F3E5AB' }}
+                  sx={{ border: '1px solid black' , fontWeight:'bold' ,paddingX: '32px', paddingY: '14px' , borderRadius: '5px' , backgroundColor:'#F3E5AB' , cursor: 'pointer' }}
                 >
                   <Typography onClick={() => {
                     handleConnectWallet()

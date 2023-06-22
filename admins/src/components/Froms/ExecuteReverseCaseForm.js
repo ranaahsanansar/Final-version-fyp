@@ -17,10 +17,107 @@ import React, { useEffect, useState } from "react";
 
 import landInspectorContract from "../../artifacts/contracts/LandInspector.sol/LandInspector.json";
 import { ethers } from "ethers";
-import nodeProviderUrl, { getAllDistricURL, getAllProvienceURL, getAreaNameURL, getAreaURL, getContractURL, getSocietyURL , landInspectorContractAddress , govermentAuthorityContractAddress } from "../../dataVariables";
+import nodeProviderUrl, { getAllDistricURL, getAllProvienceURL, getAreaNameURL, getAreaURL, getContractURL, getSocietyURL, landInspectorContractAddress, govermentAuthorityContractAddress } from "../../dataVariables";
 
 
 const ExecuteReverseCaseForm = () => {
+
+
+
+  const [formData, setFormData] = useState({
+    propertyId: "",
+    caseNum: ""
+  });
+
+  const [formErrors, setFormErrors] = useState({
+    propertyId: "",
+    caseNum: ""
+  });
+
+
+  const validateForm = () => {
+    let valid = true;
+    const errors = {};
+
+    if (formData.propertyId == "") {
+      errors.propertyId = "Field is required";
+      valid = false;
+    } else if (formData.propertyId < 1) {
+      errors.propertyId = "ID must not be less then 1";
+      valid = false;
+    }
+
+
+
+
+    if (formData.caseNum == "") {
+      errors.caseNum = "Field is required";
+      valid = false;
+    } else if (formData.caseNum < 1) {
+      errors.caseNum = "Value must not be less then 1";
+      valid = false;
+    }
+
+    let checkValidID = formData.propertyId.toString();
+    if (checkValidID.length != 12) {
+      errors.propertyId = "ID must be valid 12 digits Uniqe Identification number";
+      valid = false;
+    }
+
+    if (block == 'none') {
+      setAlert({
+        status: true,
+        msg: "All fields are required",
+        type: "error"
+      })
+      valid = false;
+    }
+
+    if (province == "none") {
+      setAlert({
+        status: true,
+        msg: "All fields are required",
+        type: "error"
+      })
+      valid = false;
+    }
+    if (distric == 'none') {
+      setAlert({
+        status: true,
+        msg: "All fields are required",
+        type: "error"
+      })
+      valid = false;
+    }
+    if (society == 'none') {
+      setAlert({
+        status: true,
+        msg: "All fields are required",
+        type: "error"
+      })
+      valid = false;
+    }
+
+    // if (!formData.agree) {
+    //   errors.agree = "You must agree to the terms and conditions";
+    //   valid = false;
+    // }
+
+    setFormErrors(errors);
+
+    return valid;
+  };
+
+  const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
+
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: type === "checkbox" ? checked : value
+    }));
+  };
+  // ---------------------------------------------------------------------------
+
   const [distric, setDistric] = useState("none");
   const [province, setProvince] = useState("none");
   const [society, setSociety] = useState("none");
@@ -28,11 +125,11 @@ const ExecuteReverseCaseForm = () => {
 
 
   const [areaOptions, setAreaOptions] = useState([])
-const [provinceOptions, setPropvinceOptions] = useState([]);
-const [districOptions, setDistricOptions] = useState([]);
-const [societyOtpions, setSocietyOptions] = useState([]);
+  const [provinceOptions, setPropvinceOptions] = useState([]);
+  const [districOptions, setDistricOptions] = useState([]);
+  const [societyOtpions, setSocietyOptions] = useState([]);
 
-const [areaName, setAreaName] = useState("none");
+  const [areaName, setAreaName] = useState("none");
 
 
   const [etherScanAlert, setEtherScanAlert] = useState({
@@ -98,6 +195,9 @@ const [areaName, setAreaName] = useState("none");
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Ok")
+    if(!validateForm()){
+      return
+    }
     let confirm = window.confirm("Are you sure want to Submit?");
     if (confirm) {
 
@@ -121,10 +221,10 @@ const [areaName, setAreaName] = useState("none");
       )
 
       const dataResult = await sendTx.executeReverseCase(
-         _areaContractAddress,
-         _propertyId,
-         _caseNumber,
-         _otpVerify , {gasLimit: 5000000});
+        _areaContractAddress,
+        _propertyId,
+        _caseNumber,
+        _otpVerify, { gasLimit: 5000000 });
 
       let txHash = dataResult.hash
       let scanUrl = "https://sepolia.etherscan.io/tx/" + txHash;
@@ -168,10 +268,10 @@ const [areaName, setAreaName] = useState("none");
 
 
 
-const handleChangeProvience = (event) => {
-  setProvince(event.target.value);
+  const handleChangeProvience = (event) => {
+    setProvince(event.target.value);
 
-  const fetchData = async () => {
+    const fetchData = async () => {
       let url = getAllDistricURL + event.target.value;
       // console.log("URL")
       // console.log(url)
@@ -182,18 +282,18 @@ const handleChangeProvience = (event) => {
 
       const json = await data.json();
       setDistricOptions(json)
-  }
-  fetchData();
+    }
+    fetchData();
 
-};
+  };
 
 
 
-const handleChangeDistric = (event) => {
+  const handleChangeDistric = (event) => {
 
-  setDistric(event.target.value);
+    setDistric(event.target.value);
 
-  const fetchData = async () => {
+    const fetchData = async () => {
       let url = getSocietyURL + event.target.value;
       // console.log("URL")
       // console.log(url)
@@ -204,15 +304,15 @@ const handleChangeDistric = (event) => {
 
       const json = await data.json();
       setSocietyOptions(json)
-  }
-  fetchData();
-};
+    }
+    fetchData();
+  };
 
 
 
-const handleChangeSociety = (event) => {
-  setSociety(event.target.value);
-  const fetchData = async () => {
+  const handleChangeSociety = (event) => {
+    setSociety(event.target.value);
+    const fetchData = async () => {
       let url = getAreaURL + event.target.value;
       // console.log("URL")
       // console.log(url)
@@ -223,14 +323,14 @@ const handleChangeSociety = (event) => {
 
       const json = await data.json();
       setAreaOptions(json)
-  }
-  fetchData();
-};
+    }
+    fetchData();
+  };
 
 
-const handleChangeBlock = (event) => {
-  setBlock(event.target.value);
-  const fetchData = async () => {
+  const handleChangeBlock = (event) => {
+    setBlock(event.target.value);
+    const fetchData = async () => {
       let url = getAreaNameURL + event.target.value;
       // console.log("URL")
       // console.log(url)
@@ -243,10 +343,10 @@ const handleChangeBlock = (event) => {
       setAreaName(_name)
       // console.log("Area Name: ");
       // console.log(areaName)
-  }
-  fetchData();
+    }
+    fetchData();
 
-  const fetchContracts = async () => {
+    const fetchContracts = async () => {
       let url = getContractURL + event.target.value;
       // console.log("URL")
       // console.log(url)
@@ -258,41 +358,41 @@ const handleChangeBlock = (event) => {
       let _landInspector = json[0].landInspector
       let _areaContractAddress = json[0].areaContract
 
-setAreaContractAddress(_areaContractAddress)
+      setAreaContractAddress(_areaContractAddress)
       console.log("Land")
       console.log(_landInspector)
       setLockContractAddress(_landInspector);
       // setAreaName(_name)
       // console.log("Area Name: ");
       // console.log(areaName)
-  }
-  fetchContracts();
+    }
+    fetchContracts();
 
 
-  // setAreaName(event.target.value);
+    // setAreaName(event.target.value);
 
-  // setLockContractAddress(landInspectorContractAddress);
+    // setLockContractAddress(landInspectorContractAddress);
 
-};
+  };
 
-useEffect(() => {
+  useEffect(() => {
 
-  // provinceOptions.push({id: "2" , name: "Ahsan"})
-  var array;
+    // provinceOptions.push({id: "2" , name: "Ahsan"})
+    var array;
 
-  const fetchData = async () => {
+    const fetchData = async () => {
 
-    const data = await fetch(getAllProvienceURL);
+      const data = await fetch(getAllProvienceURL);
 
-    const json = await data.json();
-    setPropvinceOptions(json)
-  }
-  fetchData()
-  // console.log(array);
-  // setPropvinceOptions(array)
-  // console.log(provinceOptions)
+      const json = await data.json();
+      setPropvinceOptions(json)
+    }
+    fetchData()
+    // console.log(array);
+    // setPropvinceOptions(array)
+    // console.log(provinceOptions)
 
-}, [])
+  }, [])
 
 
 
@@ -314,7 +414,7 @@ useEffect(() => {
         <Box component="form" id="addProperty-form">
           <Grid container spacing={2}>
             <Grid item lg={4} md={4} sm={4}>
-            <FormControl fullWidth>
+              <FormControl fullWidth>
                 <InputLabel id="province-label">Province</InputLabel>
 
                 <Select
@@ -343,7 +443,7 @@ useEffect(() => {
             </Grid>
 
             <Grid item lg={4} md={4} sm={4}>
-            <FormControl fullWidth>
+              <FormControl fullWidth>
                 <InputLabel id="distric-label">District</InputLabel>
 
                 <Select
@@ -374,7 +474,7 @@ useEffect(() => {
             </Grid>
 
             <Grid item lg={4} md={4} sm={4}>
-            <FormControl fullWidth>
+              <FormControl fullWidth>
                 <InputLabel id="society-label">Society</InputLabel>
 
                 <Select
@@ -404,7 +504,7 @@ useEffect(() => {
             </Grid>
 
             <Grid item lg={4} md={4} sm={4}>
-            <FormControl fullWidth>
+              <FormControl fullWidth>
                 <InputLabel id="block-label">Block</InputLabel>
 
                 <Select
@@ -435,19 +535,33 @@ useEffect(() => {
 
 
             <Grid item lg={4} md={4} sm={4}>
-              <TextField
+              {/* <TextField
                 fullWidth
                 id="propertyID"
                 name="propertyID"
                 label="Property ID"
                 variant="outlined"
                 onChange={handleChangeProppertyId}
+              /> */}
+
+              <TextField
+                fullWidth
+                required
+                id="propertyId"
+                name="propertyId"
+                label="Property ID"
+                type="number"
+                value={formData.propertyId}
+                onChange={handleChange}
+                inputProps={{ min: 0 }}
+                error={Boolean(formErrors.propertyId)}
+                helperText={formErrors.propertyId}
               />
             </Grid>
 
 
             <Grid item lg={4} md={4} sm={4}>
-              <TextField
+              {/* <TextField
                 fullWidth
                 id="caseNumber"
                 name="caseNumber"
@@ -455,6 +569,20 @@ useEffect(() => {
                 variant="outlined"
                 type="Number"
                 onChange={handleChangeCaseNum}
+              /> */}
+
+<TextField
+                fullWidth
+                required
+                id="caseNum"
+                name="caseNum"
+                label="Case Number"
+                type="number"
+                value={formData.caseNum}
+                onChange={handleChange}
+                inputProps={{ min: 0 }}
+                error={Boolean(formErrors.caseNum)}
+                helperText={formErrors.caseNum}
               />
             </Grid>
             {/* <Grid item lg={4} md={4} sm={4}>

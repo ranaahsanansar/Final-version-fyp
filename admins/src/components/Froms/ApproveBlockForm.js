@@ -16,22 +16,118 @@ import {
 import React, { useState, useEffect } from "react";
 
 import govAuthority from "../../artifacts/contracts/govermenAuthority.sol/GovermentAuthority.json";
-import nodeProviderUrl, { getAllDistricURL, getAllProvienceURL, getAreaNameURL, getAreaURL, getContractURL, getSocietyURL , landInspectorContractAddress , govermentAuthorityContractAddress } from "../../dataVariables";
+import nodeProviderUrl, { getAllDistricURL, getAllProvienceURL, getAreaNameURL, getAreaURL, getContractURL, getSocietyURL, landInspectorContractAddress, govermentAuthorityContractAddress } from "../../dataVariables";
 
 import { ethers } from "ethers";
 
 const ApproveBlockForm = () => {
+
+
+  const [formData, setFormData] = useState({
+    address: "",
+    amount: ""
+  });
+
+  const [formErrors, setFormErrors] = useState({
+    address: "",
+    amount: ""
+  });
+
+
+  const validateForm = () => {
+    let valid = true;
+    const errors = {};
+
+    if (formData.address == "") {
+      errors.address = "Field is required";
+      valid = false;
+    } else if (formData.address < 1) {
+      errors.address = "ID must not be less then 1";
+      valid = false;
+    }
+
+    if (formData.amount == "") {
+      errors.amount = "Field is required";
+      valid = false;
+    } else if (formData.amount < 1) {
+      errors.amount = "Value must not be less then 1";
+      valid = false;
+    }
+
+    let checkValidID = formData.address.toString();
+    if (checkValidID.length != 42) {
+      errors.address = "ID must be valid 42 HEXA Decimal Numbers";
+      valid = false;
+    }
+
+    if (block == 'none') {
+      setAlert({
+        status: true,
+        msg: "All fields are required",
+        type: "error"
+      })
+      valid = false;
+    }
+
+    if (province == "none") {
+      setAlert({
+        status: true,
+        msg: "All fields are required",
+        type: "error"
+      })
+      valid = false;
+    }
+    if (distric == 'none') {
+      setAlert({
+        status: true,
+        msg: "All fields are required",
+        type: "error"
+      })
+      valid = false;
+    }
+    if (society == 'none') {
+      setAlert({
+        status: true,
+        msg: "All fields are required",
+        type: "error"
+      })
+      valid = false;
+    }
+
+    // if (!formData.agree) {
+    //   errors.agree = "You must agree to the terms and conditions";
+    //   valid = false;
+    // }
+
+    setFormErrors(errors);
+
+    return valid;
+  };
+
+
+  const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
+
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: type === "checkbox" ? checked : value
+    }));
+  };
+
+
+
+  // ---------------------------------------------
   const [distric, setDistric] = useState('none');
   const [province, setProvince] = useState('none');
   const [society, setSociety] = useState('none');
   const [block, setBlock] = useState('none');
 
   const [areaOptions, setAreaOptions] = useState([])
-const [provinceOptions, setPropvinceOptions] = useState([]);
-const [districOptions, setDistricOptions] = useState([]);
-const [societyOtpions, setSocietyOptions] = useState([]);
+  const [provinceOptions, setPropvinceOptions] = useState([]);
+  const [districOptions, setDistricOptions] = useState([]);
+  const [societyOtpions, setSocietyOptions] = useState([]);
 
-const [areaName, setAreaName] = useState("none");
+  const [areaName, setAreaName] = useState("none");
 
 
   const [etherScanAlert, setEtherScanAlert] = useState({
@@ -80,14 +176,17 @@ const [areaName, setAreaName] = useState("none");
     console.log("Ok ha1")
 
     e.preventDefault();
+    if(!validateForm()){
+      return
+    }
     let confirm = window.confirm("Are you sure want to Submit?");
     if (confirm) {
 
       const { ethereum } = window;
 
       let contractAddress = lockContractAddress;
-      let _areaContractAddress = areaContractAddress;
-      let _propertiesCount = propertiesAmmount;
+      let _areaContractAddress = formData.address;
+      let _propertiesCount = formData.amount;
 
 
       const walletProvider = new ethers.providers.Web3Provider(
@@ -103,7 +202,7 @@ const [areaName, setAreaName] = useState("none");
       )
       console.log("Ok ha")
 
-      const dataResult = await sendTx.approveSociety(_areaContractAddress, _propertiesCount , {gasLimit: 5000000});
+      const dataResult = await sendTx.approveSociety(_areaContractAddress, _propertiesCount, { gasLimit: 5000000 });
 
       let txHash = dataResult.hash
       let scanUrl = "https://sepolia.etherscan.io/tx/" + txHash;
@@ -146,10 +245,10 @@ const [areaName, setAreaName] = useState("none");
   // };
 
 
-const handleChangeProvience = (event) => {
-  setProvince(event.target.value);
+  const handleChangeProvience = (event) => {
+    setProvince(event.target.value);
 
-  const fetchData = async () => {
+    const fetchData = async () => {
       let url = getAllDistricURL + event.target.value;
       // console.log("URL")
       // console.log(url)
@@ -160,18 +259,18 @@ const handleChangeProvience = (event) => {
 
       const json = await data.json();
       setDistricOptions(json)
-  }
-  fetchData();
+    }
+    fetchData();
 
-};
+  };
 
 
 
-const handleChangeDistric = (event) => {
+  const handleChangeDistric = (event) => {
 
-  setDistric(event.target.value);
+    setDistric(event.target.value);
 
-  const fetchData = async () => {
+    const fetchData = async () => {
       let url = getSocietyURL + event.target.value;
       // console.log("URL")
       // console.log(url)
@@ -182,15 +281,15 @@ const handleChangeDistric = (event) => {
 
       const json = await data.json();
       setSocietyOptions(json)
-  }
-  fetchData();
-};
+    }
+    fetchData();
+  };
 
 
 
-const handleChangeSociety = (event) => {
-  setSociety(event.target.value);
-  const fetchData = async () => {
+  const handleChangeSociety = (event) => {
+    setSociety(event.target.value);
+    const fetchData = async () => {
       let url = getAreaURL + event.target.value;
       // console.log("URL")
       // console.log(url)
@@ -201,14 +300,14 @@ const handleChangeSociety = (event) => {
 
       const json = await data.json();
       setAreaOptions(json)
-  }
-  fetchData();
-};
+    }
+    fetchData();
+  };
 
 
-const handleChangeBlock = (event) => {
-  setBlock(event.target.value);
-  const fetchData = async () => {
+  const handleChangeBlock = (event) => {
+    setBlock(event.target.value);
+    const fetchData = async () => {
       let url = getAreaNameURL + event.target.value;
       // console.log("URL")
       // console.log(url)
@@ -221,10 +320,10 @@ const handleChangeBlock = (event) => {
       setAreaName(_name)
       // console.log("Area Name: ");
       // console.log(areaName)
-  }
-  fetchData();
+    }
+    fetchData();
 
-  const fetchContracts = async () => {
+    const fetchContracts = async () => {
       let url = getContractURL + event.target.value;
       // console.log("URL")
       // console.log(url)
@@ -240,15 +339,15 @@ const handleChangeBlock = (event) => {
       // setAreaName(_name)
       // console.log("Area Name: ");
       // console.log(areaName)
-  }
-  fetchContracts();
+    }
+    fetchContracts();
 
 
-  // setAreaName(event.target.value);
+    // setAreaName(event.target.value);
 
-  // setLockContractAddress(landInspectorContractAddress);
+    // setLockContractAddress(landInspectorContractAddress);
 
-};
+  };
 
 
   const handleChangeContractAddress = (e) => {
@@ -259,24 +358,24 @@ const handleChangeBlock = (event) => {
   }
 
 
-useEffect(() => {
+  useEffect(() => {
 
-  // provinceOptions.push({id: "2" , name: "Ahsan"})
-  var array;
+    // provinceOptions.push({id: "2" , name: "Ahsan"})
+    var array;
 
-  const fetchData = async () => {
+    const fetchData = async () => {
 
-    const data = await fetch(getAllProvienceURL);
+      const data = await fetch(getAllProvienceURL);
 
-    const json = await data.json();
-    setPropvinceOptions(json)
-  }
-  fetchData()
-  // console.log(array);
-  // setPropvinceOptions(array)
-  // console.log(provinceOptions)
+      const json = await data.json();
+      setPropvinceOptions(json)
+    }
+    fetchData()
+    // console.log(array);
+    // setPropvinceOptions(array)
+    // console.log(provinceOptions)
 
-}, [])
+  }, [])
 
   return (
     <Box width='100%' sx={{
@@ -292,7 +391,7 @@ useEffect(() => {
           <Grid container spacing={2} >
 
             <Grid item lg={4} md={4} sm={4} >
-            <FormControl fullWidth>
+              <FormControl fullWidth>
                 <InputLabel id="province-label">Province</InputLabel>
 
                 <Select
@@ -321,7 +420,7 @@ useEffect(() => {
             </Grid>
 
             <Grid item lg={4} md={4} sm={4} >
-            <FormControl fullWidth>
+              <FormControl fullWidth>
                 <InputLabel id="distric-label">District</InputLabel>
 
                 <Select
@@ -352,7 +451,7 @@ useEffect(() => {
             </Grid>
 
             <Grid item lg={4} md={4} sm={4} >
-            <FormControl fullWidth>
+              <FormControl fullWidth>
                 <InputLabel id="society-label">Society</InputLabel>
 
                 <Select
@@ -382,7 +481,7 @@ useEffect(() => {
             </Grid>
 
             <Grid item lg={4} md={4} sm={4} >
-            <FormControl fullWidth>
+              <FormControl fullWidth>
                 <InputLabel id="block-label">Block</InputLabel>
 
                 <Select
@@ -413,12 +512,39 @@ useEffect(() => {
 
 
             <Grid item lg={4} md={4} sm={4} >
-              <TextField fullWidth id="address" name="address" onChange={handleChangeContractAddress} label="Contract Address" variant="outlined" placeholder="9x99856489264896519879654" />
-
+              {/* <TextField fullWidth id="address" name="address" onChange={handleChangeContractAddress} label="Contract Address" variant="outlined" placeholder="9x99856489264896519879654" /> */}
+              <TextField
+                fullWidth
+                required
+                id="address"
+                name="address"
+                label="Contract Address"
+                type="string"
+                value={formData.address}
+                onChange={handleChange}
+                inputProps={{ min: 0 }}
+                error={Boolean(formErrors.address)}
+                helperText={formErrors.address}
+                placeholder="0xC7d127cE7faD614Af410ac21546a2DbCa5f08419"
+              />
             </Grid>
 
             <Grid item lg={4} md={4} sm={4} >
-              <TextField fullWidth id="propertiesAmount" name="propertiesAmount" onChange={handleChangePropertiesAmmount} label="Total Allowed Properties" variant="outlined" type="number" inputProps={{ min: 1 }} />
+              {/* <TextField fullWidth id="propertiesAmount" name="propertiesAmount" onChange={handleChangePropertiesAmmount} label="Total Allowed Properties" variant="outlined" type="number" inputProps={{ min: 1 }} /> */}
+
+              <TextField
+                fullWidth
+                required
+                id="amount"
+                name="amount"
+                label="Properties Ammount"
+                type="number"
+                value={formData.amount}
+                onChange={handleChange}
+                inputProps={{ min: 0 }}
+                error={Boolean(formErrors.amount)}
+                helperText={formErrors.amount}
+              />
 
             </Grid>
 
@@ -436,7 +562,7 @@ useEffect(() => {
 
           {alert.status ? <Alert severity={alert.type} sx={{ mt: 3 }}>{alert.msg}</Alert> : ''}
 
-{ etherScanAlert.status ? <><Alert severity={etherScanAlert.type} sx={{ mt: 3 }}>{etherScanAlert.msg}<a href={etherScanAlert.url} target="_blank" > Click Me</a> </Alert>  </> : '' }
+          {etherScanAlert.status ? <><Alert severity={etherScanAlert.type} sx={{ mt: 3 }}>{etherScanAlert.msg}<a href={etherScanAlert.url} target="_blank" > Click Me</a> </Alert>  </> : ''}
 
 
 

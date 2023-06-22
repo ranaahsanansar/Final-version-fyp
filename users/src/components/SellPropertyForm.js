@@ -114,14 +114,11 @@ const SellPropertyForm = () => {
     url: "",
     type: ""
   });
-
   const [lockContractAddress, setLockContractAddress] = useState("");
-
   const [areaOptions, setAreaOptions] = useState([])
   const [provinceOptions, setPropvinceOptions] = useState([]);
   const [districOptions, setDistricOptions] = useState([]);
   const [societyOtpions, setSocietyOptions] = useState([]);
-
   const [areaName, setAreaName] = useState("none");
 
   const handleSubmit = async (e) => {

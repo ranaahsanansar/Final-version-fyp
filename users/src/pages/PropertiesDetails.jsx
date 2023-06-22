@@ -137,13 +137,14 @@ const PropertiesDetails = () => {
   // ];
   const gradiantText = {
     backgroundcolor: "primary",
-    backgroundImage: `linear-gradient(to left, #5514B4, #9d149d)`,
+    // backgroundImage: `linear-gradient(to left, #5514B4, #9d149d)`,
+    color: 'black',
     backgroundSize: "100%",
     backgroundRepeat: "repeat",
     backgroundClip: "text",
     WebkitBackgroundClip: "text",
     display: "table",
-    WebkitTextFillColor: "transparent",
+    // WebkitTextFillColor: "transparent",
   };
   const glassMorphismStyle = {
     background: "rgba(255, 255, 255, 0.2)",
@@ -367,15 +368,16 @@ const PropertiesDetails = () => {
                 borderRadius={3}
                 padding={1}
                 sx={{
-                  backgroundImage: "linear-gradient(to left, #5514B4, #9d149d)",
+                  backgroundColor: "#F3E5AB",
                 }}
               >
                 <Box borderRadius={3} padding={2} sx={glassMorphismStyle}>
                   <Stack spacing={2}>
                     <Box display="flex" alignItems="center">
-                      <MonetizationOnRoundedIcon />
+                      {/* <MonetizationOnRoundedIcon /> */}
+                      
                       <Typography fontWeight="bold" mr={1} variant="h6">
-                        {propertyDetails.price}
+                      RS.{propertyDetails.price}
                       </Typography>
                       {/* <span
                         style={{
@@ -387,7 +389,7 @@ const PropertiesDetails = () => {
                         per share
                       </span> */}
                     </Box>
-                    <Typography variant="body2" color="white">
+                    <Typography variant="body2" color="black">
                       {propertyDetails.minitDescription}
                     </Typography>
 
@@ -419,7 +421,7 @@ const PropertiesDetails = () => {
         <Box
           mb={4}
           sx={{
-            background: "rgba(190, 186, 186, 0.256)",
+            background: "#A9D6C6",
             // boxShadow: " 0 4px 30px rgba(0, 0, 0, 0.1)",
             // backdropFilter: "blur(5px)",
             border: "1px solid rgba(255, 255, 255, 0.3)",

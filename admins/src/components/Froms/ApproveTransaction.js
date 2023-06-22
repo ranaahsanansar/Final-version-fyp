@@ -17,12 +17,137 @@ import React, { useEffect, useState } from "react";
 
 import landInspectorContract from "../../artifacts/contracts/LandInspector.sol/LandInspector.json";
 import { ethers } from "ethers";
-import nodeProviderUrl, { getAllDistricURL, getAllProvienceURL, getAreaNameURL, getAreaURL, getContractURL, getSocietyURL , landInspectorContractAddress , govermentAuthorityContractAddress } from "../../dataVariables";
+import nodeProviderUrl, { getAllDistricURL, getAllProvienceURL, getAreaNameURL, getAreaURL, getContractURL, getSocietyURL, landInspectorContractAddress, govermentAuthorityContractAddress } from "../../dataVariables";
 
 
 const ApproveTransaction = () => {
 
+  const [formData, setFormData] = useState({
+    propertyId: "",
+    ownerCNIC: "",
+    buyerCnic: "",
+    reqNum: ""
+  });
 
+  const [formErrors, setFormErrors] = useState({
+    propertyId: "",
+    ownerCNIC: "",
+    buyerCnic: "",
+    reqNum: ""
+  });
+
+
+  const validateForm = () => {
+    let valid = true;
+    const errors = {};
+
+
+
+    if (formData.propertyId == "") {
+      errors.propertyId = "Property ID is required";
+      valid = false;
+    } else if (formData.propertyId < 1) {
+      errors.propertyId = "ID must not be less then 1";
+      valid = false;
+    }
+
+    if (formData.ownerCNIC == "") {
+      errors.ownerCNIC = "Owner CNIC is required";
+      valid = false;
+    } else if (formData.ownerCNIC < 1) {
+      errors.ownerCNIC = "Value must not be less then 1";
+      valid = false;
+    }
+
+    if (formData.buyerCnic == "") {
+      errors.shares = "Shares is required";
+      valid = false;
+    } 
+
+    if (formData.reqNum == "") {
+      errors.reqNum = "Field is required";
+      valid = false;
+    } else if (formData.reqNum < 1) {
+      errors.reqNum = "Value must not be less then 1";
+      valid = false;
+    }
+
+    // -------------------------------
+
+    let checkValidID = formData.propertyId.toString();
+    if (checkValidID.length != 12) {
+      errors.propertyId = "ID must be valid 12 digits Uniqe Identification number";
+      valid = false;
+    }
+    let checkValidCnic = formData.ownerCNIC.toString();
+    if (checkValidCnic.length != 13) {
+      errors.ownerCNIC = "Cnicn Must be Valid";
+      valid = false;
+    }
+
+    let buyerCnicValid = formData.buyerCnic.toString();
+    if (buyerCnicValid.length != 13) {
+      errors.buyerCnic = "Cnicn Must be Valid";
+      valid = false;
+    }
+
+
+    if (block == 'none') {
+      setAlert({
+        status: true,
+        msg: "All fields are required",
+        type: "error"
+      })
+      valid = false;
+    }
+
+    if (province == "none") {
+      setAlert({
+        status: true,
+        msg: "All fields are required",
+        type: "error"
+      })
+      valid = false;
+    }
+    if (distric == 'none') {
+      setAlert({
+        status: true,
+        msg: "All fields are required",
+        type: "error"
+      })
+      valid = false;
+    }
+    if (society == 'none') {
+      setAlert({
+        status: true,
+        msg: "All fields are required",
+        type: "error"
+      })
+      valid = false;
+    }
+
+    // if (!formData.agree) {
+    //   errors.agree = "You must agree to the terms and conditions";
+    //   valid = false;
+    // }
+
+    setFormErrors(errors);
+
+    return valid;
+  };
+
+
+  const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
+
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: type === "checkbox" ? checked : value
+    }));
+  };
+
+
+  // ----------------------------------------------------------
   const [etherScanAlert, setEtherScanAlert] = useState({
     status: false,
     msg: "",
@@ -44,12 +169,12 @@ const ApproveTransaction = () => {
 
 
 
-const [areaOptions, setAreaOptions] = useState([])
-const [provinceOptions, setPropvinceOptions] = useState([]);
-const [districOptions, setDistricOptions] = useState([]);
-const [societyOtpions, setSocietyOptions] = useState([]);
+  const [areaOptions, setAreaOptions] = useState([])
+  const [provinceOptions, setPropvinceOptions] = useState([]);
+  const [districOptions, setDistricOptions] = useState([]);
+  const [societyOtpions, setSocietyOptions] = useState([]);
 
-const [areaName, setAreaName] = useState("none");
+  const [areaName, setAreaName] = useState("none");
 
   const [alert, setAlert] = useState({
     status: false,
@@ -85,6 +210,9 @@ const [areaName, setAreaName] = useState("none");
     e.preventDefault();
     // const data = new FormData(e.currentTarget);
 
+    if(!validateForm()){
+      return
+    }
     const actualData = {
       id: propertyId,
       sellerCnic: selletCnic,
@@ -118,7 +246,7 @@ const [areaName, setAreaName] = useState("none");
         actualData.requestNumber,
         actualData.sellerCnic,
         actualData.buyerCnic,
-        {gasLimit: 5000000}
+        { gasLimit: 5000000 }
       );
 
       let txHash = dataResult.hash
@@ -144,11 +272,11 @@ const [areaName, setAreaName] = useState("none");
   };
 
 
-  
-const handleChangeProvience = (event) => {
-  setProvince(event.target.value);
 
-  const fetchData = async () => {
+  const handleChangeProvience = (event) => {
+    setProvince(event.target.value);
+
+    const fetchData = async () => {
       let url = getAllDistricURL + event.target.value;
       // console.log("URL")
       // console.log(url)
@@ -159,17 +287,17 @@ const handleChangeProvience = (event) => {
 
       const json = await data.json();
       setDistricOptions(json)
-  }
-  fetchData();
+    }
+    fetchData();
 
-};
+  };
 
 
-const handleChangeDistric = (event) => {
+  const handleChangeDistric = (event) => {
 
-  setDistric(event.target.value);
+    setDistric(event.target.value);
 
-  const fetchData = async () => {
+    const fetchData = async () => {
       let url = getSocietyURL + event.target.value;
       // console.log("URL")
       // console.log(url)
@@ -180,14 +308,14 @@ const handleChangeDistric = (event) => {
 
       const json = await data.json();
       setSocietyOptions(json)
-  }
-  fetchData();
-};
+    }
+    fetchData();
+  };
 
-  
-const handleChangeSociety = (event) => {
-  setSociety(event.target.value);
-  const fetchData = async () => {
+
+  const handleChangeSociety = (event) => {
+    setSociety(event.target.value);
+    const fetchData = async () => {
       let url = getAreaURL + event.target.value;
       // console.log("URL")
       // console.log(url)
@@ -198,14 +326,14 @@ const handleChangeSociety = (event) => {
 
       const json = await data.json();
       setAreaOptions(json)
-  }
-  fetchData();
-};
+    }
+    fetchData();
+  };
 
 
-const handleChangeBlock = (event) => {
-  setBlock(event.target.value);
-  const fetchData = async () => {
+  const handleChangeBlock = (event) => {
+    setBlock(event.target.value);
+    const fetchData = async () => {
       let url = getAreaNameURL + event.target.value;
       // console.log("URL")
       // console.log(url)
@@ -218,10 +346,10 @@ const handleChangeBlock = (event) => {
       setAreaName(_name)
       // console.log("Area Name: ");
       // console.log(areaName)
-  }
-  fetchData();
+    }
+    fetchData();
 
-  const fetchContracts = async () => {
+    const fetchContracts = async () => {
       let url = getContractURL + event.target.value;
       // console.log("URL")
       // console.log(url)
@@ -240,35 +368,35 @@ const handleChangeBlock = (event) => {
       // setAreaName(_name)
       // console.log("Area Name: ");
       // console.log(areaName)
-  }
-  fetchContracts();
+    }
+    fetchContracts();
 
 
-  // setAreaName(event.target.value);
+    // setAreaName(event.target.value);
 
-  // setLockContractAddress(landInspectorContractAddress);
+    // setLockContractAddress(landInspectorContractAddress);
 
-};
+  };
 
 
-useEffect(() => {
+  useEffect(() => {
 
-  // provinceOptions.push({id: "2" , name: "Ahsan"})
-  var array;
+    // provinceOptions.push({id: "2" , name: "Ahsan"})
+    var array;
 
-  const fetchData = async () => {
+    const fetchData = async () => {
 
-    const data = await fetch(getAllProvienceURL);
+      const data = await fetch(getAllProvienceURL);
 
-    const json = await data.json();
-    setPropvinceOptions(json)
-  }
-  fetchData()
-  // console.log(array);
-  // setPropvinceOptions(array)
-  // console.log(provinceOptions)
+      const json = await data.json();
+      setPropvinceOptions(json)
+    }
+    fetchData()
+    // console.log(array);
+    // setPropvinceOptions(array)
+    // console.log(provinceOptions)
 
-}, [])
+  }, [])
 
 
   const handleChangeId = (e) => {
@@ -297,7 +425,7 @@ useEffect(() => {
           <Grid container spacing={2} >
 
             <Grid item lg={4} md={4} sm={4} >
-            <FormControl fullWidth>
+              <FormControl fullWidth>
                 <InputLabel id="province-label">Province</InputLabel>
 
                 <Select
@@ -326,7 +454,7 @@ useEffect(() => {
             </Grid>
 
             <Grid item lg={4} md={4} sm={4} >
-            <FormControl fullWidth>
+              <FormControl fullWidth>
                 <InputLabel id="distric-label">District</InputLabel>
 
                 <Select
@@ -357,7 +485,7 @@ useEffect(() => {
             </Grid>
 
             <Grid item lg={4} md={4} sm={4} >
-            <FormControl fullWidth>
+              <FormControl fullWidth>
                 <InputLabel id="society-label">Society</InputLabel>
 
                 <Select
@@ -387,7 +515,7 @@ useEffect(() => {
             </Grid>
 
             <Grid item lg={4} md={4} sm={4} >
-            <FormControl fullWidth>
+              <FormControl fullWidth>
                 <InputLabel id="block-label">Block</InputLabel>
 
                 <Select
@@ -423,22 +551,77 @@ useEffect(() => {
             </Grid> */}
 
             <Grid item lg={4} md={4} sm={4} >
-              <TextField fullWidth id="propertyId" onChange={handleChangeId} type="number" name="propertyId" label="Property ID" variant="outlined" />
+              {/* <TextField fullWidth id="propertyId" onChange={handleChangeId} type="number" name="propertyId" label="Property ID" variant="outlined" /> */}
+              <TextField
+                fullWidth
+                required
+                id="propertyId"
+                name="propertyId"
+                label="Property ID"
+                type="number"
+                value={formData.propertyId}
+                onChange={handleChange}
+                inputProps={{ min: 0 }}
+                error={Boolean(formErrors.propertyId)}
+                helperText={formErrors.propertyId}
+              />
 
             </Grid>
 
             <Grid item lg={4} md={4} sm={4} >
-              <TextField fullWidth id="sellerCnic" onChange={handleChangeSellerCnic} type="number" name="sellerCnic" label="Seller CNIC" variant="outlined" />
+              {/* <TextField fullWidth id="sellerCnic" onChange={handleChangeSellerCnic} type="number" name="sellerCnic" label="Seller CNIC" variant="outlined" /> */}
+              <TextField
+                fullWidth
+                required
+                id="ownerCNIC"
+                name="ownerCNIC"
+                label="Seller CNIC"
+                type="number"
+                value={formData.ownerCNIC}
+                onChange={handleChange}
+                inputProps={{ min: 0 }}
+                error={Boolean(formErrors.ownerCNIC)}
+                helperText={formErrors.ownerCNIC}
+              />
+
 
             </Grid>
 
             <Grid item lg={4} md={4} sm={4} >
-              <TextField fullWidth id="buyerCNIC" onChange={handleChangeBuyerCnic} type="number" name="buyerCNIC" label="Buyer CNIC" variant="outlined" />
+              {/* <TextField fullWidth id="buyerCNIC" onChange={handleChangeBuyerCnic} type="number" name="buyerCNIC" label="Buyer CNIC" variant="outlined" /> */}
+
+              <TextField
+  fullWidth
+  required
+  id="buyerCnic"
+  name="buyerCnic"
+  label="BuyerCnic ID"
+  type="number"
+  value={formData.buyerCnic}
+  onChange={handleChange}
+  inputProps={{ min: 0 }}
+  error={Boolean(formErrors.buyerCnic)}
+  helperText={formErrors.buyerCnic}
+/>
 
             </Grid>
 
             <Grid item lg={4} md={4} sm={4} >
-              <TextField fullWidth id="requestNum" onChange={handleChangeReqNum} type="number" name="requestNum" label="Request Number" variant="outlined" />
+              {/* <TextField fullWidth id="requestNum" onChange={handleChangeReqNum} type="number" name="requestNum" label="Request Number" variant="outlined" /> */}
+
+              <TextField
+  fullWidth
+  required
+  id="reqNum"
+  name="reqNum"
+  label="Request Number"
+  type="number"
+  value={formData.reqNum}
+  onChange={handleChange}
+  inputProps={{ min: 0 }}
+  error={Boolean(formErrors.reqNum)}
+  helperText={formErrors.reqNum}
+/>
 
             </Grid>
 

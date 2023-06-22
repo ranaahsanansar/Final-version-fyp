@@ -21,6 +21,94 @@ import { ethers } from "ethers";
 import nodeProviderUrl, { getAllDistricURL, getAllProvienceURL, getAreaNameURL, getAreaURL, getContractURL, getSocietyURL , landInspectorContractAddress , govermentAuthorityContractAddress } from "../../dataVariables";
 
 const DeclareDeathForm = () => {
+
+
+  const [formData, setFormData] = useState({
+   
+    ownerCNIC: ""
+  });
+  
+  const [formErrors, setFormErrors] = useState({
+   
+    ownerCNIC: ""
+  });
+  
+  
+  const validateForm = () => {
+    let valid = true;
+    const errors = {};
+  
+    if (formData.ownerCNIC == "") {
+      errors.ownerCNIC = "Field is required";
+      valid = false;
+    } else if (formData.ownerCNIC < 1) {
+      errors.ownerCNIC = "Value must not be less then 1";
+      valid = false;
+    }
+  
+  
+    let checkValidCnic = formData.ownerCNIC.toString();
+    if (checkValidCnic.length != 13) {
+      errors.ownerCNIC = "Cnicn Must be Valid";
+      valid = false;
+    }
+  
+  
+    if (block == 'none') {
+      setAlert({
+        status: true,
+        msg: "All fields are required",
+        type: "error"
+      })
+      valid = false;
+    }
+  
+    if (province == "none") {
+      setAlert({
+        status: true,
+        msg: "All fields are required",
+        type: "error"
+      })
+      valid = false;
+    }
+    if (distric == 'none') {
+      setAlert({
+        status: true,
+        msg: "All fields are required",
+        type: "error"
+      })
+      valid = false;
+    }
+    if (society == 'none') {
+      setAlert({
+        status: true,
+        msg: "All fields are required",
+        type: "error"
+      })
+      valid = false;
+    }
+  
+    // if (!formData.agree) {
+    //   errors.agree = "You must agree to the terms and conditions";
+    //   valid = false;
+    // }
+  
+    setFormErrors(errors);
+  
+    return valid;
+  };
+
+  const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
+  
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: type === "checkbox" ? checked : value
+    }));
+  };
+
+  
+  // -------------------------
   const [distric, setDistric] = useState('none');
   const [province, setProvince] = useState('none');
   const [society, setSociety] = useState('none');
@@ -77,6 +165,9 @@ const DeclareDeathForm = () => {
   })
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if(!validateForm()){
+      return;
+    }
     let confirm = window.confirm("Are you sure want to Submit?");
     if (confirm) {
 
@@ -397,7 +488,21 @@ useEffect(() => {
             </Grid>
 
             <Grid item lg={4} md={4} sm={4} >
-              <TextField fullWidth id="Cnic" type="number" onChange={handleChangeId} name="cnic" label="CNIC" variant="outlined" />
+              {/* <TextField fullWidth id="Cnic" type="number" onChange={handleChangeId} name="cnic" label="CNIC" variant="outlined" /> */}
+
+              <TextField
+                fullWidth
+                required
+                id="ownerCNIC"
+                name="ownerCNIC"
+                label="Seller CNIC"
+                type="number"
+                value={formData.ownerCNIC}
+                onChange={handleChange}
+                inputProps={{ min: 0 }}
+                error={Boolean(formErrors.ownerCNIC)}
+                helperText={formErrors.ownerCNIC}
+              />
 
             </Grid>
 

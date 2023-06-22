@@ -25,6 +25,59 @@ import TableComponents from "../components/TableComponents";
 
 const Home = () => {
 
+    const [formData, setFormData] = useState({
+
+        propertyId: ""
+    });
+
+    const [formErrors, setFormErrors] = useState({
+
+        propertyId: ""
+    });
+
+
+    const validateForm = () => {
+        let valid = true;
+        const errors = {};
+
+        if (formData.propertyId == "") {
+            errors.propertyId = "Field is required";
+            valid = false;
+        } else if (formData.propertyId < 1) {
+            errors.propertyId = "Value must not be less then 1";
+            valid = false;
+        }
+
+
+        let checkValidId = formData.propertyId.toString();
+        if (checkValidId.length != 12) {
+            errors.propertyId = "ID must be valid 12 digits Uniqe Identification number";
+            valid = false;
+        }
+
+
+        // if (!formData.agree) {
+        //   errors.agree = "You must agree to the terms and conditions";
+        //   valid = false;
+        // }
+
+        setFormErrors(errors);
+
+        return valid;
+    };
+
+    const handleChange = (e) => {
+        const { name, value, type, checked } = e.target;
+
+        setFormData((prevFormData) => ({
+            ...prevFormData,
+            [name]: type === "checkbox" ? checked : value
+        }));
+    };
+
+
+    // ---------------------------------------------
+
     const [areaOptions, setAreaOptions] = useState([])
     const [provinceOptions, setPropvinceOptions] = useState([]);
     const [districOptions, setDistricOptions] = useState([]);
@@ -232,7 +285,9 @@ const Home = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-
+        if(!validateForm()){
+            return;
+        }
         setFlagNewProTable(false)
 
         const actualData = {
@@ -472,36 +527,36 @@ const Home = () => {
                     </Grid>
 
                     <Grid item sm={12} xs={12} md={6} lg={6}>
-                    <FormControl fullWidth>
-                <InputLabel id="block-label">Block</InputLabel>
+                        <FormControl fullWidth>
+                            <InputLabel id="block-label">Block</InputLabel>
 
-                <Select
-                  fullWidth
-                  required
-                  labelId="block-label"
-                  id="block"
-                  value={block}
-                  label="block"
-                  onChange={handleChangeBlock}
-                >
-                  <MenuItem value="none">None</MenuItem>
-                  {
-                    areaOptions.map((e) => {
+                            <Select
+                                fullWidth
+                                required
+                                labelId="block-label"
+                                id="block"
+                                value={block}
+                                label="block"
+                                onChange={handleChangeBlock}
+                            >
+                                <MenuItem value="none">None</MenuItem>
+                                {
+                                    areaOptions.map((e) => {
 
-                      return (<MenuItem value={e._id}>{e.name}</MenuItem>)
+                                        return (<MenuItem value={e._id}>{e.name}</MenuItem>)
 
-                    })
-                  }
-                  {/* <MenuItem value="bahria-1-A">A Block</MenuItem>
+                                    })
+                                }
+                                {/* <MenuItem value="bahria-1-A">A Block</MenuItem>
                   <MenuItem value="bahria">B Block</MenuItem>
                   <MenuItem value="rehman-garden">X Block</MenuItem>
                   <MenuItem value="iqbal-town">Y Block</MenuItem> */}
-                </Select>
-              </FormControl>
+                            </Select>
+                        </FormControl>
                     </Grid>
 
                     <Grid item sm={12} xs={12} md={6} lg={6}>
-                        <TextField
+                        {/* <TextField
                             margin="normal"
                             fullWidth
                             required
@@ -510,6 +565,20 @@ const Home = () => {
                             label="Property ID"
                             type="number"
                             onChange={hadnleChangeId}
+                        /> */}
+
+                        <TextField
+                            fullWidth
+                            required
+                            id="propertyId"
+                            name="propertyId"
+                            label="Property ID"
+                            type="number"
+                            value={formData.propertyId}
+                            onChange={handleChange}
+                            inputProps={{ min: 0 }}
+                            error={Boolean(formErrors.propertyId)}
+                            helperText={formErrors.propertyId}
                         />
                     </Grid>
                     {/* <Grid item sm={12} xs={12} md={6} lg={6}>
@@ -531,7 +600,7 @@ const Home = () => {
                     <Button
                         type="submit"
                         variant="contained"
-                        sx={{ mt: 3, mb: 2, px: 5 , backgroundColor: '#F3E5AB' , color: 'black'}}
+                        sx={{ mt: 3, mb: 2, px: 5, backgroundColor: '#F3E5AB', color: 'black' }}
                         onClick={handleSubmit}
                     >
                         Fetch

@@ -43,9 +43,9 @@ const PropertyCardFilter = ({ data }) => {
           <img
             src={path+data.photos[0]}
             // src={data.img}
-            // style={{ objectFit: "cover" , backgroundSize: 'cover' }}
+            style={{ objectFit: "cover" , backgroundSize: 'cover' }}
             width="100%"
-            height="100%"
+            height="210px"
           />
         </Box>
         <Box display="flex" padding={2} width={{ xs: '60%',sm:'60%' , md:'70%' , lg: '70%' }}>

@@ -21,6 +21,8 @@ router.delete('/delete/:id' , PropertyController.deleteProperty )
 router.get('/myProperties' , PropertyController.getPropertiesOfUser )
 router.get('/allProperties' , PropertyController.getAllListedProperty )
 router.get('/filterProperty/:cityParam/:type' , PropertyController.getFilterProperty )
+
+router.post('/send-message' , PropertyController.mailSeller)
 // router.get('/getProperty/:id' , PropertyController.getPropertyById )
 
 

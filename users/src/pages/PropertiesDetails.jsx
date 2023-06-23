@@ -33,6 +33,7 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import CloseIcon from '@mui/icons-material/Close';
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import OfferMailForm from "../components/OfferMailForm";
 
 function srcset(image, size, rows = 1, cols = 1) {
   return {
@@ -50,6 +51,7 @@ const PropertiesDetails = () => {
 
   const [idState, setIdState] = useState(id);
   const [propertyDetails, setPropertyDetils] = useState({
+    id : "",
     title: "",
     locationTitle: "",
     description: "",
@@ -170,40 +172,41 @@ const PropertiesDetails = () => {
     // console.log(fetchdetails)
 
 
-  //   const compeletData = {
-  //     title: "Apartment Complex",
-  //     locationTitle: "4th floor Gulberg Plaza",
-  //     des: "Located a 5-minute walk from Al rehman garden gate 2, Tower Street Apartments has accommodations with air conditioning and free WiFi. The units come with hardwood floors and feature a fully equipped kitchenette with a microwave, a flat-screen TV, and a private bathroom with shower and a hairdryer. A fridge is also offered, as well as an electric tea pot and a coffee machine. Popular points of interest near the apartment include Cloth Hall, Main Market Square and Town Hall Tower. The nearest airport is John Paul II International Kraków–Balice, 16.1 km from Tower Street Apartments, and the property offers a paid airport shuttle service.",
-  //     price: "20,000",
-  //     minitDescription: "Property is already approved and listed on blockchain. Per sheare price is 20,000. Price is negotiable.",
-  //     locationBold: "293 4th Floor, Gulberg Plaza,Lahore Pakistan",
-  //     locationBody: "House no.2, Street no. 12, New garden town near Himayat-e-Islam Collage, band road, Lahore.",
-  //     selleName: "Rana Ahsan Ansar",
-  //     sellerEmail: "asn.cs21@gmail.com",
-  //     sharesForSale: 20,
-  //     sellerPhone: "03091045145"
-  // }
+    //   const compeletData = {
+    //     title: "Apartment Complex",
+    //     locationTitle: "4th floor Gulberg Plaza",
+    //     des: "Located a 5-minute walk from Al rehman garden gate 2, Tower Street Apartments has accommodations with air conditioning and free WiFi. The units come with hardwood floors and feature a fully equipped kitchenette with a microwave, a flat-screen TV, and a private bathroom with shower and a hairdryer. A fridge is also offered, as well as an electric tea pot and a coffee machine. Popular points of interest near the apartment include Cloth Hall, Main Market Square and Town Hall Tower. The nearest airport is John Paul II International Kraków–Balice, 16.1 km from Tower Street Apartments, and the property offers a paid airport shuttle service.",
+    //     price: "20,000",
+    //     minitDescription: "Property is already approved and listed on blockchain. Per sheare price is 20,000. Price is negotiable.",
+    //     locationBold: "293 4th Floor, Gulberg Plaza,Lahore Pakistan",
+    //     locationBody: "House no.2, Street no. 12, New garden town near Himayat-e-Islam Collage, band road, Lahore.",
+    //     selleName: "Rana Ahsan Ansar",
+    //     sellerEmail: "asn.cs21@gmail.com",
+    //     sharesForSale: 20,
+    //     sellerPhone: "03091045145"
+    // }
 
-  const compeletData = {
-    title: fetchdetails.title,
-    locationTitle: fetchdetails.location.head,
-    des: fetchdetails.description,
-    price: fetchdetails.price,
-    minitDescription: fetchdetails.priceDes,
-    locationBold: fetchdetails.location.head,
-    locationBody: fetchdetails.location.details,
-    selleName: fetchdetails.ownerId.name,
-    sellerEmail: fetchdetails.ownerId.email,
-    sharesForSale: fetchdetails.shares,
-    sellerPhone: fetchdetails.phone,
-    city: fetchdetails.city
-}
+    const compeletData = {
+      id: fetchdetails.propertyId,
+      title: fetchdetails.title,
+      locationTitle: fetchdetails.location.head,
+      des: fetchdetails.description,
+      price: fetchdetails.price,
+      minitDescription: fetchdetails.priceDes,
+      locationBold: fetchdetails.location.head,
+      locationBody: fetchdetails.location.details,
+      selleName: fetchdetails.ownerId.name,
+      sellerEmail: fetchdetails.ownerId.email,
+      sharesForSale: fetchdetails.shares,
+      sellerPhone: fetchdetails.phone,
+      city: fetchdetails.city
+    }
 
-// console.log(fetchdetails.phone)
+    // console.log(fetchdetails.phone)
 
-// if(fetchdetails.phone){
-//   compeletData.sellerPhone = fetchdetails.phone
-// }
+    // if(fetchdetails.phone){
+    //   compeletData.sellerPhone = fetchdetails.phone
+    // }
 
     const imagesArray = []
 
@@ -227,11 +230,11 @@ const PropertiesDetails = () => {
 
     setImagesData(imagesArray);
 
- 
+
 
     setPropertyDetils(compeletData)
-//     console.log(fetchdetails.des)
-// console.log(compeletData.des)
+    //     console.log(fetchdetails.des)
+    // console.log(compeletData.des)
 
   }
 
@@ -290,7 +293,7 @@ const PropertiesDetails = () => {
               zIndex={1}
               bottom={7}
               right={7}
-              
+
             >
               <Typography
                 fontWeight="bold"
@@ -319,7 +322,7 @@ const PropertiesDetails = () => {
                         key={item.img}
                         cols={item.cols || 1}
                         rows={item.rows || 1}
-                        sx={{overflow: 'hidden'}} 
+                        sx={{ overflow: 'hidden' }}
                       >
 
                         <img
@@ -360,10 +363,10 @@ const PropertiesDetails = () => {
                   </Typography>
                   <Typography color='black' >
                     {
-                     propertyDetails.des
+                      propertyDetails.des
                       // return propertyDetails.description
                     }
-                    
+
                   </Typography>
                 </Box>
               </Stack>
@@ -381,9 +384,9 @@ const PropertiesDetails = () => {
                   <Stack spacing={2}>
                     <Box display="flex" alignItems="center">
                       {/* <MonetizationOnRoundedIcon /> */}
-                      
+
                       <Typography fontWeight="bold" mr={1} variant="h6">
-                      RS.{propertyDetails.price}
+                        RS.{propertyDetails.price}
                       </Typography>
                       {/* <span
                         style={{
@@ -451,26 +454,39 @@ const PropertiesDetails = () => {
           </Stack>
         </Box>
 
-        <Box mb={4}>
-          <Typography sx={gradiantText} variant="h6" fontWeight="bold">
-            Seller Information
-          </Typography>
-          <Stack>
-            <span>Name: </span>
-            <Typography fontWeight="bold">{propertyDetails.selleName}</Typography>
-            <span>Contact Inforamtion: </span>
-            <Box display="flex">
-              <EmailIcon />
+        <Grid container spacing={2} >
+          <Grid item xs={12} sx={12} md={6} lg={6} >
+            <Box mb={4} >
+              <Typography sx={gradiantText} variant="h6" fontWeight="bold">
+                Seller Information
+              </Typography>
+              <Stack>
+                <span>Name: </span>
+                <Typography fontWeight="bold">{propertyDetails.selleName}</Typography>
+                <span>Contact Inforamtion: </span>
+                <Box display="flex">
+                  <EmailIcon />
 
-              <Typography ml={1} fontWeight="bold">{propertyDetails.sellerEmail}</Typography>
-            </Box>
-            <Box display="flex">
-              <LocalPhoneIcon />
+                  <Typography ml={1} fontWeight="bold">{propertyDetails.sellerEmail}</Typography>
+                </Box>
+                <Box display="flex">
+                  <LocalPhoneIcon />
 
-              <Typography ml={1} fontWeight="bold">{propertyDetails.sellerPhone}</Typography>
+                  <Typography ml={1} fontWeight="bold">{propertyDetails.sellerPhone}</Typography>
+                </Box>
+              </Stack>
             </Box>
-          </Stack>
-        </Box>
+          </Grid>
+          <Grid item xs={12} sx={12} md={6} lg={6} >
+            <Box sx={{ mb: '10px' }} >
+              <Typography sx={{ fontWeight:'bold' , fontSize: '22px' }} >Leave a message for seller</Typography>
+              <OfferMailForm  id={propertyDetails.id} title={propertyDetails.title} sellerMail={propertyDetails.sellerEmail} />
+            </Box>
+          </Grid>
+        </Grid>
+
+
+
 
         {/* <Box
           mb={4}
@@ -509,7 +525,7 @@ const PropertiesDetails = () => {
             </Box>
           </TabPanel>
         </Box>  */}
-        
+
         {/* <Box
           mb={4}
           sx={{

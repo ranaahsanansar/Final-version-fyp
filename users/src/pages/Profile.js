@@ -1,4 +1,5 @@
 import {
+  Alert,
   Box,
   Button,
   Container,
@@ -19,14 +20,41 @@ import {nodeProviderUrl} from "../dataVariables";
 import { citizenContractAddress } from "../dataVariables";
 import YourPropertiesDetails from "../components/YourPropertiesDetails";
 import Chart from "../components/ChartComponent";
+import axios from "axios";
+
 
 const Profile = () => {
+  const [alert, setAlert] = useState({
+    status: false,
+    msg: "",
+    type: ""
+  });
+
 
   const { ethereum } = window;
   const dispatch = useDispatch();
   // const [walletConnection, setWalletConnection] = useState(false);
+  const { token } = useSelector(state => state.auth)
 
 
+  const [userName , setUserName]  = useState("Rana Ahsan Ansar");
+
+
+  const fetchUser = async () => {
+    const response = await axios.get('http://localhost:8000/api/user/loggeduser', {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+
+    console.log(response.data.user.name)
+    setUserName(response.data.user.name)
+    // console.log(userName)
+    
+  }
+  useEffect(()=>{
+    fetchUser()
+  } , [])
 
 
 
@@ -42,6 +70,10 @@ const Profile = () => {
   const [approvStatus , setApprovStatus] = useState(false);
 
   const handleConnectWallet = async () => {
+
+    try{
+
+   
     await ethereum.request({
       method: "wallet_requestPermissions",
       params: [{
@@ -83,12 +115,29 @@ const Profile = () => {
     console.log(dataResult);
 
     setApprovStatus(dataResult);
-
+  }catch(err){
+    setAlert({
+      status: true,
+      msg: "Kindly Install meta mask Wallet and login your account",
+      type: "error"
+    })
+  }
 
   }
 
   useEffect(() => {
-    
+    // console.log("1")
+    if (alert.status === true) {
+      setTimeout(() => {
+
+        setAlert({
+          status: false,
+          msg: "",
+          type: ""
+        })
+      }, 5000);
+    }
+
   })
 
   return (
@@ -97,9 +146,11 @@ const Profile = () => {
         <Container>
           <Box mt={2}>
             <Stack spacing={2}>
+          {alert.status ? <Alert severity={alert.type} sx={{ mt: 3 }}>{alert.msg}</Alert> : ''}
+
               <Box sx={ [ {borderRadius: 2, padding: 2 , backgroundColor: 'white' , display: 'flex' , alignItems: 'center' , justifyContent:'space-between' }] }>
                 <Box>
-                <h1>Rana Ahsan Ansar</h1>
+                <h1>{userName}</h1>
                 {
                   isConnected ? (<Typography  sx={{
                     display: '-webkit-box',

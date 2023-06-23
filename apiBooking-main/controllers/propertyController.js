@@ -1,6 +1,10 @@
 import PropertyModel from "../models/Property.js";
 import fs from "fs";
 import path from "path";
+import nodemailer from 'nodemailer'
+import dotenv from 'dotenv'
+import transporter from "../config/emailConfig.js";
+dotenv.config()
 
 class PropertyController {
   static listNewProperty = async (req, res) => {
@@ -203,7 +207,7 @@ class PropertyController {
           status: "success",
           propertiesArray: properties,
         })
-      } else if (cityParam != "none" && type != "none"){
+      } else if (cityParam != "none" && type != "none") {
         const properties = await PropertyModel.find({
           city: cityParam,
           propertyType: type
@@ -215,7 +219,7 @@ class PropertyController {
           status: "success",
           propertiesArray: properties,
         })
-      }else {
+      } else {
         const properties = await PropertyModel.find();
         console.log(properties)
         console.log("4")
@@ -244,6 +248,79 @@ class PropertyController {
       })
     }
   }
+
+  static mailSeller = async (req, res) => {
+    try {
+      const {
+        sellerMail,
+        clientMail, //
+        ClientPhone,//numeric
+        propertyID, //numeric
+        propertyTitle,
+        clientMessage,
+      } = req.body;
+
+      const parsedClientPhone = parseInt(ClientPhone);
+      const parsedPropertyId = parseInt(propertyID);
+
+      
+
+      const transporter = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+          user: process.env.MY_EMAIL,
+          pass: process.env.EMAIL_PASSWORD,
+        },
+      });
+
+      const mailOptions = {
+        from: process.env.MY_EMAIL,
+        to: sellerMail,
+        subject: `Potential Buyer Interested in Your Property Ad - Property ID: ${propertyID} - ${propertyTitle}`,
+        text: `Dear Seller! ,
+
+        I hope this email finds you well. I am writing to inform you that we have received significant interest from a potential buyer regarding your property advertisement. They have provided their contact information along with a message expressing their interest. Please find the details below:
+        
+        BUYER INFO
+        Email: ${clientMail}
+        Phone Number: ${ClientPhone}
+        
+        Message from the Buyer:
+        ${clientMessage}
+        
+        We highly encourage you to reach out to the buyer at your earliest convenience to discuss the property further and potentially arrange a viewing or provide additional information.
+        
+        Property Details:
+        Property ID: ${propertyID}
+        Property Title: ${propertyTitle}
+        
+        If you require any assistance or have any questions regarding this potential buyer, please do not hesitate to contact us. We are more than willing to help facilitate communication between you and the interested party.
+        
+        Thank you for choosing our platform to advertise your property. We wish you the best in your real estate endeavors and hope for a successful transaction.
+        
+        Warm regards,`,
+      };
+      console.log(sellerMail)
+      transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          console.log("Error:", error);
+          res.send({
+            status: "failed",
+            message: "Mail not send",
+          });
+        } else {
+          console.log("Email sent:", info.response);
+          res.send({
+            status: "Successfull",
+            message: "Mail Send Successfully!",
+          });
+        }
+      });
+   
+    } catch (error) {
+      console.log(`Mailing Error: ${error}`);
+    }
+  };
 
 }
 export default PropertyController;

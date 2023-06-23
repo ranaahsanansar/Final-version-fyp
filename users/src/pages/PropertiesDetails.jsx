@@ -97,26 +97,26 @@ const PropertiesDetails = () => {
   };
 
 
-  // function TabPanel(props) {
-  //   const { children, value, index } = props;
-  //   return <>{value === index && <>{children}</>}</>;
-  // }
+  function TabPanel(props) {
+    const { children, value, index } = props;
+    return <>{value === index && <>{children}</>}</>;
+  }
   // Shares Table Data
-  // const sharesTableColumns = [
-  //   { id: "name", label: "Name", minWidth: 170 },
-  //   { id: "sahres", label: "Shares", minWidth: 100 },
-  //   { id: "contact", label: "Contact", minWidth: 100 },
-  // ];
+  const sharesTableColumns = [
+    { id: "name", label: "Name", minWidth: 170 },
+    { id: "sahres", label: "Shares", minWidth: 100 },
+    { id: "contact", label: "Contact", minWidth: 100 },
+  ];
 
   function createData(name, sahres, contact) {
     return { name, sahres, contact };
   }
 
-  // const sharesTableRows = [
-  //   createData("Rana Ahsan Ansar", "70", "03091045145"),
-  //   createData("Talal", "20", "03091045145"),
-  //   createData("Sufyan Asghar", "10", "03091045145"),
-  // ];
+  const sharesTableRows = [
+    createData("Rana Ahsan Ansar", "70", "03091045145"),
+    createData("Talal", "20", "03091045145"),
+    createData("Sufyan Asghar", "10", "03091045145"),
+  ];
 
   // Property Purchasing logs
   const historyTableColumns = [
@@ -130,11 +130,11 @@ const PropertiesDetails = () => {
     return { seller, buyer, shares, time };
   }
 
-  // const historyTableRows = [
-  //   createHistoryData("Rana Ahsan Ansar", "Talal", "70", "5246"),
-  //   createHistoryData("Talal", "Talal", "70", "5246"),
-  //   createHistoryData("Sufyan Asghar", "Talal", "70", "5246"),
-  // ];
+  const historyTableRows = [
+    createHistoryData("Rana Ahsan Ansar", "Talal", "70", "5246"),
+    createHistoryData("Talal", "Talal", "70", "5246"),
+    createHistoryData("Sufyan Asghar", "Talal", "70", "5246"),
+  ];
   const gradiantText = {
     backgroundcolor: "primary",
     // backgroundImage: `linear-gradient(to left, #5514B4, #9d149d)`,
@@ -156,15 +156,18 @@ const PropertiesDetails = () => {
   // tabs Settings
   const [value, setValue] = React.useState(0);
 
-  // const handleTabs = (event, newValue) => {
-  //   setValue(newValue);
-  // };
+  const handleTabs = (event, newValue) => {
+    setValue(newValue);
+  };
 
   const fetchProperty = async (id) => {
     const url = `http://localhost:8000/api/dashboard/property/getProperty/${id}`
     const property = await axios.get(url)
     // console.log(property.data.details)
     const fetchdetails = property.data.details
+
+
+    // console.log(fetchdetails)
 
 
   //   const compeletData = {
@@ -192,12 +195,17 @@ const PropertiesDetails = () => {
     selleName: fetchdetails.ownerId.name,
     sellerEmail: fetchdetails.ownerId.email,
     sharesForSale: fetchdetails.shares,
-    sellerPhone: "03091045145"
+    sellerPhone: fetchdetails.phone,
+    city: fetchdetails.city
 }
 
+// console.log(fetchdetails.phone)
+
+// if(fetchdetails.phone){
+//   compeletData.sellerPhone = fetchdetails.phone
+// }
+
     const imagesArray = []
-
-
 
     await fetchdetails.photos.forEach((element, i) => {
       let path = `http://localhost:8000/public/uploads/propertyImage/${element}`
@@ -322,11 +330,9 @@ const PropertiesDetails = () => {
                       </ImageListItem>
                     )
                   }
-
                 })}
               </ImageList>
             </Box>
-
           </Box>
         </Box>
 
@@ -437,7 +443,10 @@ const PropertiesDetails = () => {
               {propertyDetails.locationBold}
             </Typography>
             <Typography>
-              {propertyDetails.locationBody}
+              <span style={{ fontWeight: 'bold' }} >Near to: </span>{propertyDetails.locationBody}
+            </Typography>
+            <Typography>
+              <span style={{ fontWeight: 'bold' }} >City: </span>{propertyDetails.city}
             </Typography>
           </Stack>
         </Box>
@@ -499,8 +508,8 @@ const PropertiesDetails = () => {
               />
             </Box>
           </TabPanel>
-        </Box> */}
-        {/* Share Holders Table  */}
+        </Box>  */}
+        
         {/* <Box
           mb={4}
           sx={{
@@ -519,9 +528,9 @@ const PropertiesDetails = () => {
               rowsArray={sharesTableRows} 
             />
           </Box>
-        </Box> */}
-        {/* Buying History Table  */}
-        {/* <Box
+        </Box>
+        
+         <Box
           mb={4}
           sx={{
             background: "rgba(190, 186, 186, 0.256)",

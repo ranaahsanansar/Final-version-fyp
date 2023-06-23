@@ -20,6 +20,7 @@ import { useSelector } from "react-redux";
 import { citites } from "../cities";
 
 
+
 const validationSchema = Yup.object().shape({
   propertyId: Yup.number().test(
     "is-twelve-digits",
@@ -66,6 +67,41 @@ const validationSchema = Yup.object().shape({
       }
       return false;
     }
+  ),
+  phone: Yup.string().test(
+    "is-phone-number",
+    "Phone must be 11 digit valid number",
+    (value) => {
+      // console.log("Talal")
+
+      try {
+
+      // if ( value.length == 11 ) {
+      //   console.log("Talal")
+      //    let parseedValue = parseInt(value);
+      
+      // if (String(parseedValue).length == 11){
+      //   return true;
+      // }
+      //   return true;
+      // }
+      console.log("Ahsan")
+
+      let parseedValue = parseInt(value);
+      
+      if (String(parseedValue).length == 11){
+        return true;
+      }
+      
+      return false;
+      
+      }catch(err){
+        console.log("ho gya")
+
+        return false;
+      }
+      return false;
+    }
   )
 });
 
@@ -97,7 +133,8 @@ const AddProperty = () => {
       city: "",
       propertyType: "",
       description: "",
-      share: ""
+      share: "",
+      phone: ""
     },
     validationSchema,
     onSubmit: async (values) => {
@@ -114,6 +151,7 @@ const AddProperty = () => {
         formData.append("propertyType", values.propertyType);
         formData.append("description", values.description);
         formData.append('shares' , values.share)
+        formData.append('phone' , values.phone)
   
         // const document = {
   
@@ -302,16 +340,29 @@ const AddProperty = () => {
           
           <Grid item sm={6} md={6} lg={4} xs={12}>
             <TextField
-              margin="normal"
               fullWidth
               required
               id="share"
               name="share"
-              label="share"
+              label="shares"
               value={formik.values.share}
               onChange={formik.handleChange}
               error={formik.touched.share && Boolean(formik.errors.share)}
               helperText={formik.touched.share && formik.errors.share}
+            />
+          </Grid>
+          <Grid item sm={6} md={6} lg={4} xs={12}>
+            <TextField
+              fullWidth
+              required
+              id="phone"
+              name="phone"
+              label="Phone Number"
+              placeholder="+923*********"
+              value={formik.values.phone}
+              onChange={formik.handleChange}
+              error={formik.touched.phone && Boolean(formik.errors.phone)}
+              helperText={formik.touched.phone && formik.errors.phone}
             />
           </Grid>
 

@@ -53,7 +53,9 @@ const propertySchema = new mongoose.Schema({
   shares: {
     type: Number,
     default: 100
-  }
+  },
+  phone: {type: String, 
+  default: "Not given"}
 });
 const PropertyModel = mongoose.model("Property", propertySchema);
 

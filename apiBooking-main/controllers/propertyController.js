@@ -14,7 +14,8 @@ class PropertyController {
       locationHead,
       locationDetails,
       city,
-      shares
+      shares,
+      phone
     } = req.body;
     const propertyImagesArray = req.files["propertyImage"];
     // console.log(propertyImagesArray)
@@ -46,7 +47,8 @@ class PropertyController {
           },
           city: city,
           photos: imagesArray,
-          shares: shares
+          shares: shares,
+          phone: phone
         });
 
         console.log(doc)

@@ -45,14 +45,12 @@ const SellProperty = () => {
                     How to Sell property through Blockchain
                   </Typography>
                   <ul style={{ listStyle: "none" }} >
-                    <li>Verify Your self as a Seller.</li>
-                    <li>Contact to the owner.</li>
-                    <li>Decide the price of property per share.</li>
-                    <li>Take request number from the owner.</li>
-                    <li>Enter required details below.</li>
-                    <li>
-                      Go to the landInspector office and approve your transaction.
-                    </li>
+                  <li>1. Verify yourself as a Citizen.</li>
+                    <li>2. Go to Land Inspector / Patwari office to initailly Mint the Property on Blockchain, only then you can sell it. If you have minted before, Ignore step 2 </li>
+                    <li>3. Then List the Property on this Platform.</li>
+                    <li>4. Set the price of property according to the Shares / Tokens you are selling e.g for 30 shares you set the price Rs.30 lacs</li>
+                    <li>5. When you close a deal with buyer, Then fill out the form below. By submiting it you are minting this deal on Blockchain.</li>
+                    <li>6. Then visit Landinspector / Patwari office of your area along with the Buyer to Transfer the ownership of the property .</li>
                   </ul>
                 </Box>
 

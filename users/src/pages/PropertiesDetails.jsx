@@ -31,9 +31,10 @@ import EmailIcon from "@mui/icons-material/Email";
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import CloseIcon from '@mui/icons-material/Close';
-import { useParams } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 import axios from "axios";
 import OfferMailForm from "../components/OfferMailForm";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 function srcset(image, size, rows = 1, cols = 1) {
   return {
@@ -247,6 +248,9 @@ const PropertiesDetails = () => {
     <>
       <Container>
         <Box marginY={4}>
+          <Button component={NavLink} to='/filter' startIcon={<ArrowBackIcon />} variant='contained' sx={{ fontWeight: 'bold' , color:'black' , textTransform: 'none' , mb: 2 , backgroundColor: '#A9D6C6'}} >
+            Back
+          </Button>
           <Typography sx={gradiantText} variant="h5" fontWeight="bold">
             {propertyDetails.title}
           </Typography>
@@ -297,13 +301,13 @@ const PropertiesDetails = () => {
             >
               <Typography
                 fontWeight="bold"
-                color="whitesmoke"
+                color="black"
                 padding={1}
                 variant="subtitle1"
                 onClick={() => {
                   setOpen(!open)
                 }}
-                sx={{ cursor: 'pointer' }}
+                sx={{ cursor: 'pointer' , border: '1px solid black' , borderRadius: 2 }}
               >
                 Show all Images
               </Typography>

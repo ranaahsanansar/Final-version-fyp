@@ -45,14 +45,12 @@ const BuyProperty = () => {
                     How to Buy property through Blockchain
                   </Typography>
                   <ul style={{ listStyle: "none" }} >
-                  <li>Verify Your self as a Buyer.</li>
-                    <li>Contact to the owner.</li>
-                    <li>Decide the price of property per share.</li>
-                    <li>Take request number from the owner.</li>
-                    <li>Enter required details below.</li>
-                    <li>
-                      Go to the landInspector office and approve your transaction.
-                    </li>
+                  <li>1. Verify yourself as a Citizen.</li>
+                    <li>2. Choose Property to buy form Listed Properties from our Platform.</li>
+                    <li>3. Contact the seller and negotaite the price.</li>
+                    <li>4. Then fill out the form below, By submiting it you are singing a deal which will be stored on blockchain.</li>
+                    <li>5. Then visit land inspector/Patwari office of your area along with the seller to become the Owner of the Property.</li>
+                    
                   </ul>
                 </Box>
 

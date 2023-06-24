@@ -177,7 +177,7 @@ const Profile = () => {
                 >
                   <Typography onClick={() => {
                     handleConnectWallet()
-                  }} >Connect Wallet</Typography> 
+                  }} >{isConnected ? "Wallet Connected" : "Connect Wallet"}</Typography> 
                   {/* <AccountBalanceWalletIcon style={{fontSize: '50px'}} /> */}
                 </Box>
               </Box>

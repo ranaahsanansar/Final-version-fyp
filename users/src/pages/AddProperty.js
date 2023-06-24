@@ -89,7 +89,7 @@ const validationSchema = Yup.object().shape({
 
       let parseedValue = parseInt(value);
       
-      if (String(parseedValue).length == 11){
+      if (String(parseedValue).length == 10){
         return true;
       }
       
@@ -205,7 +205,7 @@ const AddProperty = () => {
               label="Property ID"
               value={formik.values.propertyId}
               onChange={formik.handleChange}
-              error={formik.touched.propertyId && Boolean(formik.errors.title)}
+              error={formik.touched.propertyId && Boolean(formik.errors.propertyId)}
               helperText={formik.touched.propertyId && formik.errors.propertyId}
             />
           </Grid>
@@ -358,7 +358,7 @@ const AddProperty = () => {
               id="phone"
               name="phone"
               label="Phone Number"
-              placeholder="+923*********"
+              placeholder="03*********"
               value={formik.values.phone}
               onChange={formik.handleChange}
               error={formik.touched.phone && Boolean(formik.errors.phone)}

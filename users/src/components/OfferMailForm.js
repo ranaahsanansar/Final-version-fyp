@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
-import { Alert, Box } from '@mui/material';
+import { Alert, Box, Button, TextField } from '@mui/material';
 import axios from 'axios';
 
 const OfferMailForm = ({ id, title , sellerMail }) => {
@@ -64,7 +62,7 @@ const OfferMailForm = ({ id, title , sellerMail }) => {
         console.log('Form submitted successfully!');
         setAlert({
           status: true,
-          msg: "Mail send Successfuly",
+          msg: "Mail sent Successfuly",
           type: "success"
         })
       } catch (err) {

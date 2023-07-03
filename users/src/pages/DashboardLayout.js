@@ -2,7 +2,7 @@ import React from "react";
 import DashboardNavbar from "../components/DashboardNavbar";
 import { NavLink, Outlet } from "react-router-dom";
 import {
-    Box,
+  Box,
   Button,
   CssBaseline,
   Divider,
@@ -72,25 +72,25 @@ const DashboardLayout = () => {
             p: 2,
             color: "white",
             display: { xs: "none", sm: "none", md: "block" },
-            height: {lg: '90vh', md: '90vh' , sm: 'auto' , xs: 'auto'},
+            height: { lg: '90vh', md: '90vh', sm: 'auto', xs: 'auto' },
             overflow: 'scroll',
             '&::-webkit-scrollbar': {
               display: "none"
-          },
-          '&::-webkit-scrollbar-thumb': {
+            },
+            '&::-webkit-scrollbar-thumb': {
               backgroundColor: `rgba(0, 0, 0, 0.05)`,
               display: "none"
-          }
+            }
           }}
         >
           <Box sx={{ mb: '20px' }}>
             {/* <Typography variant="h3">Dashboard</Typography> */}
-            <h1 style={{ color: 'black'}} >Dashboard</h1>
+            <h1 style={{ color: 'black' }} >Dashboard</h1>
           </Box>
-          
+
 
           <Stack spacing={1}>
-          <Button
+            <Button
               component={NavLink}
               variant="contained"
               to="/"
@@ -101,6 +101,7 @@ const DashboardLayout = () => {
             >
               Home
             </Button>
+            
             <Button
               component={NavLink}
               variant="contained"
@@ -111,6 +112,17 @@ const DashboardLayout = () => {
               sx={{ color: "black", textTransform: "none", width: "100%" }}
             >
               Profile
+            </Button>
+            <Button
+              component={NavLink}
+              variant="contained"
+              to="propertyLogs"
+              style={({ isActive }) => {
+                return { backgroundColor: isActive ? "white" : "#A9D6C6" };
+              }}
+              sx={{ color: "black", textTransform: "none", width: "100%" }}
+            >
+              Property Info
             </Button>
             <Button
               component={NavLink}
@@ -168,10 +180,10 @@ const DashboardLayout = () => {
               Change Password
             </Button>
             <Button
-              
+
               variant="contained"
               onClick={handleLogout}
-              sx={{ color: "black", textTransform: "none", width: "100%" , backgroundColor: '#A9D6C6' }}
+              sx={{ color: "black", textTransform: "none", width: "100%", backgroundColor: '#A9D6C6' }}
             >
               Logout
             </Button>
@@ -188,16 +200,18 @@ const DashboardLayout = () => {
           </Button> */}
         </Grid>
         <Grid item sm={12} lg={10} md={10} xs={12}
-        sx={{height: {lg: '90vh', md: '90vh' , sm: '90vh' , xs: '90vh'},
-        // backgroundColor : "#353839",
-        backgroundColor: "#A9D6C6",
-        overflow: 'scroll' , '&::-webkit-scrollbar': {
-          display: "none"
-      },
-      '&::-webkit-scrollbar-thumb': {
-          backgroundColor: `rgba(0, 0, 0, 0.05)`,
-          display: "none"
-      }}}
+          sx={{
+            height: { lg: '90vh', md: '90vh', sm: '90vh', xs: '90vh' },
+            // backgroundColor : "#353839",
+            backgroundColor: "#A9D6C6",
+            overflow: 'scroll', '&::-webkit-scrollbar': {
+              display: "none"
+            },
+            '&::-webkit-scrollbar-thumb': {
+              backgroundColor: `rgba(0, 0, 0, 0.05)`,
+              display: "none"
+            }
+          }}
         >
           {/* <ChangePassword /> */}
           <Outlet />

@@ -35,8 +35,6 @@ const Profile = () => {
   const dispatch = useDispatch();
   // const [walletConnection, setWalletConnection] = useState(false);
   const { token } = useSelector(state => state.auth)
-
-
   const [userName , setUserName]  = useState("Rana Ahsan Ansar");
 
 

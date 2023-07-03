@@ -19,6 +19,7 @@ import PropertiesDetails from "./pages/PropertiesDetails";
 import UpdateProperty from "./pages/UpdateProperty";
 import ApprovalRequestForm from "./components/ApprovalRequestForm";
 import './App.css';
+import GetPropertyLogs from "./pages/GetPropertyLogs";
 
 
 
@@ -46,6 +47,7 @@ function App() {
             <Route path="changePassword" element={token ? <ChangePassword /> : <Navigate to="/login" />} />
             <Route path="updateProperty" element={token ? <UpdateProperty /> : <Navigate to="/login" />} />
             <Route path="approvalRequest" element={token ? <ApprovalRequestForm /> : <Navigate to="/login" />} />
+            <Route path="propertyLogs" element={token ? <GetPropertyLogs /> : <Navigate to="/login" />} />
 
           <Route path="test" element={ <UpdateProperty /> } />
 

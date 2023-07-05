@@ -2,6 +2,8 @@ import express from "express";
 import PropertyController from "../controllers/propertyController.js";
 import checkUserAuth from "../middlewares/auth-middleware.js";
 import uploadFile from "../middlewares/picUploadMiddleware.js";
+import approvalFiles from "../middlewares/approvalPicMiddleware.js";
+import ApprovalController from "../controllers/approvalController.js";
 const router = express.Router();
 // /api/dashboard/property
 // Midware to Authentic user 
@@ -25,5 +27,10 @@ router.get('/filterProperty/:cityParam/:type' , PropertyController.getFilterProp
 router.post('/send-message' , PropertyController.mailSeller)
 // router.get('/getProperty/:id' , PropertyController.getPropertyById )
 
+
+// routers for User Approval requests 
+router.use('/approval' , checkUserAuth ,approvalFiles.fields([{ name: 'front' , maxCount: 1 } , { name: 'back' , maxCount: 1 } , { name: 'passport-pic' , maxCount: 1 } ]))
+
+router.post('/approval' , ApprovalController.approvalRequest)
 
 export default router

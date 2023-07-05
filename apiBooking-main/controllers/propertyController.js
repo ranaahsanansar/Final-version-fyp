@@ -65,7 +65,7 @@ class PropertyController {
         });
       } catch (err) {
         // console.log(err)
-        res.status(201).send({
+        res.status(404).send({
           status: "failed",
           message: "DB Error",
         });

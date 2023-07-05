@@ -101,6 +101,8 @@ const DashboardLayout = () => {
             >
               Home
             </Button>
+
+
             
             <Button
               component={NavLink}
@@ -178,6 +180,17 @@ const DashboardLayout = () => {
               sx={{ color: "black", textTransform: "none", width: "100%" }}
             >
               Change Password
+            </Button>
+            <Button
+              component={NavLink}
+              variant="contained"
+              to="approvalRequest"
+              style={({ isActive }) => {
+                return { backgroundColor: isActive ? "white" : "#A9D6C6" };
+              }}
+              sx={{ color: "black", textTransform: "none", width: "100%" }}
+            >
+              Approval Request
             </Button>
             <Button
 

@@ -51,8 +51,18 @@ const CitizenApprovalPage = () => {
 
   const handleFetch = async (e) => {
     e.preventDefault();
+    if(etherScanAlert.status === true ){
+      setEtherScanAlert(
+        {
+          status: false,
+          msg: "",
+          url: null,
+          type: ""
+        }
+      )
+    }
 
-    if(cnic == ""){
+    if (cnic == "") {
       setError({
         status: true,
         msg: "Enter a valid CNIC",
@@ -94,7 +104,7 @@ const CitizenApprovalPage = () => {
         }
 
         setFetchedUser(newUser)
-let test = `${webUrl}${fetchedUser.path}${fetchedUser.front}`
+        let test = `${webUrl}${fetchedUser.path}${fetchedUser.front}`
         console.log(test)
 
 
@@ -108,7 +118,7 @@ let test = `${webUrl}${fetchedUser.path}${fetchedUser.front}`
         return
       }
 
-    setCitizen(!citizen);
+      setCitizen(!citizen);
 
 
       // console.log(response.data)
@@ -162,27 +172,42 @@ let test = `${webUrl}${fetchedUser.path}${fetchedUser.front}`
     )
     // console.log("Ok ha")
 
-    const dataResult = await sendTx.approveCitizen(applicantCnic, "0xa543CBa1E566DB08d3d0fe2D888bC1797E5226F6", "only", { gasLimit: 5000000 });
+    try {
+      const dataResult = await sendTx.approveCitizen(applicantCnic, "0xa543CBa1E566DB08d3d0fe2D888bC1797E5226F6", "only", { gasLimit: 5000000 });
+      let txHash = dataResult.hash
+      let scanUrl = "https://sepolia.etherscan.io/tx/" + txHash;
 
-    let txHash = dataResult.hash
-    let scanUrl = "https://sepolia.etherscan.io/tx/" + txHash;
+      const response = await axios.post('http://localhost:8000/api/dashboard/property/send-approval-mail', {
+        "email": fetchedUser.email,
+        "msg": "Approved",
+        "url": `${scanUrl}`
+      })
 
+      setEtherScanAlert(
+        {
+          status: true,
+          msg: "View Transaction on EtherScan",
+          url: scanUrl,
+          type: "success"
+        }
+      )
 
-
-    setEtherScanAlert(
-      {
+      setError({
         status: true,
-        msg: "View Transaction on EtherScan",
-        url: scanUrl,
+        msg: "Mail send to Person",
         type: "success"
-      }
-    )
+      })
 
-    await dataResult.wait();
-
+      // await dataResult.wait();
+    } catch (err) {
+      setError({
+        status: true,
+        msg: "Error! bad communication with server",
+        type: "error"
+      })
+      return
+    }
     // console.log(dataResult)
-
-
   }
 
   const handleReject = async (e) => {
@@ -219,23 +244,49 @@ let test = `${webUrl}${fetchedUser.path}${fetchedUser.front}`
     )
     // console.log("Ok ha")
 
-    const dataResult = await sendTx.rejectCitizen(applicantCnic, "only", { gasLimit: 5000000 });
+    try {
+      const dataResult = await sendTx.rejectCitizen(applicantCnic, "only", { gasLimit: 5000000 });
+      let txHash = dataResult.hash
+      let scanUrl = "https://sepolia.etherscan.io/tx/" + txHash;
 
-    let txHash = dataResult.hash
-    let scanUrl = "https://sepolia.etherscan.io/tx/" + txHash;
+      const response = await axios.post('http://localhost:8000/api/dashboard/property/send-approval-mail', {
+        "email": fetchedUser.email,
+        "msg": "Rejected",
+        "url": `${scanUrl}`
+      })
 
+      // setEtherScanAlert(
+      //   {
+      //     status: true,
+      //     msg: "View Transaction on EtherScan",
+      //     url: scanUrl,
+      //     type: "success"
+      //   }
+      // )
 
-
-    setEtherScanAlert(
-      {
+      setEtherScanAlert(
+        {
+          status: true,
+          msg: "View Transaction on EtherScan",
+          url: scanUrl,
+          type: "success"
+        }
+      )
+      setError({
         status: true,
-        msg: "View Transaction on EtherScan",
-        url: scanUrl,
+        msg: "Mail send to Person",
         type: "success"
-      }
-    )
+      })
+      // await dataResult.wait();
+    } catch (err) {
+      setError({
+        status: true,
+        msg: "Error! bad communication with server",
+        type: "error"
+      })
+      return
+    }
 
-    await dataResult.wait();
 
     // console.log(dataResult)
 
@@ -261,17 +312,32 @@ let test = `${webUrl}${fetchedUser.path}${fetchedUser.front}`
 
   useEffect(() => {
     if (error.status === true) {
-        setTimeout(() => {
+      setTimeout(() => {
 
-            setError({
-                status: false,
-                msg: "",
-                type: ""
-            });
+        setError({
+          status: false,
+          msg: "",
+          type: ""
+        });
 
-        }, 5000);
+      }, 5000);
     }
-})
+    // if(etherScanAlert.status === true){
+    //   setTimeout(() => {
+
+        // setEtherScanAlert(
+        //   {
+        //     status: false,
+        //     msg: "",
+        //     url: null,
+        //     type: ""
+        //   }
+        // )
+
+    //   }, 5000);
+    // }
+    
+  })
 
   return (
     <>
@@ -292,8 +358,8 @@ let test = `${webUrl}${fetchedUser.path}${fetchedUser.front}`
               sx={{ mt: 1 }}
               id="approveCitizen-form"
             >
-                {error.status ? <Alert sx={{mb: 2}} severity={error.type}>{error.msg}</Alert> : ''}
-                
+              {error.status ? <Alert sx={{ mb: 2 }} severity={error.type}>{error.msg}</Alert> : ''}
+
 
               <Grid direction="row" container spacing={2}>
 
@@ -389,7 +455,7 @@ let test = `${webUrl}${fetchedUser.path}${fetchedUser.front}`
                         Cnic
                       </Typography>
                       <Typography fontWeight="bold" color="black" fontSize="20px">
-                      {fetchedUser.cnic}
+                        {fetchedUser.cnic}
                       </Typography>
                     </Box>
                     <Box>
@@ -397,7 +463,7 @@ let test = `${webUrl}${fetchedUser.path}${fetchedUser.front}`
                         Phone
                       </Typography>
                       <Typography fontWeight="bold" color="black" fontSize="20px">
-                      {fetchedUser.phone}
+                        {fetchedUser.phone}
                       </Typography>
                     </Box>
                     <Box>
@@ -405,7 +471,7 @@ let test = `${webUrl}${fetchedUser.path}${fetchedUser.front}`
                         Email
                       </Typography>
                       <Typography fontWeight="bold" color="black" fontSize="20px">
-                      {fetchedUser.email}
+                        {fetchedUser.email}
                       </Typography>
                     </Box>
                     {/* <Box>
@@ -427,7 +493,7 @@ let test = `${webUrl}${fetchedUser.path}${fetchedUser.front}`
 
                     <Divider />
 
-                    <Box>
+                    {/* <Box>
                       <Typography fontWeight="bold" color="black" fontSize="16px">
                         Any Message for Applicant
                       </Typography>
@@ -437,7 +503,7 @@ let test = `${webUrl}${fetchedUser.path}${fetchedUser.front}`
                         placeholder="Enter your Message here"
                         style={{ width: "80%" }}
                       />
-                    </Box>
+                    </Box> */}
 
                     <Box>
                       <Stack direction="row" spacing={2}>
@@ -454,55 +520,55 @@ let test = `${webUrl}${fetchedUser.path}${fetchedUser.front}`
                   <Stack spacing={2}>
                     <Box>
                       <a href={`${webUrl}${fetchedUser.path}${fetchedUser.front}`} target="_blank">
-                      <Typography
-                        mb={2}
-                        fontWeight="bold"
-                        color="gray"
-                        fontSize="16px"
-                      >
-                        Cnic Front
-                      </Typography>
-                      <img
-                        src={`${webUrl}${fetchedUser.path}${fetchedUser.front}`}
-                        width="100%"
-                        height="250px"
-                      />
+                        <Typography
+                          mb={2}
+                          fontWeight="bold"
+                          color="gray"
+                          fontSize="16px"
+                        >
+                          Cnic Front
+                        </Typography>
+                        <img
+                          src={`${webUrl}${fetchedUser.path}${fetchedUser.front}`}
+                          width="100%"
+                          height="250px"
+                        />
                       </a>
                     </Box>
                     <Box>
-                    <a href={`${webUrl}${fetchedUser.path}${fetchedUser.back}`} target="_blank">
+                      <a href={`${webUrl}${fetchedUser.path}${fetchedUser.back}`} target="_blank">
 
-                    
-                      <Typography
-                        mb={2}
-                        fontWeight="bold"
-                        color="gray"
-                        fontSize="16px"
-                      >
-                        Cnic Back
-                      </Typography>
-                      <img
-                        src={`${webUrl}${fetchedUser.path}${fetchedUser.back}`}
-                        width="100%"
-                        height="250px"
-                      />
+
+                        <Typography
+                          mb={2}
+                          fontWeight="bold"
+                          color="gray"
+                          fontSize="16px"
+                        >
+                          Cnic Back
+                        </Typography>
+                        <img
+                          src={`${webUrl}${fetchedUser.path}${fetchedUser.back}`}
+                          width="100%"
+                          height="250px"
+                        />
                       </a>
                     </Box>
                     <Box>
-                    <a href={`${webUrl}${fetchedUser.path}${fetchedUser.picture}`} target="_blank">
-                      <Typography
-                        mb={2}
-                        fontWeight="bold"
-                        color="gray"
-                        fontSize="16px"
-                      >
-                        Picture
-                      </Typography>
-                      <img
-                        src={`${webUrl}${fetchedUser.path}${fetchedUser.picture}`}
-                        width="100%"
-                        height="300px"
-                      />
+                      <a href={`${webUrl}${fetchedUser.path}${fetchedUser.picture}`} target="_blank">
+                        <Typography
+                          mb={2}
+                          fontWeight="bold"
+                          color="gray"
+                          fontSize="16px"
+                        >
+                          Picture
+                        </Typography>
+                        <img
+                          src={`${webUrl}${fetchedUser.path}${fetchedUser.picture}`}
+                          width="100%"
+                          height="300px"
+                        />
                       </a>
                     </Box>
                   </Stack>

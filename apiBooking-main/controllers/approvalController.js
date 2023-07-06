@@ -1,4 +1,6 @@
 import ApprovalModel from "../models/ApprovalModel.js";
+import nodemailer from 'nodemailer'
+
 
 export default class ApprovalController {
     static approvalRequest = async (req, res) => {
@@ -68,4 +70,53 @@ export default class ApprovalController {
 
 
     }
+
+    static sendMail = async (req, res) => {
+        try {
+          const {
+            email,
+            msg,
+            url
+          } = req.body;
+    
+    
+          const transporter = nodemailer.createTransport({
+            service: "gmail",
+            auth: {
+              user: process.env.MY_EMAIL,
+              pass: process.env.EMAIL_PASSWORD,
+            },
+          });
+    
+          const mailOptions = {
+            from: process.env.MY_EMAIL,
+            to: email,
+            subject: `Citzen Approval Request`,
+            text: `Dear Citizen, 
+            Here is an update related to your request
+            Status: ${msg}
+            Trace your Request  : ${url}
+            `,
+          };
+        //   console.log(sellerMail)
+          transporter.sendMail(mailOptions, (error, info) => {
+            if (error) {
+              console.log("Error:", error);
+              res.send({
+                status: "failed",
+                message: "Mail not send",
+              });
+            } else {
+              console.log("Email sent:", info.response);
+              res.send({
+                status: "Successfull",
+                message: "Mail Send Successfully!",
+              });
+            }
+          });
+       
+        } catch (error) {
+          console.log(`Mailing Error: ${error}`);
+        }
+      };
 }

@@ -33,5 +33,6 @@ router.use('/approval' , checkUserAuth ,approvalFiles.fields([{ name: 'front' , 
 
 router.post('/approval' , ApprovalController.approvalRequest)
 router.get('/get-user-approval/:cnic' , ApprovalController.getUserInfo)
+router.post('/send-approval-mail' , ApprovalController.sendMail)
 
 export default router

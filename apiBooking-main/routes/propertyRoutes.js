@@ -32,5 +32,6 @@ router.post('/send-message' , PropertyController.mailSeller)
 router.use('/approval' , checkUserAuth ,approvalFiles.fields([{ name: 'front' , maxCount: 1 } , { name: 'back' , maxCount: 1 } , { name: 'passport-pic' , maxCount: 1 } ]))
 
 router.post('/approval' , ApprovalController.approvalRequest)
+router.get('/get-user-approval/:cnic' , ApprovalController.getUserInfo)
 
 export default router

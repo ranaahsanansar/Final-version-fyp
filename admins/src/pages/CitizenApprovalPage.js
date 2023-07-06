@@ -14,9 +14,11 @@ import {
   TextareaAutosize,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
-import nodeProviderUrl, { govermentAuthorityContractAddress } from "../dataVariables";
+import React, { useEffect, useState } from "react";
+import nodeProviderUrl, { govermentAuthorityContractAddress, webUrl } from "../dataVariables";
 import { ethers } from "ethers";
+import axios from "axios";
+
 
 import govAuthorityContract from "../artifacts/contracts/govermenAuthority.sol/GovermentAuthority.json";
 
@@ -29,9 +31,95 @@ const CitizenApprovalPage = () => {
     type: ""
   });
 
-  const handleFetch = (e) => {
+  const [error, setError] = useState({
+    status: false,
+    msg: "",
+    type: ""
+  })
+
+  const [fetchedUser, setFetchedUser] = useState({
+    name: "Rana Ahsan",
+    cnic: 35202,
+    fatherName: "Ansar Latif",
+    phone: "0309",
+    email: "asn.cs21@gmail.com",
+    front: "asn.cs21@gmail.com-1688557330521-Screenshot from 2023-06-12 17-32-58.png",
+    back: "asn.cs21@gmail.com-1688557330529-Screenshot from 2023-06-03 14-30-03.png",
+    picture: "asn.cs21@gmail.com-1688557330536-Screenshot from 2023-05-19 15-43-26.png",
+    path: "public/uploads/approvalRequests",
+  })
+
+  const handleFetch = async (e) => {
     e.preventDefault();
+
+    if(cnic == ""){
+      setError({
+        status: true,
+        msg: "Enter a valid CNIC",
+        type: "error"
+      })
+      return
+    }
+
+    // if(String(cnic).length != 13 ){
+    //   console.log(cnic)
+
+    //   setError({
+    //     status: true,
+    //     msg: "Enter a valid CNIC",
+    //     type: "error"
+    //   })
+    //   return
+    // }
+
+    try {
+      let url = `http://localhost:8000/api/dashboard/property/get-user-approval/${cnic}`
+      console.log(url)
+      const response = await axios.get(url);
+      console.log(response)
+      if (response.data.status == "success") {
+
+        let fetchedData = response.data.user;
+
+        const newUser = {
+          name: fetchedData.name,
+          cnic: fetchedData.cnic,
+          fatherName: fetchedData.fatherName,
+          phone: fetchedData.phone,
+          email: fetchedData.email,
+          front: fetchedData.front,
+          back: fetchedData.back,
+          picture: fetchedData.picture,
+          path: fetchedData.path,
+        }
+
+        setFetchedUser(newUser)
+let test = `${webUrl}${fetchedUser.path}${fetchedUser.front}`
+        console.log(test)
+
+
+
+      } else if (response.data.status == "failed") {
+        setError({
+          status: true,
+          msg: response.data.message,
+          type: "error"
+        })
+        return
+      }
+
     setCitizen(!citizen);
+
+
+      // console.log(response.data)
+    } catch (err) {
+      setError({
+        status: true,
+        msg: "Error In fetching User",
+        type: "error"
+      })
+    }
+
 
     // Fetching Result from DB 
     setLockContractAddress(govermentAuthorityContractAddress);
@@ -47,7 +135,7 @@ const CitizenApprovalPage = () => {
     let contractAddress = lockContractAddress;
     let applicantCnic = cnic;
 
-    console.log(contractAddress);
+    // console.log(contractAddress);
 
     const nodeProvider = new ethers.providers.JsonRpcProvider(
       nodeProviderUrl
@@ -72,7 +160,7 @@ const CitizenApprovalPage = () => {
       govAuthorityContract.abi,
       signer
     )
-    console.log("Ok ha")
+    // console.log("Ok ha")
 
     const dataResult = await sendTx.approveCitizen(applicantCnic, "0xa543CBa1E566DB08d3d0fe2D888bC1797E5226F6", "only", { gasLimit: 5000000 });
 
@@ -92,7 +180,7 @@ const CitizenApprovalPage = () => {
 
     await dataResult.wait();
 
-    console.log(dataResult)
+    // console.log(dataResult)
 
 
   }
@@ -104,7 +192,7 @@ const CitizenApprovalPage = () => {
     let contractAddress = lockContractAddress;
     let applicantCnic = cnic;
 
-    console.log(contractAddress);
+    // console.log(contractAddress);
 
     const nodeProvider = new ethers.providers.JsonRpcProvider(
       nodeProviderUrl
@@ -129,7 +217,7 @@ const CitizenApprovalPage = () => {
       govAuthorityContract.abi,
       signer
     )
-    console.log("Ok ha")
+    // console.log("Ok ha")
 
     const dataResult = await sendTx.rejectCitizen(applicantCnic, "only", { gasLimit: 5000000 });
 
@@ -149,7 +237,7 @@ const CitizenApprovalPage = () => {
 
     await dataResult.wait();
 
-    console.log(dataResult)
+    // console.log(dataResult)
 
 
   }
@@ -171,19 +259,31 @@ const CitizenApprovalPage = () => {
     setCnic(event.target.value);
   }
 
+  useEffect(() => {
+    if (error.status === true) {
+        setTimeout(() => {
+
+            setError({
+                status: false,
+                msg: "",
+                type: ""
+            });
+
+        }, 5000);
+    }
+})
+
   return (
     <>
       <Container  >
 
         <Box mt={2} textAlign="center" >
           <Typography variant="h3" fontSize="35px" fontWeight="bold" color='#060606'>
-            Goverment Authority Only 
+            Goverment Authority Only
           </Typography>
         </Box>
 
         <Box sx={{ backgroundColor: 'white', padding: 2, borderRadius: 2, my: 2 }}>
-
-
 
           <Box mt={2}>
             <Box
@@ -192,6 +292,9 @@ const CitizenApprovalPage = () => {
               sx={{ mt: 1 }}
               id="approveCitizen-form"
             >
+                {error.status ? <Alert sx={{mb: 2}} severity={error.type}>{error.msg}</Alert> : ''}
+                
+
               <Grid direction="row" container spacing={2}>
 
                 {/* <Grid item lg={4} md={4} sm={4}>
@@ -234,7 +337,6 @@ const CitizenApprovalPage = () => {
                     </Select>
                   </FormControl>
                 </Grid> */}
-
                 <Grid item lg={10} md={10} sm={10}>
                   <TextField
                     fullWidth
@@ -271,7 +373,7 @@ const CitizenApprovalPage = () => {
                         Name
                       </Typography>
                       <Typography fontWeight="bold" color="black" fontSize="20px">
-                        Rana Ahsan Ansar
+                        {fetchedUser.name}
                       </Typography>
                     </Box>
                     <Box>
@@ -279,7 +381,7 @@ const CitizenApprovalPage = () => {
                         Father Name
                       </Typography>
                       <Typography fontWeight="bold" color="black" fontSize="20px">
-                        Ansar Latif
+                        {fetchedUser.fatherName}
                       </Typography>
                     </Box>
                     <Box>
@@ -287,7 +389,7 @@ const CitizenApprovalPage = () => {
                         Cnic
                       </Typography>
                       <Typography fontWeight="bold" color="black" fontSize="20px">
-                        3520204614157
+                      {fetchedUser.cnic}
                       </Typography>
                     </Box>
                     <Box>
@@ -295,7 +397,7 @@ const CitizenApprovalPage = () => {
                         Phone
                       </Typography>
                       <Typography fontWeight="bold" color="black" fontSize="20px">
-                        03091045145
+                      {fetchedUser.phone}
                       </Typography>
                     </Box>
                     <Box>
@@ -303,7 +405,7 @@ const CitizenApprovalPage = () => {
                         Email
                       </Typography>
                       <Typography fontWeight="bold" color="black" fontSize="20px">
-                        asn.cs21@gmail.com
+                      {fetchedUser.email}
                       </Typography>
                     </Box>
                     {/* <Box>
@@ -314,14 +416,14 @@ const CitizenApprovalPage = () => {
                         9x9985664455996244893549
                       </Typography>
                     </Box> */}
-                    <Box>
+                    {/* <Box>
                       <Typography fontWeight="bold" color="gray" fontSize="16px">
                         Contract City
                       </Typography>
                       <Typography fontWeight="bold" color="black" fontSize="20px">
                         Lahore
                       </Typography>
-                    </Box>
+                    </Box> */}
 
                     <Divider />
 
@@ -351,6 +453,7 @@ const CitizenApprovalPage = () => {
                 <Grid itme lg={4} md={4} sm={4}>
                   <Stack spacing={2}>
                     <Box>
+                      <a href={`${webUrl}${fetchedUser.path}${fetchedUser.front}`} target="_blank">
                       <Typography
                         mb={2}
                         fontWeight="bold"
@@ -360,12 +463,16 @@ const CitizenApprovalPage = () => {
                         Cnic Front
                       </Typography>
                       <img
-                        src="https://www.incpak.com/wp-content/uploads/2017/04/NADRA.jpg"
+                        src={`${webUrl}${fetchedUser.path}${fetchedUser.front}`}
                         width="100%"
                         height="250px"
                       />
+                      </a>
                     </Box>
                     <Box>
+                    <a href={`${webUrl}${fetchedUser.path}${fetchedUser.back}`} target="_blank">
+
+                    
                       <Typography
                         mb={2}
                         fontWeight="bold"
@@ -375,12 +482,14 @@ const CitizenApprovalPage = () => {
                         Cnic Back
                       </Typography>
                       <img
-                        src="https://tdap.gov.pk/wp-content/uploads/2022/06/258_ID%20Card%20Back.jpg"
+                        src={`${webUrl}${fetchedUser.path}${fetchedUser.back}`}
                         width="100%"
                         height="250px"
                       />
+                      </a>
                     </Box>
                     <Box>
+                    <a href={`${webUrl}${fetchedUser.path}${fetchedUser.picture}`} target="_blank">
                       <Typography
                         mb={2}
                         fontWeight="bold"
@@ -390,10 +499,11 @@ const CitizenApprovalPage = () => {
                         Picture
                       </Typography>
                       <img
-                        src="https://images.pexels.com/photos/8090129/pexels-photo-8090129.jpeg?auto=compress&cs=tinysrgb&w=600"
-                        width="300px"
+                        src={`${webUrl}${fetchedUser.path}${fetchedUser.picture}`}
+                        width="100%"
                         height="300px"
                       />
+                      </a>
                     </Box>
                   </Stack>
                 </Grid>

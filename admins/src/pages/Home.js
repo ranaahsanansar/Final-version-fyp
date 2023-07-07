@@ -229,7 +229,7 @@ const Home = () => {
         setFlagNewProTable(false)
 
         const actualData = {
-            id: propertyId,
+            id: formData.propertyId,
             cnic: cnic
         }
 

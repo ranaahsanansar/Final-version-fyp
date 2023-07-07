@@ -173,9 +173,7 @@ const ApprovalRequestForm = () => {
                 type: "error",
             });
         }
-
         setFormErrors(errors);
-
         if (!isValid) {
             return;
         }

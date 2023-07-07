@@ -127,10 +127,6 @@ const TransferNewOwnership = () => {
       valid = false;
     }
 
-    // if (!formData.agree) {
-    //   errors.agree = "You must agree to the terms and conditions";
-    //   valid = false;
-    // }
 
     setFormErrors(errors);
 
@@ -147,7 +143,6 @@ const TransferNewOwnership = () => {
     }));
   };
 
-  // ----------------------------
 
   const [etherScanAlert, setEtherScanAlert] = useState({
     status: false,
@@ -167,17 +162,10 @@ const TransferNewOwnership = () => {
   const [shares, setShares] = useState();
   const [propertyAmmount, setPropertyAmmount] = useState();
 
-
-
   const [areaOptions, setAreaOptions] = useState([])
-
   const [provinceOptions, setPropvinceOptions] = useState([]);
   const [districOptions, setDistricOptions] = useState([]);
   const [societyOtpions, setSocietyOptions] = useState([]);
-
-
-
-
 
   const [alert, setAlert] = useState({
     status: false,
@@ -248,17 +236,12 @@ const TransferNewOwnership = () => {
         societyName,
         { gasLimit: 5000000 }
       )
-
       // await dataResult.wait();
-
 
       console.log("Ok ha 2")
 
-
       let txHash = dataResult.hash
       let scanUrl = "https://sepolia.etherscan.io/tx/" + txHash;
-
-
 
       setEtherScanAlert(
         {
@@ -271,8 +254,6 @@ const TransferNewOwnership = () => {
 
       await dataResult.wait();
 
-
-
       setAlert({
         status: true,
         msg: "Submitted Successfuly!",
@@ -282,18 +263,12 @@ const TransferNewOwnership = () => {
 
   };
 
-
   const handleChangeProvience = (event) => {
     setProvince(event.target.value);
 
     const fetchData = async () => {
       let url = getAllDistricURL + event.target.value;
-      // console.log("URL")
-      // console.log(url)
       const data = await fetch(url);
-      // console.log("Data")
-      // console.log(data);
-
 
       const json = await data.json();
       setDistricOptions(json)
@@ -308,13 +283,7 @@ const TransferNewOwnership = () => {
 
     const fetchData = async () => {
       let url = getSocietyURL + event.target.value;
-      // console.log("URL")
-      // console.log(url)
       const data = await fetch(url);
-      // console.log("Data")
-      // console.log(data);
-
-
       const json = await data.json();
       setSocietyOptions(json)
     }
@@ -325,12 +294,7 @@ const TransferNewOwnership = () => {
     setSociety(event.target.value);
     const fetchData = async () => {
       let url = getAreaURL + event.target.value;
-      // console.log("URL")
-      // console.log(url)
       const data = await fetch(url);
-      // console.log("Data")
-      // console.log(data);
-
 
       const json = await data.json();
       setAreaOptions(json)
@@ -338,58 +302,32 @@ const TransferNewOwnership = () => {
     fetchData();
   };
 
-  // const handleChangeBlock = (event) => {
-  //   setBlock(event.target.value);
-  //   setAreaName(event.target.value);
-  //   setLockContractAddress(landInspectorContractAddress);
-  // };
   const handleChangeBlock = (event) => {
     setBlock(event.target.value);
     const fetchData = async () => {
       let url = getAreaNameURL + event.target.value;
-      // console.log("URL")
-      // console.log(url)
       const data = await fetch(url);
       const json = await data.json();
-      // console.log("Data")
-      // console.log(json.name);
       let _name = json.name;
-      // console.log(_name)
       setAreaName(_name)
-      // console.log("Area Name: ");
-      // console.log(areaName)
     }
     fetchData();
 
     const fetchContracts = async () => {
       let url = getContractURL + event.target.value;
-      // console.log("URL")
-      // console.log(url)
       const data = await fetch(url);
 
       const json = await data.json();
-      // console.log("Data")
-      // console.log(json.name);
       let _landInspector = json[0].landInspector
       console.log("Land")
       console.log(_landInspector)
       setLockContractAddress(_landInspector);
-      // setAreaName(_name)
-      // console.log("Area Name: ");
-      // console.log(areaName)
     }
     fetchContracts();
-
-
-    // setAreaName(event.target.value);
-
-    // setLockContractAddress(landInspectorContractAddress);
 
   };
 
   useEffect(() => {
-
-    // provinceOptions.push({id: "2" , name: "Ahsan"})
     var array;
 
     const fetchData = async () => {
@@ -400,9 +338,6 @@ const TransferNewOwnership = () => {
       setPropvinceOptions(json)
     }
     fetchData()
-    // console.log(array);
-    // setPropvinceOptions(array)
-    // console.log(provinceOptions)
 
   }, [])
 
@@ -460,10 +395,6 @@ const TransferNewOwnership = () => {
 
                     })
                   }
-                  {/* <MenuItem value="punjab">punjab</MenuItem>
-                  <MenuItem value="sindh">Karachi</MenuItem>
-                  <MenuItem value="balochistan">Sialkot</MenuItem>
-                  <MenuItem value="KPK">KPK</MenuItem> */}
                 </Select>
               </FormControl>
             </Grid>
@@ -492,9 +423,6 @@ const TransferNewOwnership = () => {
                     })
                   }
 
-                  {/* <MenuItem value="lahore">Lahore</MenuItem>
-                  <MenuItem value="karachi">Karachi</MenuItem>
-                  <MenuItem value="sialkot">Sialkot</MenuItem> */}
                 </Select>
               </FormControl>
             </Grid>
@@ -520,11 +448,6 @@ const TransferNewOwnership = () => {
 
                     })
                   }
-
-                  {/* <MenuItem value="park-view">Park View</MenuItem>
-                  <MenuItem value="bahria">Bahria</MenuItem>
-                  <MenuItem value="rehman-garden">Rehman Garden</MenuItem>
-                  <MenuItem value="iqbal-town">Iqbal Town</MenuItem> */}
                 </Select>
               </FormControl>
             </Grid>
@@ -550,37 +473,10 @@ const TransferNewOwnership = () => {
 
                     })
                   }
-                  {/* <MenuItem value="bahria-1-A">A Block</MenuItem>
-                  <MenuItem value="bahria">B Block</MenuItem>
-                  <MenuItem value="rehman-garden">X Block</MenuItem>
-                  <MenuItem value="iqbal-town">Y Block</MenuItem> */}
                 </Select>
               </FormControl>
             </Grid>
-
-            {/* <Grid item lg={4} md={4} sm={4}>
-              <TextField
-                fullWidth
-                id="propertyTitle"
-                label="Property Title"
-                variant="outlined"
-                name="propertyTitle"
-                onChange={hand}
-
-              />
-            </Grid> */}
-
-
             <Grid item lg={4} md={4} sm={4}>
-              {/* <TextField
-                fullWidth
-                id="propertyID"
-                name="propertyID"
-                label="Property ID"
-                type='number'
-                variant="outlined"
-                onChange={handleChangePropertyId}
-              /> */}
 
               <TextField
 
@@ -599,16 +495,6 @@ const TransferNewOwnership = () => {
             </Grid>
 
             <Grid item lg={4} md={4} sm={4}>
-              {/* <TextField
-                fullWidth
-                id="newOwnerCnic"
-                name="newOwnerCnic"
-                label="New Owner Cnic"
-                variant="outlined"
-                type="Number"
-                placeholder="3520200000000"
-                onChange={handleChangeCnic}
-              /> */}
               <TextField
                 fullWidth
                 required
@@ -624,18 +510,6 @@ const TransferNewOwnership = () => {
               />
             </Grid>
             <Grid item lg={4} md={4} sm={4}>
-              {/* <TextField
-                fullWidth
-                id="sharesAmount"
-                name="sharesAmount"
-                label="Shares Amount"
-                variant="outlined"
-                type="number"
-                placeholder="0-100"
-                inputProps={{ min: 0, max: 100 }}
-                onChange={handleChangeShares}
-
-              /> */}
               <TextField
                 fullWidth
                 required
@@ -651,16 +525,6 @@ const TransferNewOwnership = () => {
               />
             </Grid>
             <Grid item lg={4} md={4} sm={4}>
-              {/* <TextField
-                fullWidth
-                id="propertyAmmount"
-                name="propertyAmmount"
-                label="Property Amount"
-                variant="outlined"
-                type="number"
-                onChange={handleChangePropertyAmmount}
-
-              /> */}
               <TextField
                 fullWidth
                 required

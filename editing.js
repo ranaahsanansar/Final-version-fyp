@@ -103,14 +103,8 @@ const SellPropertyForm = () => {
   const [areaName, setAreaName] = useState("none");
 
   const handleSubmit = async (values) => {
-    // e.preventDefault();
-    // const data = new FormData(e.currentTarget);
     console.log(values)
     const actualData = {
-      // province: data.get('province'),
-      // distric: data.get('distric'),
-      // society: data.get('society'),
-      // block: data.get('block'),
       propertyId: values.propertyId,
       ownerCNIC: values.ownerCNIC,
       sharesAmmount: values.sharesAmount,
@@ -120,7 +114,6 @@ const SellPropertyForm = () => {
     }
 
     console.log(values.propertyId)
-    // console.log(actualData)
     if (actualData.propertyId && actualData.ownerCNIC && actualData.priceOfShare && actualData.buyerCNIC && actualData.agree) {
 
       const { ethereum } = window;
@@ -184,11 +177,8 @@ const SellPropertyForm = () => {
           type: "success"
         }
       )
-      // Get the transaction receipt
       const transactionReceipt = await provider.getTransactionReceipt(dataResult.hash);
 
-      // Get the return value from the transaction receipt
-      //  const returnValue = ethers.utils.hexlify(transactionReceipt.logs[0].data);
 
       const returnValue = ethers.utils.defaultAbiCoder.decode(['uint256'], dataResult);
 
@@ -196,9 +186,6 @@ const SellPropertyForm = () => {
       console.log("1: " + returnValue);
       console.log("2: " + dataResult);
 
-      // await dataResult.wait();
-
-      // console.log(dataResult)
 
       setAlert({
         status: true,
@@ -207,7 +194,6 @@ const SellPropertyForm = () => {
       });
 
     } else {
-      // setError({ status: true, msg: "All Fields are Required", type: 'error' })
       setAlert({
         status: true,
         msg: "All Fields are required!",
@@ -243,7 +229,6 @@ const SellPropertyForm = () => {
 
   })
 
-
   const [distric, setDistric] = useState('none');
   const [province, setProvince] = useState('none');
   const [selectPropertyId, setSelectPropertyId] = useState('none');
@@ -262,13 +247,7 @@ const SellPropertyForm = () => {
 
     const fetchData = async () => {
       let url = getAllDistricURL + event.target.value;
-      // console.log("URL")
-      // console.log(url)
       const data = await fetch(url);
-      // console.log("Data")
-      // console.log(data);
-
-
       const json = await data.json();
       setDistricOptions(json)
     }
@@ -281,13 +260,7 @@ const SellPropertyForm = () => {
     setDistric(event.target.value);
     const fetchData = async () => {
       let url = getSocietyURL + event.target.value;
-      // console.log("URL")
-      // console.log(url)
       const data = await fetch(url);
-      // console.log("Data")
-      // console.log(data);
-
-
       const json = await data.json();
       setSocietyOptions(json)
     }
@@ -298,13 +271,7 @@ const SellPropertyForm = () => {
     setSociety(event.target.value);
     const fetchData = async () => {
       let url = getAreaURL + event.target.value;
-      // console.log("URL")
-      // console.log(url)
       const data = await fetch(url);
-      // console.log("Data")
-      // console.log(data);
-
-
       const json = await data.json();
       setAreaOptions(json)
     }
@@ -315,8 +282,6 @@ const SellPropertyForm = () => {
     setBlock(event.target.value);
     const fetchData = async () => {
       let url = getAreaNameURL + event.target.value;
-      // console.log("URL")
-      // console.log(url)
       const data = await fetch(url);
       const json = await data.json();
       // console.log("Data")

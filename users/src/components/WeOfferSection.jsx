@@ -83,47 +83,6 @@ const WeOfferSection = () => {
               
               
             </Grid>
-
-            {/* <Box
-              display="flex"
-              alignItems="center"
-              justifyContent="center"
-              width="100%"
-              flexWrap={{ xs: "wrap", md: "wrap", lg: "wrap" }}
-            >
-              {weOfferData.map((item) => (
-                <Box
-                  position="relative"
-                  borderRadius="10px"
-                  overflow="hidden"
-                  height="300px"
-                  width="300px"
-                  margin={3}
-                >
-                  <img
-                    src={item.img}
-                    width="100%"
-                    height="100%"
-                    style={{ objectFit: "cover" }}
-                  />
-                  <Box
-                    sx={glassMorphismStyle}
-                    position="absolute"
-                    bottom="20px"
-                    width="100%"
-                    padding="10px"
-                  >
-                    <Typography
-                      variant="h3"
-                      color="whitesmoke"
-                      fontWeight={500}
-                    >
-                      {item.title}
-                    </Typography>
-                  </Box>
-                </Box>
-              ))}
-            </Box> */}
           </Box>
         </Box>
       </Container>

@@ -148,7 +148,6 @@ const SellPropertyForm = () => {
     }
     // console.log(actualData)
 console.log(validateForm())
-    // if (actualData.propertyId && actualData.ownerCNIC && actualData.priceOfShare && actualData.buyerCNIC && actualData.agree) {
     if (validateForm() && actualData.agree) {
 
       const { ethereum } = window;
@@ -212,11 +211,8 @@ console.log(validateForm())
           type: "success"
         }
       )
-      // Get the transaction receipt
       const transactionReceipt = await provider.getTransactionReceipt(dataResult.hash);
 
-      // Get the return value from the transaction receipt
-      //  const returnValue = ethers.utils.hexlify(transactionReceipt.logs[0].data);
 
       const returnValue = ethers.utils.defaultAbiCoder.decode(['uint256'], dataResult);
 
@@ -226,8 +222,6 @@ console.log(validateForm())
 
       // await dataResult.wait();
 
-      // console.log(dataResult)
-
       setAlert({
         status: true,
         msg: "Your Request is now generated! Check on EtherScan",
@@ -235,7 +229,6 @@ console.log(validateForm())
       });
 
     } else {
-      // setError({ status: true, msg: "All Fields are Required", type: 'error' })
       setAlert({
         status: true,
         msg: "All Fields are required!",
@@ -290,11 +283,7 @@ console.log(validateForm())
 
     const fetchData = async () => {
       let url = getAllDistricURL + event.target.value;
-      // console.log("URL")
-      // console.log(url)
       const data = await fetch(url);
-      // console.log("Data")
-      // console.log(data);
 
 
       const json = await data.json();
@@ -309,11 +298,7 @@ console.log(validateForm())
     setDistric(event.target.value);
     const fetchData = async () => {
       let url = getSocietyURL + event.target.value;
-      // console.log("URL")
-      // console.log(url)
       const data = await fetch(url);
-      // console.log("Data")
-      // console.log(data);
 
 
       const json = await data.json();
@@ -326,11 +311,7 @@ console.log(validateForm())
     setSociety(event.target.value);
     const fetchData = async () => {
       let url = getAreaURL + event.target.value;
-      // console.log("URL")
-      // console.log(url)
       const data = await fetch(url);
-      // console.log("Data")
-      // console.log(data);
 
 
       const json = await data.json();
@@ -343,43 +324,25 @@ console.log(validateForm())
     setBlock(event.target.value);
     const fetchData = async () => {
       let url = getAreaNameURL + event.target.value;
-      // console.log("URL")
-      // console.log(url)
       const data = await fetch(url);
       const json = await data.json();
-      // console.log("Data")
-      // console.log(json.name);
       let _name = json.name;
-      // console.log(_name)
       setAreaName(_name)
-      // console.log("Area Name: ");
-      // console.log(areaName)
     }
     fetchData();
 
     const fetchContracts = async () => {
       let url = getContractURL + event.target.value;
-      // console.log("URL")
-      // console.log(url)
       const data = await fetch(url);
 
       const json = await data.json();
-      // console.log("Data")
-      // console.log(json.name);
       let _landInspector = json[0].landInspector
       console.log("Land")
       console.log(_landInspector)
       setLockContractAddress(_landInspector);
-      // setAreaName(_name)
-      // console.log("Area Name: ");
-      // console.log(areaName)
     }
     fetchContracts();
 
-
-    // setAreaName(event.target.value);
-
-    // setLockContractAddress(landInspectorContractAddress);
 
   };
 
@@ -387,16 +350,12 @@ console.log(validateForm())
   const handleChangePropertyId = (event) => {
     setSelectPropertyId(event.target.value);
   };
-  // const handleChangeSociety = (event) => {
-  //     setSociety(event.target.value);
-  // };
   const handleCheck = (event) => {
     setChecked(event.target.checked);
   };
 
   useEffect(() => {
 
-    // provinceOptions.push({id: "2" , name: "Ahsan"})
     var array;
 
     const fetchData = async () => {
@@ -407,9 +366,6 @@ console.log(validateForm())
       setPropvinceOptions(json)
     }
     fetchData()
-    // console.log(array);
-    // setPropvinceOptions(array)
-    // console.log(provinceOptions)
 
   }, [])
   const handleChange = (e) => {
@@ -453,10 +409,6 @@ console.log(validateForm())
 
                   })
                 }
-                {/* <MenuItem value="punjab">punjab</MenuItem>
-                  <MenuItem value="sindh">Karachi</MenuItem>
-                  <MenuItem value="balochistan">Sialkot</MenuItem>
-                  <MenuItem value="KPK">KPK</MenuItem> */}
               </Select>
             </FormControl >
           </Grid>
@@ -485,9 +437,6 @@ console.log(validateForm())
                   })
                 }
 
-                {/* <MenuItem value="lahore">Lahore</MenuItem>
-                  <MenuItem value="karachi">Karachi</MenuItem>
-                  <MenuItem value="sialkot">Sialkot</MenuItem> */}
               </Select>
             </FormControl>
           </Grid>
@@ -514,10 +463,6 @@ console.log(validateForm())
                   })
                 }
 
-                {/* <MenuItem value="park-view">Park View</MenuItem>
-                  <MenuItem value="bahria">Bahria</MenuItem>
-                  <MenuItem value="rehman-garden">Rehman Garden</MenuItem>
-                  <MenuItem value="iqbal-town">Iqbal Town</MenuItem> */}
               </Select>
             </FormControl>
           </Grid>
@@ -543,45 +488,13 @@ console.log(validateForm())
 
                   })
                 }
-                {/* <MenuItem value="bahria-1-A">A Block</MenuItem>
-                  <MenuItem value="bahria">B Block</MenuItem>
-                  <MenuItem value="rehman-garden">X Block</MenuItem>
-                  <MenuItem value="iqbal-town">Y Block</MenuItem> */}
               </Select>
             </FormControl>
           </Grid>
 
           <Grid item sm={12} xs={12} md={12} lg={12}>
-            {/* <FormControl fullWidth>
-                            <InputLabel id="property-id-label">Property ID</InputLabel>
-
-                            <Select
-                                fullWidth
-                                required
-                                labelId="property-id-label"
-                                id="propertyId"
-                                name="propertyId"
-                                value={selectPropertyId}
-                                label="propertyId"
-                                onChange={handleChangePropertyId}
-                            >
-                                <MenuItem value="none">None</MenuItem>
-                                <MenuItem value="5555">5555</MenuItem>
-                                <MenuItem value="888">888</MenuItem>
-                                <MenuItem value="999">999</MenuItem>
-                            </Select>
-                        </FormControl> */}
-            {/* <TextField
-                            margin="normal"
-                            fullWidth
-                            required
-                            id="propertyId"
-                            name="propertyId"
-                            label="Property ID"
-                            type="number"
-                            onChange={handleChangePropertyId}
-                            inputProps={{ min: 0 }}
-                        /> */}
+           
+            
             <TextField
               margin="normal"
               fullWidth
@@ -598,30 +511,7 @@ console.log(validateForm())
             />
 
           </Grid>
-          {/* <Grid item sm={12} xs={12} md={6} lg={6}>
-                        <TextField
-                            margin="normal"
-                            fullWidth
-                            required
-                            id="sellerEmail"
-                            name="sellerEmail"
-                            label="Your Email"
-                            type="String"
-                        />
-                        <Typography fontSize='small' >You will recive request number through this email</Typography>
-                    </Grid> */}
-
-          {/* <Grid item sm={12} xs={12} md={6} lg={6}>
-                        <TextField
-                            margin="normal"
-                            fullWidth
-                            required
-                            id="ownerFullName"
-                            name="ownerFullName"
-                            label="Full Name of Owner"
-                            type="String"
-                        />
-                    </Grid> */}
+          
           <Grid item sm={12} xs={12} md={6} lg={6}>
           <TextField
               margin="normal"

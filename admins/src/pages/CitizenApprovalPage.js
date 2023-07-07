@@ -71,16 +71,6 @@ const CitizenApprovalPage = () => {
       return
     }
 
-    // if(String(cnic).length != 13 ){
-    //   console.log(cnic)
-
-    //   setError({
-    //     status: true,
-    //     msg: "Enter a valid CNIC",
-    //     type: "error"
-    //   })
-    //   return
-    // }
 
     try {
       let url = `http://localhost:8000/api/dashboard/property/get-user-approval/${cnic}`
@@ -120,8 +110,6 @@ const CitizenApprovalPage = () => {
 
       setCitizen(!citizen);
 
-
-      // console.log(response.data)
     } catch (err) {
       setError({
         status: true,
@@ -130,8 +118,6 @@ const CitizenApprovalPage = () => {
       })
     }
 
-
-    // Fetching Result from DB 
     setLockContractAddress(govermentAuthorityContractAddress);
     setLockCnic(cnic);
 
@@ -145,7 +131,6 @@ const CitizenApprovalPage = () => {
     let contractAddress = lockContractAddress;
     let applicantCnic = cnic;
 
-    // console.log(contractAddress);
 
     const nodeProvider = new ethers.providers.JsonRpcProvider(
       nodeProviderUrl
@@ -156,8 +141,6 @@ const CitizenApprovalPage = () => {
     )
 
     const signer = walletProvider.getSigner();
-
-    // console.log(nodeProvider , walletProvider)
 
     const getContractData = new ethers.Contract(
       contractAddress,
@@ -170,7 +153,6 @@ const CitizenApprovalPage = () => {
       govAuthorityContract.abi,
       signer
     )
-    // console.log("Ok ha")
 
     try {
       const dataResult = await sendTx.approveCitizen(applicantCnic, "0xa543CBa1E566DB08d3d0fe2D888bC1797E5226F6", "only", { gasLimit: 5000000 });
@@ -198,7 +180,6 @@ const CitizenApprovalPage = () => {
         type: "success"
       })
 
-      // await dataResult.wait();
     } catch (err) {
       setError({
         status: true,
@@ -207,7 +188,6 @@ const CitizenApprovalPage = () => {
       })
       return
     }
-    // console.log(dataResult)
   }
 
   const handleReject = async (e) => {
@@ -216,8 +196,6 @@ const CitizenApprovalPage = () => {
 
     let contractAddress = lockContractAddress;
     let applicantCnic = cnic;
-
-    // console.log(contractAddress);
 
     const nodeProvider = new ethers.providers.JsonRpcProvider(
       nodeProviderUrl
@@ -229,7 +207,6 @@ const CitizenApprovalPage = () => {
 
     const signer = walletProvider.getSigner();
 
-    // console.log(nodeProvider , walletProvider)
 
     const getContractData = new ethers.Contract(
       contractAddress,
@@ -242,7 +219,6 @@ const CitizenApprovalPage = () => {
       govAuthorityContract.abi,
       signer
     )
-    // console.log("Ok ha")
 
     try {
       const dataResult = await sendTx.rejectCitizen(applicantCnic, "only", { gasLimit: 5000000 });
@@ -254,15 +230,6 @@ const CitizenApprovalPage = () => {
         "msg": "Rejected",
         "url": `${scanUrl}`
       })
-
-      // setEtherScanAlert(
-      //   {
-      //     status: true,
-      //     msg: "View Transaction on EtherScan",
-      //     url: scanUrl,
-      //     type: "success"
-      //   }
-      // )
 
       setEtherScanAlert(
         {
@@ -277,7 +244,6 @@ const CitizenApprovalPage = () => {
         msg: "Mail send to Person",
         type: "success"
       })
-      // await dataResult.wait();
     } catch (err) {
       setError({
         status: true,
@@ -287,24 +253,11 @@ const CitizenApprovalPage = () => {
       return
     }
 
-
-    // console.log(dataResult)
-
-
   }
 
-  // const [distric, setDistric] = useState("");
   const [lockContractAddress, setLockContractAddress] = useState("");
   const [cnic, setCnic] = useState("");
   const [lockCnic, setLockCnic] = useState("");
-  // const [province, setProvince] = useState("punjab");
-
-  // const handleChangeProvience = (event) => {
-  //   setProvince(event.target.value);
-  // };
-  // const handleChangeDistric = (event) => {
-  //   setDistric(event.target.value);
-  // };
 
   const handleChangeCnic = (event) => {
     setCnic(event.target.value);
@@ -322,20 +275,6 @@ const CitizenApprovalPage = () => {
 
       }, 5000);
     }
-    // if(etherScanAlert.status === true){
-    //   setTimeout(() => {
-
-        // setEtherScanAlert(
-        //   {
-        //     status: false,
-        //     msg: "",
-        //     url: null,
-        //     type: ""
-        //   }
-        // )
-
-    //   }, 5000);
-    // }
     
   })
 
@@ -363,46 +302,6 @@ const CitizenApprovalPage = () => {
 
               <Grid direction="row" container spacing={2}>
 
-                {/* <Grid item lg={4} md={4} sm={4}>
-                  <FormControl fullWidth>
-                    <InputLabel id="province-label">Province</InputLabel>
-
-                    <Select
-                      fullWidth
-                      required
-                      labelId="province-label"
-                      id="province"
-                      value={province}
-                      label="province"
-                      onChange={handleChangeProvience}
-                    >
-                      <MenuItem value="punjab">punjab</MenuItem>
-                      <MenuItem value="sindh">Karachi</MenuItem>
-                      <MenuItem value="balochistan">Sialkot</MenuItem>
-                      <MenuItem value="KPK">KPK</MenuItem>
-                    </Select>
-                  </FormControl>
-                </Grid> */}
-
-                {/* <Grid item lg={4} md={4} sm={4}>
-                  <FormControl fullWidth>
-                    <InputLabel id="distric-label">Distric</InputLabel>
-
-                    <Select
-                      fullWidth
-                      required
-                      labelId="distric-label"
-                      id="distric"
-                      value={distric}
-                      label="Distric"
-                      onChange={handleChangeDistric}
-                    >
-                      <MenuItem value="0x6D775f5A4008BaAEF0FdadC09dAEe96149aB301c">Lahore</MenuItem>
-                      <MenuItem value="karachi">Karachi</MenuItem>
-                      <MenuItem value="sialkot">Sialkot</MenuItem>
-                    </Select>
-                  </FormControl>
-                </Grid> */}
                 <Grid item lg={10} md={10} sm={10}>
                   <TextField
                     fullWidth
@@ -474,36 +373,8 @@ const CitizenApprovalPage = () => {
                         {fetchedUser.email}
                       </Typography>
                     </Box>
-                    {/* <Box>
-                      <Typography fontWeight="bold" color="gray" fontSize="16px">
-                        Contract Address
-                      </Typography>
-                      <Typography fontWeight="bold" color="black" fontSize="20px">
-                        9x9985664455996244893549
-                      </Typography>
-                    </Box> */}
-                    {/* <Box>
-                      <Typography fontWeight="bold" color="gray" fontSize="16px">
-                        Contract City
-                      </Typography>
-                      <Typography fontWeight="bold" color="black" fontSize="20px">
-                        Lahore
-                      </Typography>
-                    </Box> */}
 
                     <Divider />
-
-                    {/* <Box>
-                      <Typography fontWeight="bold" color="black" fontSize="16px">
-                        Any Message for Applicant
-                      </Typography>
-                      <TextareaAutosize
-                        aria-label="message"
-                        minRows={5}
-                        placeholder="Enter your Message here"
-                        style={{ width: "80%" }}
-                      />
-                    </Box> */}
 
                     <Box>
                       <Stack direction="row" spacing={2}>

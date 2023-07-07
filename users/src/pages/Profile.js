@@ -33,7 +33,6 @@ const Profile = () => {
 
   const { ethereum } = window;
   const dispatch = useDispatch();
-  // const [walletConnection, setWalletConnection] = useState(false);
   const { token } = useSelector(state => state.auth)
   const [userName , setUserName]  = useState("Rana Ahsan Ansar");
 
@@ -47,8 +46,6 @@ const Profile = () => {
 
     console.log(response.data.user.name)
     setUserName(response.data.user.name)
-    // console.log(userName)
-    
   }
   useEffect(()=>{
     fetchUser()
@@ -124,7 +121,6 @@ const Profile = () => {
   }
 
   useEffect(() => {
-    // console.log("1")
     if (alert.status === true) {
       setTimeout(() => {
 
@@ -183,143 +179,16 @@ const Profile = () => {
               <Box>
                 <Box>
                   <Grid container spacing={2} >
-                    {/* <Grid item xs={12} sm={3}>
-                      <Box  sx={{display: "flex" , backgroundColor: 'white' , border: '2px solid gray' , padding: '10px' , borderRadius: '10px' }} >
-                        <Box>
-                          <Typography
-                          variant="h6"
-                          fontWeight="bold"
-                          fontSize="large"
-                        >
-                          Listed Properties
-                        </Typography>
-                        <br />
-                        <Typography
-                          variant="h3"
-                          fontWeight="bold"
-                          fontSize="large"
-                        >
-                          24
-                        </Typography>
-                        </Box>
-                        
-
-                      </Box>
-                      
-                    </Grid> */}
-
-                    {/* <Grid item xs={12} sm={3}>
-                    <Box  sx={{display: "flex" , backgroundColor:'white' , border: '2px solid gray' , padding: '10px' , borderRadius: '10px' }} >
-                      <Box>
-                        <Typography
-                          variant="h6"
-                          fontWeight="bold"
-                          fontSize="large"
-                        >
-                          My Properties
-                        </Typography>
-                        <br />
-                        {isConnected ? (
-                          <Typography
-                            variant="h3"
-                            fontWeight="bold"
-                            fontSize="large"
-                          >
-                            24
-                          </Typography>
-                        ) : (
-                          <Typography variant="h3"
-                          fontWeight="bold"
-                          fontSize="large">
-                            Connect Wallet
-                          </Typography>
-                        )}
-                      </Box>
-                    </Box>
-                      
-                    </Grid> */}
-
-                    {/* <Grid item xs={12} sm={3}>
-                    <Box  sx={{display: "flex" , backgroundColor: 'white' , border: '2px solid gray' , padding: '10px' , borderRadius: '10px' }} >
-                      <Box>
-                        <Typography
-                          variant="h6"
-                          fontWeight="bold"
-                          fontSize="large"
-                        >
-                          My Deals
-                        </Typography>
-                        <br />
-                        {isConnected ? (
-                          <Typography
-                            variant="h3"
-                            fontWeight="bold"
-                            fontSize="large"
-                          >
-                            10
-                          </Typography>
-                        ) : (
-                          <Typography variant="h3"
-                          fontWeight="bold"
-                          fontSize="large">
-                            Connect Wallet
-                          </Typography>
-                        )}
-                      </Box>
-                      </Box>
-                      
-                    </Grid> */}
-
+                    
                     <Grid item xs={12} sm={3}>
-                    {/* <Box  sx={{display: "flex" , backgroundColor: 'white' , border: '2px solid gray' , padding: '10px' , borderRadius: '10px' }} >
-                      <Box>
-                        <Typography
-                          variant="h6"
-                          fontWeight="bold"
-                          fontSize="large"
-                        >
-                          My Status
-                        </Typography>
-                        <br />
-                        {isConnected ? (
-                          
-                            approvStatus ? (<Typography
-                              variant="h3"
-                              fontWeight="bold"
-                              fontSize="large"
-                              color='green'
-                            >
-                              Approved
-                            </Typography>) : (<Typography
-                              variant="h3"
-                              fontWeight="bold"
-                              fontSize="large"
-                              color='green'
-                              component={NavLink} to='/dashboard/approvalRequest' 
-                            >
-                              Pending
-                            </Typography>)
-                          
-                          
-                        ) : (
-                          <Typography variant="h3"
-                          fontWeight="bold"
-                          fontSize="large">
-                            Connect Wallet
-                          </Typography>
-                        )}
-                      </Box>
-                      </Box> */}
-                      
+                    
                     </Grid>
                   </Grid>
                 </Box>
               </Box>
-                  {/* Your Property Details */}
                   <YourPropertiesDetails />
               <Box> 
 
-                
                 
               </Box>
             </Stack>

@@ -7,7 +7,6 @@ import ResponsiveNavbar from "../components/responsiveNavbar";
 const Layout = () => {
   return <>
     <CssBaseline />
-    {/* <Navbar /> */}
     <ResponsiveNavbar />
     <Outlet />
   </>;

@@ -87,13 +87,8 @@ const PropertiesDetails = () => {
 
     if (direction === "l") {
       newSlideNumber = slideNumber === 0 ? imagesData.length - 1 : slideNumber - 1;
-      // console.log(propertiesImageData.length)
-      // console.log(newSlideNumber)
     } else {
       newSlideNumber = slideNumber === imagesData.length - 1 ? 0 : slideNumber + 1;
-      // console.log(propertiesImageData.length)
-      // console.log(newSlideNumber)
-
     }
 
     setSlideNumber(newSlideNumber)
@@ -104,7 +99,6 @@ const PropertiesDetails = () => {
     const { children, value, index } = props;
     return <>{value === index && <>{children}</>}</>;
   }
-  // Shares Table Data
   const sharesTableColumns = [
     { id: "name", label: "Name", minWidth: 170 },
     { id: "sahres", label: "Shares", minWidth: 100 },
@@ -121,7 +115,6 @@ const PropertiesDetails = () => {
     createData("Sufyan Asghar", "10", "03091045145"),
   ];
 
-  // Property Purchasing logs
   const historyTableColumns = [
     { id: "seller", label: "Seller", minWidth: 170 },
     { id: "buyer", label: "Buyer", minWidth: 100 },
@@ -140,14 +133,12 @@ const PropertiesDetails = () => {
   ];
   const gradiantText = {
     backgroundcolor: "primary",
-    // backgroundImage: `linear-gradient(to left, #5514B4, #9d149d)`,
     color: 'black',
     backgroundSize: "100%",
     backgroundRepeat: "repeat",
     backgroundClip: "text",
     WebkitBackgroundClip: "text",
     display: "table",
-    // WebkitTextFillColor: "transparent",
   };
   const glassMorphismStyle = {
     background: "rgba(255, 255, 255, 0.2)",
@@ -156,7 +147,6 @@ const PropertiesDetails = () => {
     border: "1px solid rgba(255, 255, 255, 0.3)",
   };
 
-  // tabs Settings
   const [value, setValue] = React.useState(0);
 
   const handleTabs = (event, newValue) => {
@@ -166,26 +156,7 @@ const PropertiesDetails = () => {
   const fetchProperty = async (id) => {
     const url = `http://localhost:8000/api/dashboard/property/getProperty/${id}`
     const property = await axios.get(url)
-    // console.log(property.data.details)
     const fetchdetails = property.data.details
-
-
-    // console.log(fetchdetails)
-
-
-    //   const compeletData = {
-    //     title: "Apartment Complex",
-    //     locationTitle: "4th floor Gulberg Plaza",
-    //     des: "Located a 5-minute walk from Al rehman garden gate 2, Tower Street Apartments has accommodations with air conditioning and free WiFi. The units come with hardwood floors and feature a fully equipped kitchenette with a microwave, a flat-screen TV, and a private bathroom with shower and a hairdryer. A fridge is also offered, as well as an electric tea pot and a coffee machine. Popular points of interest near the apartment include Cloth Hall, Main Market Square and Town Hall Tower. The nearest airport is John Paul II International Kraków–Balice, 16.1 km from Tower Street Apartments, and the property offers a paid airport shuttle service.",
-    //     price: "20,000",
-    //     minitDescription: "Property is already approved and listed on blockchain. Per sheare price is 20,000. Price is negotiable.",
-    //     locationBold: "293 4th Floor, Gulberg Plaza,Lahore Pakistan",
-    //     locationBody: "House no.2, Street no. 12, New garden town near Himayat-e-Islam Collage, band road, Lahore.",
-    //     selleName: "Rana Ahsan Ansar",
-    //     sellerEmail: "asn.cs21@gmail.com",
-    //     sharesForSale: 20,
-    //     sellerPhone: "03091045145"
-    // }
 
     const compeletData = {
       id: fetchdetails.propertyId,
@@ -202,12 +173,6 @@ const PropertiesDetails = () => {
       sellerPhone: fetchdetails.phone,
       city: fetchdetails.city
     }
-
-    // console.log(fetchdetails.phone)
-
-    // if(fetchdetails.phone){
-    //   compeletData.sellerPhone = fetchdetails.phone
-    // }
 
     const imagesArray = []
 
@@ -234,15 +199,11 @@ const PropertiesDetails = () => {
 
 
     setPropertyDetils(compeletData)
-    //     console.log(fetchdetails.des)
-    // console.log(compeletData.des)
 
   }
 
   useEffect(async () => {
     await fetchProperty(idState)
-    // console.log(propertyDetails)
-    // console.log(imagesData)
   }, [])
   return (
     <>
@@ -261,28 +222,16 @@ const PropertiesDetails = () => {
 
         {open && (
           <div className="slider" key={slideNumber}  >
-            {/* <FontAwesomeIcon
-              icon={CloseIcon}
-              className="close"
-              onClick={() => setOpen(false)}
-            /> */}
+           
             <CloseIcon className="close"
               onClick={() => setOpen(false)} />
-            {/* <FontAwesomeIcon
-              icon={ArrowBackIosNewIcon}
-              className="arrow"
-              onClick={() => handleMove("l")}
-            /> */}
+            
             <ArrowBackIosNewIcon sx={{ left: "10px" }} className="arrow"
               onClick={() => handleMove("l")} />
             <div className="sliderWrapper">
               <img key={slideNumber} src={imagesData[slideNumber].img} alt="" className="sliderImg" />
             </div>
-            {/* <FontAwesomeIcon
-              icon={ArrowForwardIosIcon}
-              className="arrow"
-              onClick={() => handleMove("r")}
-            /> */}
+            
             <ArrowForwardIosIcon sx={{ right: "10px" }} className="arrow"
               onClick={() => handleMove("r")} />
           </div>
@@ -348,16 +297,7 @@ const PropertiesDetails = () => {
             <Grid item xs={12} sm={8} md={8} lg={8}>
               <Stack>
                 <Box>
-                  {/* <Box display="flex" alignItems="center">
-                    <Typography
-                      sx={gradiantText}
-                      variant="h6"
-                      fontWeight="bold"
-                    >
-                      Verified
-                    </Typography>
-                    <VerifiedRoundedIcon color="success" />
-                  </Box> */}
+                  
                 </Box>
                 <Divider />
 
@@ -368,7 +308,6 @@ const PropertiesDetails = () => {
                   <Typography color='black' >
                     {
                       propertyDetails.des
-                      // return propertyDetails.description
                     }
 
                   </Typography>
@@ -387,20 +326,10 @@ const PropertiesDetails = () => {
                 <Box borderRadius={3} padding={2} sx={glassMorphismStyle}>
                   <Stack spacing={2}>
                     <Box display="flex" alignItems="center">
-                      {/* <MonetizationOnRoundedIcon /> */}
 
                       <Typography fontWeight="bold" mr={1} variant="h6">
                         RS.{propertyDetails.price}
                       </Typography>
-                      {/* <span
-                        style={{
-                          fontSize: 14,
-                          textDecoration: "underline",
-                          color: "black",
-                        }}
-                      >
-                        per share
-                      </span> */}
                     </Box>
                     <Typography variant="body2" color="black">
                       {propertyDetails.minitDescription}
@@ -410,20 +339,6 @@ const PropertiesDetails = () => {
                       <Typography mr={1}>Shares to be sold: </Typography>
                       <Typography fontWeight="bold">{propertyDetails.sharesForSale} out of 100</Typography>
                     </Box>
-                    {/* <Box display="flex">
-                      <Typography mr={1}>Total: </Typography>
-                      <Typography fontWeight="bold">800,000</Typography>
-                    </Box> */}
-
-                    {/* <Button
-                      variant="contained"
-                      sx={{
-                        backgroundImage:
-                          "linear-gradient(to right , #AE69B3 , #4868DB)",
-                      }}
-                    >
-                      Buy Property
-                    </Button> */}
                   </Stack>
                 </Box>
               </Box>
@@ -435,8 +350,6 @@ const PropertiesDetails = () => {
           mb={4}
           sx={{
             background: "#A9D6C6",
-            // boxShadow: " 0 4px 30px rgba(0, 0, 0, 0.1)",
-            // backdropFilter: "blur(5px)",
             border: "1px solid rgba(255, 255, 255, 0.3)",
           }}
           padding={2}
@@ -488,87 +401,6 @@ const PropertiesDetails = () => {
             </Box>
           </Grid>
         </Grid>
-
-
-
-
-        {/* <Box
-          mb={4}
-          sx={{
-            background: "rgba(190, 186, 186, 0.256)",
-          }}
-          padding={1}
-          borderRadius={2}
-        >
-          <Tabs
-            value={value}
-            onChange={handleTabs}
-            variant="scrollable"
-            scrollButtons={false}
-            textColor="primary"
-            TabIndicatorProps={{
-              style: {
-                backgroundImage: "linear-gradient(to left, #5514B4, #9d149d)",
-              },
-            }}
-          >
-            
-            <Tab
-              label="Transaction History"
-              style={{ textTransform: "none", fontWeight: "bold" }}
-            />
-          </Tabs>
-
-          
-          <TabPanel value={value} index={0}>
-            <Box mt={2}>
-              <ShresDetailsTable key="transaction"
-                columsArray={historyTableColumns}
-                rowsArray={historyTableRows}
-              />
-            </Box>
-          </TabPanel>
-        </Box>  */}
-
-        {/* <Box
-          mb={4}
-          sx={{
-            background: "rgba(190, 186, 186, 0.256)",
-          }}
-          padding={1}
-          borderRadius={2}
-        >
-          <Typography sx={gradiantText} variant="h6" fontWeight="bold">
-            Share Holders
-          </Typography>
-
-          <Box mt={2}>
-            <ShresDetailsTable
-              columsArray={sharesTableColumns}
-              rowsArray={sharesTableRows} 
-            />
-          </Box>
-        </Box>
-        
-         <Box
-          mb={4}
-          sx={{
-            background: "rgba(190, 186, 186, 0.256)",
-          }}
-          padding={1}
-          borderRadius={2}
-        >
-          <Typography sx={gradiantText} variant="h6" fontWeight="bold">
-            Buying History
-          </Typography>
-
-          <Box mt={2}>
-            <ShresDetailsTable
-              columsArray={historyTableColumns}
-              rowsArray={historyTableRows}
-            />
-          </Box>
-        </Box> */}
       </Container>
     </>
   );

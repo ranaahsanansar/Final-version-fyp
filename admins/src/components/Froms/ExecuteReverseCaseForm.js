@@ -19,11 +19,7 @@ import landInspectorContract from "../../artifacts/contracts/LandInspector.sol/L
 import { ethers } from "ethers";
 import nodeProviderUrl, { getAllDistricURL, getAllProvienceURL, getAreaNameURL, getAreaURL, getContractURL, getSocietyURL, landInspectorContractAddress, govermentAuthorityContractAddress } from "../../dataVariables";
 
-
 const ExecuteReverseCaseForm = () => {
-
-
-
   const [formData, setFormData] = useState({
     propertyId: "",
     caseNum: ""
@@ -33,8 +29,6 @@ const ExecuteReverseCaseForm = () => {
     propertyId: "",
     caseNum: ""
   });
-
-
   const validateForm = () => {
     let valid = true;
     const errors = {};
@@ -47,9 +41,6 @@ const ExecuteReverseCaseForm = () => {
       valid = false;
     }
 
-
-
-
     if (formData.caseNum == "") {
       errors.caseNum = "Field is required";
       valid = false;
@@ -57,13 +48,11 @@ const ExecuteReverseCaseForm = () => {
       errors.caseNum = "Value must not be less then 1";
       valid = false;
     }
-
     let checkValidID = formData.propertyId.toString();
     if (checkValidID.length != 12) {
       errors.propertyId = "ID must be valid 12 digits Uniqe Identification number";
       valid = false;
     }
-
     if (block == 'none') {
       setAlert({
         status: true,

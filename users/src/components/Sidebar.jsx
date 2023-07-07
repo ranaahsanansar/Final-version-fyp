@@ -40,10 +40,6 @@ function Sidebar({visible, show}) {
 						className="logo"
 						to="/"
 					>
-							{/* <img
-								src={require("../assets/Images/logoCoin.png")}
-								alt="logo"
-							/> */}
                             Logo
 					</NavLink>
 					<div className="links nav-top">

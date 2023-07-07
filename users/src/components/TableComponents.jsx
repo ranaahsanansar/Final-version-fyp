@@ -14,26 +14,9 @@ import { Typography } from '@mui/material';
 
 export default function TableComponents( { columsArray , rowsArray} ) {
 
-  // const columns = [
-  //   { id: 'name', label: 'Name', minWidth: 170 },
-  //   { id: 'sahres', label: 'Shares', minWidth: 100 },
-  //   { id: 'contract', label: 'Contract', minWidth: 100 },
-    
-  // ];
-  
-  // function createData(name, sahres, contract) {
-  //   return { name, sahres, contract};
-  // }
-  
-  // const rows = [
-  //   createData('Rana Ahsan Ansar', '70', "03091045145"),
-  //   createData('Talal', '20', "03091045145"),
-  //   createData('Sufyan Asghar', '10', "03091045145"),
-  // ];
+
 
   const columns = columsArray ;
-  //   console.log("Hye")
-  // console.log(rowsArray)
   
   
   const rows = rowsArray;
@@ -41,14 +24,12 @@ export default function TableComponents( { columsArray , rowsArray} ) {
 
   const gradiantText = {
     backgroundcolor: "primary",
-    // backgroundImage: `linear-gradient(to left, #5514B4, #9d149d)`,
     color: "white" ,
     backgroundSize: "100%",
     backgroundRepeat: "repeat",
     backgroundClip: "text",
     WebkitBackgroundClip: "text",
     display: "table",
-    // WebkitTextFillColor: "transparent",
   };
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);

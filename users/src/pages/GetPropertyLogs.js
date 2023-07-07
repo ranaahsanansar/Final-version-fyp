@@ -53,12 +53,6 @@ const GetPropertyLogs = () => {
             valid = false;
         }
 
-
-        // if (!formData.agree) {
-        //   errors.agree = "You must agree to the terms and conditions";
-        //   valid = false;
-        // }
-
         setFormErrors(errors);
 
         return valid;
@@ -106,7 +100,6 @@ const GetPropertyLogs = () => {
     const [society, setSociety] = useState('none');
     const [block, setBlock] = useState('none');
     const [propertyId, setPropertyId] = useState('');
-    // const [cnic, setCnic] = useState('');
     const [contractAddress, setContractAddress] = useState('');
     const [percentage, setPercentage] = useState(20)
     const [remainig, setRemaining] = useState(80)
@@ -186,9 +179,6 @@ const GetPropertyLogs = () => {
         fetchContracts();
     };
 
-    // const handleCnicChange = (event) => {
-    //     setCnic(event.target.value)
-    // }
 
     const hadnleChangeId = (event) => {
         setPropertyId(event.target.value)
@@ -277,35 +267,6 @@ const GetPropertyLogs = () => {
         setFlagNewProTable(true);
         setFlagChart(true);
 
-        // ------------------------------------------------------
-
-        //         setFlagReqTable(false);
-
-        //         const filterReq = getContractData.filters.TransactionRequestLogs(null, actualData.cnic, null)
-
-        //         const reqResult = await getContractData.queryFilter(filterReq);
-        // console.log("yo yo yo ")
-        //         console.log(reqResult);
-
-        //         reqTableRows.splice(0, reqTableRows.length);
-
-        //         reqResult.map((item) => {
-        //             let id = item.args[0].toString();
-        //             let ownerCnic = item.args[1].toString();
-        //             let buyerCnic = item.args[2].toString();
-        //             let shares = item.args[3].toString();
-        //             let prize = item.args[4].toString();
-        //             let reqNum = item.args[6].toString();
-
-        //             console.log("Data for request");
-        //             console.log(reqNum);
-
-        //             reqTableRows.push(createReqTableData(id, ownerCnic, buyerCnic, shares, prize , reqNum));
-
-        //             // console.log(id);
-        //         })
-
-        //         setFlagReqTable(true)
 
         // ------------------------------------------------
 
@@ -326,16 +287,12 @@ const GetPropertyLogs = () => {
             let shares = item.args[3].toString();
             let prize = item.args[4].toString();
 
-            // ownerTnxRows.push(createReqTableData(id, ownerCnic, buyerCnic, shares, prize));
-
         })
 
         setFlagOwnerTransaction(true);
     }
 
     useEffect(() => {
-
-        // provinceOptions.push({id: "2" , name: "Ahsan"})
         var array;
 
         const fetchData = async () => {
@@ -346,9 +303,6 @@ const GetPropertyLogs = () => {
             setPropvinceOptions(json)
         }
         fetchData()
-        // console.log(array);
-        // setPropvinceOptions(array)
-        // console.log(provinceOptions)
 
     }, [])
 
@@ -390,10 +344,6 @@ const GetPropertyLogs = () => {
 
                                     })
                                 }
-                                {/* <MenuItem value="punjab">punjab</MenuItem>
-                  <MenuItem value="sindh">Karachi</MenuItem>
-                  <MenuItem value="balochistan">Sialkot</MenuItem>
-                  <MenuItem value="KPK">KPK</MenuItem> */}
                             </Select>
                         </FormControl>
                     </Grid>
@@ -421,10 +371,6 @@ const GetPropertyLogs = () => {
 
                                     })
                                 }
-
-                                {/* <MenuItem value="lahore">Lahore</MenuItem>
-                  <MenuItem value="karachi">Karachi</MenuItem>
-                  <MenuItem value="sialkot">Sialkot</MenuItem> */}
                             </Select>
                         </FormControl>
                     </Grid>
@@ -451,10 +397,6 @@ const GetPropertyLogs = () => {
                                     })
                                 }
 
-                                {/* <MenuItem value="park-view">Park View</MenuItem>
-                  <MenuItem value="bahria">Bahria</MenuItem>
-                  <MenuItem value="rehman-garden">Rehman Garden</MenuItem>
-                  <MenuItem value="iqbal-town">Iqbal Town</MenuItem> */}
                             </Select>
                         </FormControl>
                     </Grid>
@@ -480,25 +422,11 @@ const GetPropertyLogs = () => {
 
                                     })
                                 }
-                                {/* <MenuItem value="bahria-1-A">A Block</MenuItem>
-                  <MenuItem value="bahria">B Block</MenuItem>
-                  <MenuItem value="rehman-garden">X Block</MenuItem>
-                  <MenuItem value="iqbal-town">Y Block</MenuItem> */}
                             </Select>
                         </FormControl>
                     </Grid>
 
                     <Grid item sm={12} xs={12} md={6} lg={6}>
-                        {/* <TextField
-                            margin="normal"
-                            fullWidth
-                            required
-                            id="propertyId"
-                            name="propertyId"
-                            label="Property ID"
-                            type="number"
-                            onChange={hadnleChangeId}
-                        /> */}
                         <TextField
                             margin="normal"
                             fullWidth
@@ -514,23 +442,6 @@ const GetPropertyLogs = () => {
                             helperText={formErrors.propertyId}
                         />
                     </Grid>
-                    {/* <Grid item sm={12} xs={12} md={6} lg={6}>
-                        
-                        <TextField
-                            margin="normal"
-                            fullWidth
-                            required
-                            id="ownerCNIC"
-                            name="ownerCNIC"
-                            label="Seller CNIC"
-                            type="number"
-                            value={formData.ownerCNIC}
-                            onChange={handleChange}
-                            inputProps={{ min: 0 }}
-                            error={Boolean(formErrors.ownerCNIC)}
-                            helperText={formErrors.ownerCNIC}
-                        />
-                    </Grid> */}
 
                 </Grid>
                 {/* Submit Button  */}
@@ -544,29 +455,14 @@ const GetPropertyLogs = () => {
                         Fetch
                     </Button>
                 </Box>
-                {/* ---------------------------------------------------------------------- */}
-                {/* {
-                    flagChart ? (<Box bgcolor='white'  >
-                        <Typography fontSize='18px' fontWeight='bold' mb={3} >Shares Sold</Typography>
-                        <Chart percent={percentage} remaning={remainig} />
-                    </Box>) : ""
-                } */}
-                {/* <Typography>Sold: {percentage}% <Box sx={{ backgroundColor: "#0088FE", borderRadius: '5px' }} width="20px" height="10px" ></Box></Typography>
-                <Typography>Remaning: {remainig}% <Box sx={{ backgroundColor: "#00C49F", borderRadius: '5px' }} width="20px" height="10px" ></Box></Typography> */}
+                
 
                 
                 {
                     flagNewProTable ? (<><Typography fontSize='18px' mt={2} fontWeight='bold' >Inital Transactions of Property </Typography>
                         <TableComponents key="Property Shares" columsArray={newPropertyTableColumns} rowsArray={newPropertyTableRows} /></>) : "Noting to Show"
                 }
-                {/* {
-                    flagReqTable ? (
-                        <>
-                            <Typography fontSize='18px' fontWeight='bold' mt={2} >Requests of Owner</Typography>
-                            <TableComponents key="request" columsArray={reqTableColums} rowsArray={reqTableRows} />
-                        </>
-                    ) : ""
-                } */}
+                
                 {
                     flagOwnerTransaction ? (
                         <>

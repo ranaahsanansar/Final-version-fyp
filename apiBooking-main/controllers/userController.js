@@ -21,10 +21,8 @@ class UserController {
               password: hashPassword, 
               tc: tc,
             });
-            // store in MongoDb 
             await doc.save();
             const saved_user = await UserModel.findOne({ email: email });
-            // Generate JWT Token 
             const token = jwt.sign(
               { userID: saved_user._id },
               process.env.JWT_SECRET_KEY, 
@@ -59,7 +57,6 @@ class UserController {
         if (user != null) {
           const isMatch = await bcrypt.compare(password, user.password);
           if (user.email === email && isMatch) {
-            // Generate JWT Token
             const token = jwt.sign(
               { userID: user._id },
               process.env.JWT_SECRET_KEY,

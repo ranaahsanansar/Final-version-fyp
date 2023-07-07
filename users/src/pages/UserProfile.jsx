@@ -47,7 +47,6 @@ const gradiantText = {
 };
 
 const glassMorphismStyle = {
-  /* From https://css.glass */
   background: "rgba(255, 255, 255, 0.2)",
   boxShadow: " 0 4px 30px rgba(0, 0, 0, 0.1)",
   backdropFilter: "blur(5px)",
@@ -62,7 +61,6 @@ const UserProfile = () => {
     return <>{value === index && <>{children}</>}</>;
   }
 
-  // tabs Settings
   const [value, setValue] = React.useState(0);
 
   const handleTabs = (event, newValue) => {
@@ -72,14 +70,10 @@ const UserProfile = () => {
     <div>
       <Container>
         <Stack>
-          {/* Header  */}
           <Box mt={3} mb={2} >
             <Typography fontFamily='small' >0x5B38Da6a701c568545dCfcB03FcB875f56beddC4</Typography>
             <Typography variant='h4' fontWeight='bold' sx={gradiantText} >Rana Ahsan Ansar</Typography>
           </Box>
-
-          {/* Statics  */}
-
           <Box mb={3}>
             <Grid container spacing={2} alignItems='start' >
               <Grid item xs={6} sm={3} md={3} lg={3}  >
@@ -143,9 +137,6 @@ const UserProfile = () => {
             </Grid>
 
           </Box>
-
-
-          {/* Table Tabs  */}
 
           <Box >
           <Box

@@ -94,11 +94,6 @@ const IncreasePropertiesForm = () => {
       valid = false;
     }
 
-    // if (!formData.agree) {
-    //   errors.agree = "You must agree to the terms and conditions";
-    //   valid = false;
-    // }
-
     setFormErrors(errors);
 
     return valid;
@@ -215,19 +210,6 @@ const IncreasePropertiesForm = () => {
   };
 
 
-  // const handleChangeProvience = (event) => {
-  //   setProvince(event.target.value);
-  // };
-  // const handleChangeDistric = (event) => {
-  //   setDistric(event.target.value);
-  // };
-  // const handleChangeSociety = (event) => {
-  //   setSociety(event.target.value);
-  // };
-  // const handleChangeBlock = (event) => {
-  //   setBlock(event.target.value);
-  //   setLockContractAddress(govermentAuthorityContractAddress)
-  // };
 
   const handleChangeProvience = (event) => {
     setProvince(event.target.value);
@@ -256,12 +238,7 @@ const IncreasePropertiesForm = () => {
 
     const fetchData = async () => {
       let url = getSocietyURL + event.target.value;
-      // console.log("URL")
-      // console.log(url)
       const data = await fetch(url);
-      // console.log("Data")
-      // console.log(data);
-
 
       const json = await data.json();
       setSocietyOptions(json)
@@ -275,11 +252,7 @@ const IncreasePropertiesForm = () => {
     setSociety(event.target.value);
     const fetchData = async () => {
       let url = getAreaURL + event.target.value;
-      // console.log("URL")
-      // console.log(url)
       const data = await fetch(url);
-      // console.log("Data")
-      // console.log(data);
 
 
       const json = await data.json();
@@ -293,43 +266,24 @@ const IncreasePropertiesForm = () => {
     setBlock(event.target.value);
     const fetchData = async () => {
       let url = getAreaNameURL + event.target.value;
-      // console.log("URL")
-      // console.log(url)
       const data = await fetch(url);
       const json = await data.json();
-      // console.log("Data")
-      // console.log(json.name);
       let _name = json.name;
-      // console.log(_name)
       setAreaName(_name)
-      // console.log("Area Name: ");
-      // console.log(areaName)
     }
     fetchData();
 
     const fetchContracts = async () => {
       let url = getContractURL + event.target.value;
-      // console.log("URL")
-      // console.log(url)
       const data = await fetch(url);
 
       const json = await data.json();
-      // console.log("Data")
-      // console.log(json.name);
       let _landInspector = json[0].govermentAuthority
       console.log("Land")
       console.log(_landInspector)
       setLockContractAddress(_landInspector);
-      // setAreaName(_name)
-      // console.log("Area Name: ");
-      // console.log(areaName)
     }
     fetchContracts();
-
-
-    // setAreaName(event.target.value);
-
-    // setLockContractAddress(landInspectorContractAddress);
 
   };
 
@@ -343,7 +297,6 @@ const IncreasePropertiesForm = () => {
 
   useEffect(() => {
 
-    // provinceOptions.push({id: "2" , name: "Ahsan"})
     var array;
 
     const fetchData = async () => {
@@ -354,9 +307,6 @@ const IncreasePropertiesForm = () => {
       setPropvinceOptions(json)
     }
     fetchData()
-    // console.log(array);
-    // setPropvinceOptions(array)
-    // console.log(provinceOptions)
 
   }, [])
 
@@ -396,10 +346,6 @@ const IncreasePropertiesForm = () => {
 
                     })
                   }
-                  {/* <MenuItem value="punjab">punjab</MenuItem>
-                  <MenuItem value="sindh">Karachi</MenuItem>
-                  <MenuItem value="balochistan">Sialkot</MenuItem>
-                  <MenuItem value="KPK">KPK</MenuItem> */}
                 </Select>
               </FormControl>
             </Grid>
@@ -427,10 +373,6 @@ const IncreasePropertiesForm = () => {
 
                     })
                   }
-
-                  {/* <MenuItem value="lahore">Lahore</MenuItem>
-                  <MenuItem value="karachi">Karachi</MenuItem>
-                  <MenuItem value="sialkot">Sialkot</MenuItem> */}
                 </Select>
               </FormControl>
             </Grid>
@@ -457,10 +399,6 @@ const IncreasePropertiesForm = () => {
                     })
                   }
 
-                  {/* <MenuItem value="park-view">Park View</MenuItem>
-                  <MenuItem value="bahria">Bahria</MenuItem>
-                  <MenuItem value="rehman-garden">Rehman Garden</MenuItem>
-                  <MenuItem value="iqbal-town">Iqbal Town</MenuItem> */}
                 </Select>
               </FormControl>
             </Grid>
@@ -486,10 +424,6 @@ const IncreasePropertiesForm = () => {
 
                     })
                   }
-                  {/* <MenuItem value="bahria-1-A">A Block</MenuItem>
-                  <MenuItem value="bahria">B Block</MenuItem>
-                  <MenuItem value="rehman-garden">X Block</MenuItem>
-                  <MenuItem value="iqbal-town">Y Block</MenuItem> */}
                 </Select>
               </FormControl>
             </Grid>
@@ -497,7 +431,6 @@ const IncreasePropertiesForm = () => {
 
 
             <Grid item lg={4} md={4} sm={4} >
-              {/* <TextField fullWidth id="address" name="address" onChange={handleChangeAreaContractAddress} label="Contract Address" variant="outlined" placeholder="9x99856489264896519879654" /> */}
 
               <TextField
                 fullWidth
@@ -515,10 +448,7 @@ const IncreasePropertiesForm = () => {
               />
 
             </Grid>
-
             <Grid item lg={4} md={4} sm={4} >
-              {/* <TextField fullWidth id="increaseAmount" name="increaseAmount" onChange={handleChangeIncreaseAmmount} label="Increase Amount" variant="outlined" type="number" inputProps={{ min: 1 }} /> */}
-
               <TextField
                 fullWidth
                 required
@@ -532,10 +462,7 @@ const IncreasePropertiesForm = () => {
                 error={Boolean(formErrors.amount)}
                 helperText={formErrors.amount}
               />
-
-
             </Grid>
-
           </Grid>
           <Box textAlign="center">
             <Button
@@ -547,12 +474,8 @@ const IncreasePropertiesForm = () => {
               Increase
             </Button>
           </Box>
-
           {alert.status ? <Alert severity={alert.type} sx={{ mt: 3 }}>{alert.msg}</Alert> : ''}
           {etherScanAlert.status ? <><Alert severity={etherScanAlert.type} sx={{ mt: 3 }}>{etherScanAlert.msg}<a href={etherScanAlert.url} target="_blank" > Click Me</a> </Alert>  </> : ''}
-
-
-
         </Box>
       </Box>
     </Box>

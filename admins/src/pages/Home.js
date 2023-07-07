@@ -20,7 +20,6 @@ import ownerShipContract from '../artifacts/contracts/OwnerShip.sol/OwnerShip.js
 import nodeProviderUrl, { getAllDistricURL, getAllProvienceURL, getAreaNameURL, getAreaURL, getContractURL, getSocietyURL, landInspectorContractAddress, govermentAuthorityContractAddress } from "../dataVariables";
 
 import { ethers } from "ethers";
-// import nodeProviderUrl from "../dataVariables";
 import TableComponents from "../components/TableComponents";
 
 const Home = () => {
@@ -56,11 +55,6 @@ const Home = () => {
         }
 
 
-        // if (!formData.agree) {
-        //   errors.agree = "You must agree to the terms and conditions";
-        //   valid = false;
-        // }
-
         setFormErrors(errors);
 
         return valid;
@@ -75,8 +69,6 @@ const Home = () => {
         }));
     };
 
-
-    // ---------------------------------------------
 
     const [areaOptions, setAreaOptions] = useState([])
     const [provinceOptions, setPropvinceOptions] = useState([]);
@@ -116,20 +108,6 @@ const Home = () => {
     const [cnic, setCnic] = useState('');
     const [contractAddress, setContractAddress] = useState('');
 
-    //   const handleChangeProvience = (event) => {
-    //       setProvince(event.target.value);
-    //   };
-    //   const handleChangeDistric = (event) => {
-    //       setDistric(event.target.value);
-    //   };
-    //   const handleChangeSociety = (event) => {
-    //       setSociety(event.target.value);
-    //   };
-    //   const handleChangeBlock = (event) => {
-    //       setBlock(event.target.value);
-    //       // setLockContractAddress(ownerShipAddress);
-    //       setContractAddress('0x70fefc19b5B632996377904f1Ba21897a3d7F0f3')
-    //   };
 
 
     const handleChangeProvience = (event) => {
@@ -137,12 +115,7 @@ const Home = () => {
 
         const fetchData = async () => {
             let url = getAllDistricURL + event.target.value;
-            // console.log("URL")
-            // console.log(url)
             const data = await fetch(url);
-            // console.log("Data")
-            // console.log(data);
-
 
             const json = await data.json();
             setDistricOptions(json)
@@ -159,13 +132,7 @@ const Home = () => {
 
         const fetchData = async () => {
             let url = getSocietyURL + event.target.value;
-            // console.log("URL")
-            // console.log(url)
             const data = await fetch(url);
-            // console.log("Data")
-            // console.log(data);
-
-
             const json = await data.json();
             setSocietyOptions(json)
         }
@@ -178,13 +145,7 @@ const Home = () => {
         setSociety(event.target.value);
         const fetchData = async () => {
             let url = getAreaURL + event.target.value;
-            // console.log("URL")
-            // console.log(url)
             const data = await fetch(url);
-            // console.log("Data")
-            // console.log(data);
-
-
             const json = await data.json();
             setAreaOptions(json)
         }
@@ -196,50 +157,30 @@ const Home = () => {
         setBlock(event.target.value);
         const fetchData = async () => {
             let url = getAreaNameURL + event.target.value;
-            // console.log("URL")
-            // console.log(url)
             const data = await fetch(url);
             const json = await data.json();
-            // console.log("Data")
-            // console.log(json.name);
             let _name = json.name;
-            // console.log(_name)
             setAreaName(_name)
-            // console.log("Area Name: ");
-            // console.log(areaName)
         }
         fetchData();
 
         const fetchContracts = async () => {
             let url = getContractURL + event.target.value;
-            // console.log("URL")
-            // console.log(url)
             const data = await fetch(url);
 
             const json = await data.json();
-            // console.log("Data")
-            // console.log(json.name);
             let _landInspector = json[0].areaContract
             console.log("Land")
             console.log(_landInspector)
-            // setLockContractAddress(_landInspector);
             setContractAddress(_landInspector)
-            // setAreaName(_name)
-            // console.log("Area Name: ");
-            // console.log(areaName)
         }
         fetchContracts();
 
-
-        // setAreaName(event.target.value);
-
-        // setLockContractAddress(landInspectorContractAddress);
 
     };
 
     useEffect(() => {
 
-        // provinceOptions.push({id: "2" , name: "Ahsan"})
         var array;
 
         const fetchData = async () => {
@@ -250,9 +191,6 @@ const Home = () => {
             setPropvinceOptions(json)
         }
         fetchData()
-        // console.log(array);
-        // setPropvinceOptions(array)
-        // console.log(provinceOptions)
 
     }, [])
 
@@ -322,13 +260,8 @@ const Home = () => {
         dataResult.map((item) => {
             let hexaId = item.args[0]
             console.log(hexaId.toString())
-            // let id = hexaId.toString()
-            // console.log(id)
             let hexaCnic = item.args[1]
-            // let cnic = hexaCnic.toString()
             let hexaShares = item.args[2]
-            // let shares = hexaShares.toString()
-            // console.log(createNewPropertyData(hexaId.toString(), hexaCnic.toString(), hexaShares.toString()))
 
             newPropertyTableRows.push(createNewPropertyData(hexaId.toString(), hexaCnic.toString(), hexaShares.toString()))
         })
@@ -336,14 +269,9 @@ const Home = () => {
         console.log(newPropertyTableRows);
         setFlagNewProTable(true);
 
-        // ------------------------------------------------------
-
         setFlagReqTable(false);
 
         const filterReq = getContractData.filters.TransactionRequestLogs(actualData.id)
-        // console.log("Yaha sy ");
-
-        // console.log( actualData.cnic);
 
         const reqResult = await getContractData.queryFilter(filterReq);
 
@@ -351,14 +279,6 @@ const Home = () => {
 
         reqTableRows.splice(0, reqTableRows.length);
 
-        // console.log("Yaha Sy ")
-        // console.log(reqTableRows)
-
-
-
-        // console.log("Yaha sy ");
-
-        // console.log(reqResult);
 
         reqResult.map((item) => {
             let id = item.args[0].toString();
@@ -369,12 +289,10 @@ const Home = () => {
 
             reqTableRows.push(createReqTableData(id, ownerCnic, buyerCnic, shares, prize));
 
-            // console.log(id);
         })
 
         setFlagReqTable(true)
 
-        // ------------------------------------------------
 
         setFlagOwnerTransaction(false);
 
@@ -397,8 +315,6 @@ const Home = () => {
 
         setFlagOwnerTransaction(true);
 
-        // ------------------------------------------------
-
         setFlagMintTable(false);
 
         const filterMintTnx = getContractData.filters.AddNewPropertyLog()
@@ -410,7 +326,6 @@ const Home = () => {
         filterMintResult.map((item) => {
             let id = item.args[0].toString();
             let inspector = item.args[1].toString();
-            // let time = item.args[0].toString();
 
             mintedPropRows.push(createMintTableData(id, inspector))
         })
@@ -457,10 +372,6 @@ const Home = () => {
 
                                     })
                                 }
-                                {/* <MenuItem value="punjab">punjab</MenuItem>
-                  <MenuItem value="sindh">Karachi</MenuItem>
-                  <MenuItem value="balochistan">Sialkot</MenuItem>
-                  <MenuItem value="KPK">KPK</MenuItem> */}
                             </Select>
                         </FormControl>
                     </Grid>
@@ -489,9 +400,6 @@ const Home = () => {
                                     })
                                 }
 
-                                {/* <MenuItem value="lahore">Lahore</MenuItem>
-                  <MenuItem value="karachi">Karachi</MenuItem>
-                  <MenuItem value="sialkot">Sialkot</MenuItem> */}
                             </Select>
                         </FormControl>
                     </Grid>
@@ -517,11 +425,6 @@ const Home = () => {
 
                                     })
                                 }
-
-                                {/* <MenuItem value="park-view">Park View</MenuItem>
-                  <MenuItem value="bahria">Bahria</MenuItem>
-                  <MenuItem value="rehman-garden">Rehman Garden</MenuItem>
-                  <MenuItem value="iqbal-town">Iqbal Town</MenuItem> */}
                             </Select>
                         </FormControl>
                     </Grid>
@@ -547,25 +450,11 @@ const Home = () => {
 
                                     })
                                 }
-                                {/* <MenuItem value="bahria-1-A">A Block</MenuItem>
-                  <MenuItem value="bahria">B Block</MenuItem>
-                  <MenuItem value="rehman-garden">X Block</MenuItem>
-                  <MenuItem value="iqbal-town">Y Block</MenuItem> */}
                             </Select>
                         </FormControl>
                     </Grid>
 
                     <Grid item sm={12} xs={12} md={6} lg={6}>
-                        {/* <TextField
-                            margin="normal"
-                            fullWidth
-                            required
-                            id="propertyId"
-                            name="propertyId"
-                            label="Property ID"
-                            type="number"
-                            onChange={hadnleChangeId}
-                        /> */}
 
                         <TextField
                             fullWidth
@@ -581,21 +470,8 @@ const Home = () => {
                             helperText={formErrors.propertyId}
                         />
                     </Grid>
-                    {/* <Grid item sm={12} xs={12} md={6} lg={6}>
-                      <TextField
-                          margin="normal"
-                          fullWidth
-                          required
-                          id="ownerCNIC"
-                          name="ownerCNIC"
-                          label="CNIC of Owner"
-                          type="number"
-                          onChange={handleCnicChange}
-                      />
-                  </Grid> */}
 
                 </Grid>
-                {/* Submit Button  */}
                 <Box textAlign="center">
                     <Button
                         type="submit"
@@ -606,23 +482,12 @@ const Home = () => {
                         Fetch
                     </Button>
                 </Box>
-                {/* ---------------------------------------------------------------------- */}
-                {/* {
-                  flagNewProTable ? (<><Typography fontSize='18px' mt={2} fontWeight='bold' >Minted Properties</Typography>
-                      <TableComponents key="Property Shares" columsArray={mintedPropertiesColumns} rowsArray={mintedPropRows} /></>) : ""
-              } */}
+                
                 {
                     flagNewProTable ? (<><Typography fontSize='18px' mt={2} fontWeight='bold' >Inital Transactions of Property </Typography>
                         <TableComponents key="Property Shares" columsArray={newPropertyTableColumns} rowsArray={newPropertyTableRows} /></>) : ""
                 }
-                {/* {
-                    flagReqTable ? (
-                        <>
-                            <Typography fontSize='18px' fontWeight='bold' mt={2} >Transaction Requests</Typography>
-                            <TableComponents key="request" columsArray={reqTableColums} rowsArray={reqTableRows} />
-                        </>
-                    ) : ""
-                } */}
+               
                 {
                     flagOwnerTransaction ? (
                         <>

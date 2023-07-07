@@ -175,29 +175,10 @@ const [areaName, setAreaName] = useState("none");
       setPropvinceOptions(json)
     }
     fetchData()
-    // console.log(array);
-    // setPropvinceOptions(array)
-    // console.log(provinceOptions)
 
   }, [])
 
 
-  // const handleChangeProvience = (event) => {
-  //   formik.setFieldValue("province", event.target.value);
-  // };
-
-  // const handleChangeDistric = (event) => {
-  //   formik.setFieldValue("distric", event.target.value);
-  // };
-
-  // const handleChangeSociety = (event) => {
-  //   formik.setFieldValue("society", event.target.value);
-  // };
-
-  // const handleChangeBlock = (event) => {
-  //   formik.setFieldValue("block", event.target.value);
-  //   setLockContractAddress(ownerShipAddress);
-  // };
 
   const [province , setProvience] = useState("none")
   const [distric , setDistric] = useState("none")
@@ -210,11 +191,7 @@ const [areaName, setAreaName] = useState("none");
 
     const fetchData = async () => {
         let url = getAllDistricURL + event.target.value;
-        // console.log("URL")
-        // console.log(url)
         const data = await fetch(url);
-        // console.log("Data")
-        // console.log(data);
 
 
         const json = await data.json();
@@ -231,11 +208,7 @@ const handleChangeDistric = (event) => {
 
     const fetchData = async () => {
         let url = getSocietyURL + event.target.value;
-        // console.log("URL")
-        // console.log(url)
         const data = await fetch(url);
-        // console.log("Data")
-        // console.log(data);
 
 
         const json = await data.json();
@@ -249,11 +222,7 @@ const handleChangeSociety = (event) => {
   setSociety(event.target.value)
     const fetchData = async () => {
         let url = getAreaURL + event.target.value;
-        // console.log("URL")
-        // console.log(url)
         const data = await fetch(url);
-        // console.log("Data")
-        // console.log(data);
 
 
         const json = await data.json();
@@ -267,43 +236,25 @@ const handleChangeBlock = (event) => {
   setBlock(event.target.value)
     const fetchData = async () => {
         let url = getAreaNameURL + event.target.value;
-        // console.log("URL")
-        // console.log(url)
         const data = await fetch(url);
         const json = await data.json();
-        // console.log("Data")
-        // console.log(json.name);
         let _name = json.name;
-        // console.log(_name)
         setAreaName(_name)
-        // console.log("Area Name: ");
-        // console.log(areaName)
     }
     fetchData();
 
     const fetchContracts = async () => {
         let url = getContractURL + event.target.value;
-        // console.log("URL")
-        // console.log(url)
         const data = await fetch(url);
 
         const json = await data.json();
-        // console.log("Data")
-        // console.log(json.name);
         let _landInspector = json[0].areaContract
         console.log("Land")
         console.log(_landInspector)
         setLockContractAddress(_landInspector);
-        // setAreaName(_name)
-        // console.log("Area Name: ");
-        // console.log(areaName)
     }
     fetchContracts();
 
-
-    // setAreaName(event.target.value);
-
-    // setLockContractAddress(landInspectorContractAddress);
 
 };
 
@@ -342,10 +293,6 @@ const handleChangeBlock = (event) => {
 
                     })
                   }
-                  {/* <MenuItem value="punjab">punjab</MenuItem>
-                  <MenuItem value="sindh">Karachi</MenuItem>
-                  <MenuItem value="balochistan">Sialkot</MenuItem>
-                  <MenuItem value="KPK">KPK</MenuItem> */}
                 </Select>
               </FormControl>
         </Grid>
@@ -374,9 +321,6 @@ const handleChangeBlock = (event) => {
                     })
                   }
 
-                  {/* <MenuItem value="lahore">Lahore</MenuItem>
-                  <MenuItem value="karachi">Karachi</MenuItem>
-                  <MenuItem value="sialkot">Sialkot</MenuItem> */}
                 </Select>
               </FormControl>
         </Grid>
@@ -403,10 +347,6 @@ const handleChangeBlock = (event) => {
                     })
                   }
 
-                  {/* <MenuItem value="park-view">Park View</MenuItem>
-                  <MenuItem value="bahria">Bahria</MenuItem>
-                  <MenuItem value="rehman-garden">Rehman Garden</MenuItem>
-                  <MenuItem value="iqbal-town">Iqbal Town</MenuItem> */}
                 </Select>
               </FormControl>
         </Grid>
@@ -432,10 +372,6 @@ const handleChangeBlock = (event) => {
 
                     })
                   }
-                  {/* <MenuItem value="bahria-1-A">A Block</MenuItem>
-                  <MenuItem value="bahria">B Block</MenuItem>
-                  <MenuItem value="rehman-garden">X Block</MenuItem>
-                  <MenuItem value="iqbal-town">Y Block</MenuItem> */}
                 </Select>
               </FormControl>
         </Grid>

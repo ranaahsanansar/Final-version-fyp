@@ -72,19 +72,11 @@ const validationSchema = Yup.object().shape({
     "is-phone-number",
     "Phone must be 11 digit valid number",
     (value) => {
-      // console.log("Talal")
+
 
       try {
 
-      // if ( value.length == 11 ) {
-      //   console.log("Talal")
-      //    let parseedValue = parseInt(value);
       
-      // if (String(parseedValue).length == 11){
-      //   return true;
-      // }
-      //   return true;
-      // }
       console.log("Ahsan")
 
       let parseedValue = parseInt(value);
@@ -153,9 +145,7 @@ const AddProperty = () => {
         formData.append('shares' , values.share)
         formData.append('phone' , values.phone)
   
-        // const document = {
-  
-        // }
+     
   
         const fileInput = document.querySelector('input[type="file"]');
         for (let i = 0; i < fileInput.files.length; i++) {
@@ -210,7 +200,6 @@ const AddProperty = () => {
             />
           </Grid>
 
-          {/* Rest of the form fields... */}
 <Grid item sm={6} md={6} lg={4} xs={12}>
             <TextField
               margin="normal"
@@ -300,9 +289,7 @@ const AddProperty = () => {
                 onChange={formik.handleChange}
                 error={formik.touched.city && Boolean(formik.errors.city)}
               >
-                {/* <MenuItem value="house">Lahore</MenuItem>
-                <MenuItem value="appartment">Karachi</MenuItem>
-                <MenuItem value="plot">Quetta</MenuItem> */}
+                
                 {
                   citites.map((item)=>{
                     return <MenuItem value={item.name}>{item.name}</MenuItem>

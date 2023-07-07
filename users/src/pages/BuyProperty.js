@@ -34,7 +34,6 @@ const BuyProperty = () => {
       <Container>
         <Box mt={2}>
           <Stack spacing={2}>
-            {/* Heading Buying Property  */}
             <Box>
               <Stack spacing={2}>
                 <Box sx={[{ borderRadius: 2, padding: 2 , backgroundColor: 'whitesmoke' }]} >

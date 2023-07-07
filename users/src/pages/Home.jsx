@@ -16,7 +16,6 @@ import ListPropertiesSection from "../components/ListPropertiesSection";
 
 const Home = () => {
   const glassMorphismStyle = {
-    /* From https://css.glass */
     background: "rgba(255, 255, 255, 0.2)",
     boxShadow: " 0 4px 30px rgba(0, 0, 0, 0.1)",
     backdropFilter: "blur(5px)",
@@ -24,17 +23,12 @@ const Home = () => {
   };
   return (
     <>
-      {/* Main Hero Section  */}
-
       <HeroSection />
 
-      {/* We offers  */}
       <WeOfferSection />
 
-      {/* List some Properties to display of Home Page  */}
       <ListPropertiesSection />
 
-      {/* How it works */}
 
       <Box
       component='section'
@@ -172,132 +166,6 @@ const Home = () => {
                 </Grid>
                 
               </Grid>
-
-              {/* <Box
-                display="flex"
-                alignItems="center"
-                justifyContent="center"
-                flexWrap={{ xs: "wrap", md: "wrap", lg: "wrap" }}
-              >
-                <Box
-                  width="300px"
-                  height="300px"
-                  sx={glassMorphismStyle}
-                  padding={2}
-                  borderRadius={5}
-                  marginY={2}
-                  marginX={{ xs: "0px", sm: "4px", md: "4px", lg: "5px" }}
-                >
-                  <Stack spacing={1}>
-                    <Box display="flex" justifyContent="space-between">
-                      <Typography>Step 1</Typography>
-                      <AccountBalanceWalletIcon fontSize="large" />
-                    </Box>
-                    <Box>
-                      {" "}
-                      <Typography variant="h6" fontWeight="bold">
-                        Connect Wallet
-                      </Typography>{" "}
-                    </Box>
-                    <Box>
-                      {" "}
-                      <Typography
-                        sx={{
-                          display: "-webkit-box",
-                          overflow: "hidden",
-                          WebkitBoxOrient: "vertical",
-                          WebkitLineClamp: 6,
-                        }}
-                      >
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Harum, odio. Facilis placeat obcaecati repellendus est
-                        unde voluptatem velit harum officia dolores recusandae.
-                        Ipsum, pariatur? Modi cumque est quo quia facere?
-                      </Typography>{" "}
-                    </Box>
-                  </Stack>
-                </Box>
-
-                <Box
-                  width="300px"
-                  height="300px"
-                  sx={glassMorphismStyle}
-                  padding={2}
-                  borderRadius={5}
-                  marginY={2}
-                  marginX={{ xs: "0px", sm: "4px", md: "4px", lg: "5px" }}
-                >
-                  <Stack spacing={1}>
-                    <Box display="flex" justifyContent="space-between">
-                      <Typography>Step 1</Typography>
-                      <FingerprintIcon fontSize="large" />
-                    </Box>
-                    <Box>
-                      {" "}
-                      <Typography variant="h6" fontWeight="bold">
-                        {" "}
-                        Verification
-                      </Typography>{" "}
-                    </Box>
-                    <Box>
-                      {" "}
-                      <Typography
-                        sx={{
-                          display: "-webkit-box",
-                          overflow: "hidden",
-                          WebkitBoxOrient: "vertical",
-                          WebkitLineClamp: 6,
-                        }}
-                      >
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Harum, odio. Facilis placeat obcaecati repellendus est
-                        unde voluptatem velit harum officia dolores recusandae.
-                        Ipsum, pariatur? Modi cumque est quo quia facere?
-                      </Typography>{" "}
-                    </Box>
-                  </Stack>
-                </Box>
-
-                <Box
-                  width="300px"
-                  height="300px"
-                  sx={glassMorphismStyle}
-                  padding={2}
-                  borderRadius={5}
-                  marginY={2}
-                  marginX={{ xs: "0px", sm: "4px", md: "4px", lg: "5px" }}
-                >
-                  <Stack spacing={1}>
-                    <Box display="flex" justifyContent="space-between">
-                      <Typography>Step 1</Typography>
-
-                      <SellIcon fontSize="large" />
-                    </Box>
-                    <Box>
-                      {" "}
-                      <Typography variant="h6" fontWeight="bold">
-                        Sell Properties with smart Contract
-                      </Typography>{" "}
-                    </Box>
-                    <Box>
-                      {" "}
-                      <Typography
-                        sx={{
-                          display: "-webkit-box",
-                          overflow: "hidden",
-                          WebkitBoxOrient: "vertical",
-                          WebkitLineClamp: 6,
-                        }}
-                      >
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Harum, odio. Facilis placeat obcaecati repellendus est
-                        unde voluptatem velit harum officia dolores recusandae.
-                        Ipsum, pariatur? Modi cumque est quo quia facere?
-                      </Typography>{" "}
-                    </Box>
-                  </Stack>
-                </Box>
-              </Box> */}
             </Box>
           </Box>
         </Container>

@@ -22,12 +22,10 @@ class PropertyController {
       phone
     } = req.body;
     const propertyImagesArray = req.files["propertyImage"];
-    // console.log(propertyImagesArray)
     var imagesArray = [];
     propertyImagesArray.forEach((element) => {
       imagesArray.push(element.filename);
     });
-    // console.log(imagesArray)
     if (
       (title && description && priceCoin,
         priceDes,
@@ -87,14 +85,12 @@ class PropertyController {
       });
       console.log(property)
       if (property) {
-        // res.send(property);
         res.send({
           status: "success",
           message: "Success",
           details: property
         });
       } else {
-        // res.send("Not Found");
         res.send({
           status: "failed",
           message: "Property Not Found",
@@ -113,16 +109,13 @@ class PropertyController {
     const { id } = req.params;
     const userEmail = req.user.email;
 
-    // console.log(userEmail);
     try {
       const checkPropertyAuth = await PropertyModel.findById(id).populate(
         "ownerId"
       );
-      // id porperty Found then
       if (checkPropertyAuth) {
         if (checkPropertyAuth.ownerId.email === userEmail) {
           const property = await PropertyModel.findByIdAndDelete(id);
-          // console.log(property);
           if (property) {
 
             res.send({
@@ -142,7 +135,6 @@ class PropertyController {
       } else {
         res.send({ status: "failed", message: "Property not found" });
       }
-      // console.log(checkPropertyAuth.ownerId.email)
     } catch (err) {
       res.send("DB Error");
     }
@@ -150,8 +142,6 @@ class PropertyController {
 
   static getPropertiesOfUser = async (req, res) => {
     const properties = await PropertyModel.find({ ownerId: req.user._id })
-    // console.log(properties)
-
     res.status(201).send({
       status: "success",
       message: "Properties are Showen",
@@ -229,17 +219,6 @@ class PropertyController {
           propertiesArray: properties,
         })
       }
-      // const properties = await PropertyModel.find({
-      //   city: cityParam , 
-      //   propertyType: type
-      // });
-
-      // console.log(properties)
-
-      // res.status(200).send({
-      //   status: "success",
-      //   propertiesArray: properties,
-      // })
     } catch (err) {
       res.status(200).send({
         status: 'error',
@@ -253,9 +232,9 @@ class PropertyController {
     try {
       const {
         sellerMail,
-        clientMail, //
-        ClientPhone,//numeric
-        propertyID, //numeric
+        clientMail,
+        ClientPhone,
+        propertyID, 
         propertyTitle,
         clientMessage,
       } = req.body;

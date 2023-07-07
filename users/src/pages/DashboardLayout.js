@@ -84,7 +84,6 @@ const DashboardLayout = () => {
           }}
         >
           <Box sx={{ mb: '20px' }}>
-            {/* <Typography variant="h3">Dashboard</Typography> */}
             <h1 style={{ color: 'black' }} >Dashboard</h1>
           </Box>
 
@@ -148,17 +147,6 @@ const DashboardLayout = () => {
             >
               Buy Property
             </Button>
-            {/* <Button
-              component={NavLink}
-              variant="contained"
-              to="approvalRequest"
-              style={({ isActive }) => {
-                return { backgroundColor: isActive ? "white" : "#A9D6C6" };
-              }}
-              sx={{ color: "black", textTransform: "none", width: "100%" }}
-            >
-              Apply for Approval
-            </Button> */}
             <Button
               component={NavLink}
               variant="contained"
@@ -202,15 +190,6 @@ const DashboardLayout = () => {
             </Button>
           </Stack>
 
-          {/* <Button
-            variant="contained"
-            color="warning"
-            size="large"
-            onClick={handleLogout}
-            sx={{ mt: 8 }}
-          >
-            Logout
-          </Button> */}
         </Grid>
         <Grid item sm={12} lg={10} md={10} xs={12}
           sx={{
@@ -226,7 +205,6 @@ const DashboardLayout = () => {
             }
           }}
         >
-          {/* <ChangePassword /> */}
           <Outlet />
         </Grid>
       </Grid>

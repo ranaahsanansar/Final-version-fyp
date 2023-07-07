@@ -96,11 +96,6 @@ const SingToReverse = () => {
       valid = false;
     }
 
-    // if (!formData.agree) {
-    //   errors.agree = "You must agree to the terms and conditions";
-    //   valid = false;
-    // }
-
     setFormErrors(errors);
 
     return valid;
@@ -242,15 +237,6 @@ const SingToReverse = () => {
           type: "success"
         }
       )
-      // await dataResult.wait();
-
-
-
-
-
-
-
-
       setAlert({
         status: true,
         msg: "Submitted Successfuly!",
@@ -261,33 +247,12 @@ const SingToReverse = () => {
   };
 
 
-  // const handleChangeProvience = (event) => {
-  //   setProvince(event.target.value);
-  // };
-  // const handleChangeDistric = (event) => {
-  //   setDistric(event.target.value);
-  // };
-  // const handleChangeSociety = (event) => {
-  //   setSociety(event.target.value);
-  // };
-  // const handleChangeBlock = (event) => {
-  //   setBlock(event.target.value);
-  //   setLockContractAddress(govermentAuthorityContractAddress);
-  //   setAreaContractAddress(ownerShipAddress);
-  // };
-
-
   const handleChangeProvience = (event) => {
     setProvince(event.target.value);
 
     const fetchData = async () => {
       let url = getAllDistricURL + event.target.value;
-      // console.log("URL")
-      // console.log(url)
       const data = await fetch(url);
-      // console.log("Data")
-      // console.log(data);
-
 
       const json = await data.json();
       setDistricOptions(json)
@@ -296,21 +261,13 @@ const SingToReverse = () => {
 
   };
 
-
-
   const handleChangeDistric = (event) => {
 
     setDistric(event.target.value);
 
     const fetchData = async () => {
       let url = getSocietyURL + event.target.value;
-      // console.log("URL")
-      // console.log(url)
       const data = await fetch(url);
-      // console.log("Data")
-      // console.log(data);
-
-
       const json = await data.json();
       setSocietyOptions(json)
     }
@@ -323,13 +280,7 @@ const SingToReverse = () => {
     setSociety(event.target.value);
     const fetchData = async () => {
       let url = getAreaURL + event.target.value;
-      // console.log("URL")
-      // console.log(url)
       const data = await fetch(url);
-      // console.log("Data")
-      // console.log(data);
-
-
       const json = await data.json();
       setAreaOptions(json)
     }
@@ -341,29 +292,18 @@ const SingToReverse = () => {
     setBlock(event.target.value);
     const fetchData = async () => {
       let url = getAreaNameURL + event.target.value;
-      // console.log("URL")
-      // console.log(url)
       const data = await fetch(url);
       const json = await data.json();
-      // console.log("Data")
-      // console.log(json.name);
       let _name = json.name;
-      // console.log(_name)
       setAreaName(_name)
-      // console.log("Area Name: ");
-      // console.log(areaName)
     }
     fetchData();
 
     const fetchContracts = async () => {
       let url = getContractURL + event.target.value;
-      // console.log("URL")
-      // console.log(url)
       const data = await fetch(url);
 
       const json = await data.json();
-      // console.log("Data")
-      // console.log(json.name);
       let _landInspector = json[0].govermentAuthority
       let _areaContractAddress = json[0].areaContract
 
@@ -371,23 +311,13 @@ const SingToReverse = () => {
       console.log("Land")
       console.log(_landInspector)
       setLockContractAddress(_landInspector);
-
-      // setAreaName(_name)
-      // console.log("Area Name: ");
-      // console.log(areaName)
     }
     fetchContracts();
-
-
-    // setAreaName(event.target.value);
-
-    // setLockContractAddress(landInspectorContractAddress);
 
   };
 
   useEffect(() => {
 
-    // provinceOptions.push({id: "2" , name: "Ahsan"})
     var array;
 
     const fetchData = async () => {
@@ -398,9 +328,6 @@ const SingToReverse = () => {
       setPropvinceOptions(json)
     }
     fetchData()
-    // console.log(array);
-    // setPropvinceOptions(array)
-    // console.log(provinceOptions)
 
   }, [])
 
@@ -442,10 +369,6 @@ const SingToReverse = () => {
 
                     })
                   }
-                  {/* <MenuItem value="punjab">punjab</MenuItem>
-                  <MenuItem value="sindh">Karachi</MenuItem>
-                  <MenuItem value="balochistan">Sialkot</MenuItem>
-                  <MenuItem value="KPK">KPK</MenuItem> */}
                 </Select>
               </FormControl>
             </Grid>
@@ -474,9 +397,6 @@ const SingToReverse = () => {
                     })
                   }
 
-                  {/* <MenuItem value="lahore">Lahore</MenuItem>
-                  <MenuItem value="karachi">Karachi</MenuItem>
-                  <MenuItem value="sialkot">Sialkot</MenuItem> */}
                 </Select>
               </FormControl>
             </Grid>
@@ -503,10 +423,6 @@ const SingToReverse = () => {
                     })
                   }
 
-                  {/* <MenuItem value="park-view">Park View</MenuItem>
-                  <MenuItem value="bahria">Bahria</MenuItem>
-                  <MenuItem value="rehman-garden">Rehman Garden</MenuItem>
-                  <MenuItem value="iqbal-town">Iqbal Town</MenuItem> */}
                 </Select>
               </FormControl>
             </Grid>
@@ -532,10 +448,6 @@ const SingToReverse = () => {
 
                     })
                   }
-                  {/* <MenuItem value="bahria-1-A">A Block</MenuItem>
-                  <MenuItem value="bahria">B Block</MenuItem>
-                  <MenuItem value="rehman-garden">X Block</MenuItem>
-                  <MenuItem value="iqbal-town">Y Block</MenuItem> */}
                 </Select>
               </FormControl>
             </Grid>
@@ -543,14 +455,6 @@ const SingToReverse = () => {
 
 
             <Grid item lg={4} md={4} sm={4}>
-              {/* <TextField
-                fullWidth
-                id="propertyID"
-                name="propertyID"
-                label="Property ID"
-                variant="outlined"
-                onChange={handleChangePropertyId}
-              /> */}
               <TextField
                 fullWidth
                 required
@@ -568,15 +472,6 @@ const SingToReverse = () => {
 
 
             <Grid item lg={4} md={4} sm={4}>
-              {/* <TextField
-                fullWidth
-                id="caseNumber"
-                name="caseNumber"
-                label="Case Number"
-                variant="outlined"
-                type="Number"
-                onChange={handleChangeCaseNum}
-              /> */}
               <TextField
               fullWidth
               required
@@ -591,32 +486,6 @@ const SingToReverse = () => {
               helperText={formErrors.caseNum}
             />
             </Grid>
-            {/* <Grid item lg={4} md={4} sm={4}>
-              <TextField
-                fullWidth
-                id="OTPCodeVerify"
-                name="OTPCodeVerify"
-                label="OTP Verification Code"
-                variant="outlined"
-                type="Number"
-                inputProps={{ minLength: 8, }}
-                placeholder="Minimum 8 Digits Code"
-                onChange={handleChangeOtpVerify}
-              />
-            </Grid> */}
-            {/* <Grid item lg={4} md={4} sm={4}>
-              <TextField
-                fullWidth
-                id="newOTP"
-                name="newOTP"
-                label="New OTP Code"
-                variant="outlined"
-                type="Number"
-                inputProps={{ minLength: 8, }}
-                placeholder="Minimum 8 Digits Code"
-                onChange={handleChangeNewOtp}
-              />
-            </Grid> */}
           </Grid>
           <Box textAlign="center">
             <Button

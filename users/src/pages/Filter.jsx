@@ -56,21 +56,15 @@ const Filter = () => {
   };
 
   const handleFilterApply = async (req, res) => {
-    // console.log("Type" + propertyType)
     const url = `http://localhost:8000/api/dashboard/property/filterProperty/${city}/${propertyType}`;
     console.log("URL" + url)
     try {
       const exiosResponse = await axios.get(url);
       setList(exiosResponse.data.propertiesArray)
-      // console.log("Response")
       console.log(exiosResponse)
     } catch (err) {
       console.log('Can not fetch ');
     }
-
-
-    // console.log(exiosResponse.data.propertiesArray)
-
   }
 
   const gradiantText = {
@@ -129,33 +123,16 @@ const Filter = () => {
                     justifyContent="space-between"
                   >
                     <Typography>Showing all Properties</Typography>
-                    {/* <FormControl>
-                    <InputLabel id="sortLable">Sort</InputLabel>
-                    <Select
-                      labelId="sorting"
-                      id="sortInput"
-                      value={sequence}
-                      label="Sort"
-                      onChange={handleSequenceChange}
-                    >
-                      <MenuItem value="low-high">Price Low to High</MenuItem>
-                      <MenuItem value="high-low">High to low</MenuItem>
-                      <MenuItem value="random">Random</MenuItem>
-                    </Select>
-                  </FormControl> */}
                   </Box>
 
                   <Box height='90%'  >
                     <Stack spacing={2} >
-                      {/* {cardData.map( (item) => <PropertyCardFilter data={item} /> )} */}
                       {list.map((item) => <PropertyCardFilter data={item} />)}
                     </Stack>
                   </Box>
 
                 </Box>
               </Grid>
-
-              {/* Right Grid  */}
               <Grid item xs={12} sm={4} md={4} lg={4}>
                 <Box
                   sx={{ background: "rgba(190, 186, 186, 0.256)" }}
@@ -199,9 +176,6 @@ const Filter = () => {
 
                     </Box>
                     <Box mb={2}>
-                      {/* <Typography>City</Typography> */}
-                      {/* Options */}
-
                       <FormControl  >
                         <InputLabel id="sortLable">City</InputLabel>
                         <Select
@@ -212,8 +186,6 @@ const Filter = () => {
                           onChange={handleChangeCity}
                         >
                           <MenuItem value="none">None</MenuItem>
-                          {/* <MenuItem value="high-low">Islamabad</MenuItem>
-                      <MenuItem value="random">Karachi</MenuItem> */}
                           {
                             citites.map((item) => {
                               return <MenuItem value={item.name}>{item.name}</MenuItem>
@@ -223,25 +195,6 @@ const Filter = () => {
                       </FormControl>
 
                     </Box>
-
-                    {/* <Box mb={2}>
-                    
-                    <FormControl>
-                      <InputLabel id="sortLable">Area</InputLabel>
-                    <Select
-                      labelId="sorting"
-                      id="sortInput"
-                      value={sequence}
-                      label="Sort"
-                      onChange={handleSequenceChange}
-                    >
-                      <MenuItem value="low-high">Price Low to High</MenuItem>
-                      <MenuItem value="high-low">High to low</MenuItem>
-                      <MenuItem value="random">Random</MenuItem>
-                    </Select>
-                    </FormControl>
-                    
-                  </Box> */}
                     <Box display='flex' justifyContent='space-between' >
                       <Button fontSize='small' sx={{ color: '#060606' }} onClick={handleClear}  >Clear All</Button>
                       <Button sx={{

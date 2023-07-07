@@ -16,51 +16,6 @@ import axios from "axios";
 import { path } from "../dataVariables";
 import { SignalCellularNullOutlined } from "@mui/icons-material";
 
-// const myData = [
-//   {
-//     title: "Gulberg",
-//     size: "10 Marla, 3 floor",
-//     price: "10,000,000",
-//     image:
-//       "https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb",
-//   },
-//   {
-//     title: "Madina Park",
-//     size: "1 kanal, 2 story",
-//     price: "50,000,000",
-//     image:
-//       "https://images.pexels.com/photos/323780/pexels-photo-323780.jpeg?auto=compress&cs=tinysrgb&",
-//   },
-//   {
-//     title: "Buptiya",
-//     size: "2 kanal",
-//     price: "40,000,000",
-//     image:
-//       "https://images.pexels.com/photos/1396132/pexels-photo-1396132.jpeg?auto=compress&cs=tinysrgb&",
-//   },
-//   {
-//     title: "Defence",
-//     size: "1 kanal",
-//     price: "20,000,000",
-//     image:
-//       "https://images.pexels.com/photos/1115804/pexels-photo-1115804.jpeg?auto=compress&cs=tinysrgb&w=600",
-//   },
-//   {
-//     title: "Defence",
-//     size: "1 kanal",
-//     price: "20,000,000",
-//     image:
-//       "https://images.pexels.com/photos/1115804/pexels-photo-1115804.jpeg?auto=compress&cs=tinysrgb&w=600",
-//   },
-//   {
-//     title: "Defence",
-//     size: "1 kanal",
-//     price: "20,000,000",
-//     image:
-//       "https://images.pexels.com/photos/1115804/pexels-photo-1115804.jpeg?auto=compress&cs=tinysrgb&w=600",
-//   },
-
-// ];
 
 const ListPropertiesSection = () => {
 

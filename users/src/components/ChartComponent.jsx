@@ -5,10 +5,6 @@ import {
     Typography,
 } from "@mui/material";
 
-// const data = [
-//   { name: 'Value 1', percentage: 60 },
-//   { name: 'Value 2', percentage: 40 }
-// ];
 
 const COLORS = ['#0088FE', '#00C49F'];
 

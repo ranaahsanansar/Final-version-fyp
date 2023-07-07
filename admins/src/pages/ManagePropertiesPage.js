@@ -14,15 +14,9 @@ const ManagePropertiesPage = () => {
                 <Box mt={2} textAlign='center' >
                     <Typography variant='h3' fontSize='35px' fontWeight='bold' color='#060606'>Highcourt Only</Typography>
                 </Box>
-                {/* Add new Property Form  */}
                 <Box mt={2} >
                     <PropertyStayForm />
                 </Box>
-
-                {/* <Box mt={2} >
-                    <CitizenStayForm />
-                </Box> */}
-
                 <Box mt={2} >
                     <ReverseTransactionForm />
                 </Box>

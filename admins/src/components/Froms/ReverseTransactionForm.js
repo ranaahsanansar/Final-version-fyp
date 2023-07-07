@@ -46,7 +46,6 @@ const ReverseTransactionForm = () => {
 
     if (formData.propertyId == "") {
       errors.propertyId = "Field is required";
-      // console.log("Running")
       valid = false;
     } else if (formData.propertyId < 1) {
       errors.propertyId = "ID must not be less then 1";
@@ -80,17 +79,6 @@ const ReverseTransactionForm = () => {
       errors.applicatnCnic = "Value must not be less then 1";
       valid = false;
     }
-    // console.log(formData.propertyId.toString())
-
-
-    // if (formData.seller == "") {
-    //   errors.seller = "Field is required";
-    //   valid = false;
-    // } else if (formData.seller < 1) {
-    //   errors.seller = "Value must not be less then 1";
-    //   valid = false;
-    // }
-
 
     if (block == 'none') {
       setAlert({
@@ -127,11 +115,6 @@ const ReverseTransactionForm = () => {
     }
 
 
-    // if (!formData.agree) {
-    //   errors.agree = "You must agree to the terms and conditions";
-    //   valid = false;
-    // }
-
     console.log("Running 2 ")
     setFormErrors(errors);
 
@@ -167,9 +150,6 @@ const ReverseTransactionForm = () => {
       [name]: type === "checkbox" ? checked : value
     }));
   };
-
-
-  // -------------------------------------------------------------
 
   const [distric, setDistric] = useState("none");
   const [province, setProvince] = useState("none");
@@ -296,13 +276,7 @@ const ReverseTransactionForm = () => {
 
     const fetchData = async () => {
       let url = getAllDistricURL + event.target.value;
-      // console.log("URL")
-      // console.log(url)
       const data = await fetch(url);
-      // console.log("Data")
-      // console.log(data);
-
-
       const json = await data.json();
       setDistricOptions(json)
     }
@@ -316,13 +290,7 @@ const ReverseTransactionForm = () => {
 
     const fetchData = async () => {
       let url = getSocietyURL + event.target.value;
-      // console.log("URL")
-      // console.log(url)
       const data = await fetch(url);
-      // console.log("Data")
-      // console.log(data);
-
-
       const json = await data.json();
       setSocietyOptions(json)
     }
@@ -333,12 +301,7 @@ const ReverseTransactionForm = () => {
     setSociety(event.target.value);
     const fetchData = async () => {
       let url = getAreaURL + event.target.value;
-      // console.log("URL")
-      // console.log(url)
       const data = await fetch(url);
-      // console.log("Data")
-      // console.log(data);
-
 
       const json = await data.json();
       setAreaOptions(json)
@@ -350,28 +313,17 @@ const ReverseTransactionForm = () => {
     setBlock(event.target.value);
     const fetchData = async () => {
       let url = getAreaNameURL + event.target.value;
-      // console.log("URL")
-      // console.log(url)
       const data = await fetch(url);
       const json = await data.json();
-      // console.log("Data")
-      // console.log(json.name);
       let _name = json.name;
-      // console.log(_name)
       setAreaName(_name)
-      // console.log("Area Name: ");
-      // console.log(areaName)
     }
     fetchData();
 
     const fetchContracts = async () => {
       let url = getContractURL + event.target.value;
-      // console.log("URL")
-      // console.log(url)
       const data = await fetch(url);
       const json = await data.json();
-      // console.log("Data")
-      // console.log(json.name);
       let _landInspector = json[0].highCourt
       let _areaContractAddress = json[0].areaContract
 
@@ -379,22 +331,14 @@ const ReverseTransactionForm = () => {
       console.log("Land")
       console.log(_landInspector)
       setLockContractAddress(_landInspector);
-      // setAreaName(_name)
-      // console.log("Area Name: ");
-      // console.log(areaName)
     }
     fetchContracts();
 
-
-    // setAreaName(event.target.value);
-
-    // setLockContractAddress(landInspectorContractAddress);
 
   };
 
   useEffect(() => {
 
-    // provinceOptions.push({id: "2" , name: "Ahsan"})
     var array;
 
     const fetchData = async () => {
@@ -405,9 +349,6 @@ const ReverseTransactionForm = () => {
       setPropvinceOptions(json)
     }
     fetchData()
-    // console.log(array);
-    // setPropvinceOptions(array)
-    // console.log(provinceOptions)
 
   }, [])
 
@@ -467,10 +408,6 @@ const ReverseTransactionForm = () => {
 
                     })
                   }
-                  {/* <MenuItem value="punjab">punjab</MenuItem>
-                  <MenuItem value="sindh">Karachi</MenuItem>
-                  <MenuItem value="balochistan">Sialkot</MenuItem>
-                  <MenuItem value="KPK">KPK</MenuItem> */}
                 </Select>
               </FormControl>
             </Grid>
@@ -498,10 +435,6 @@ const ReverseTransactionForm = () => {
 
                     })
                   }
-
-                  {/* <MenuItem value="lahore">Lahore</MenuItem>
-                  <MenuItem value="karachi">Karachi</MenuItem>
-                  <MenuItem value="sialkot">Sialkot</MenuItem> */}
                 </Select>
               </FormControl>
             </Grid>
@@ -528,10 +461,6 @@ const ReverseTransactionForm = () => {
                     })
                   }
 
-                  {/* <MenuItem value="park-view">Park View</MenuItem>
-                  <MenuItem value="bahria">Bahria</MenuItem>
-                  <MenuItem value="rehman-garden">Rehman Garden</MenuItem>
-                  <MenuItem value="iqbal-town">Iqbal Town</MenuItem> */}
                 </Select>
               </FormControl>
             </Grid>
@@ -557,34 +486,11 @@ const ReverseTransactionForm = () => {
 
                     })
                   }
-                  {/* <MenuItem value="bahria-1-A">A Block</MenuItem>
-                  <MenuItem value="bahria">B Block</MenuItem>
-                  <MenuItem value="rehman-garden">X Block</MenuItem>
-                  <MenuItem value="iqbal-town">Y Block</MenuItem> */}
                 </Select>
               </FormControl>
             </Grid>
-            {/* 
-            <Grid item lg={4} md={4} sm={4}>
-              <TextField
-                fullWidth
-                id="propertyTitle"
-                label="Property Title"
-                variant="outlined"
-                name="propertyTitle"
-
-              />
-            </Grid> */}
 
             <Grid item lg={4} md={4} sm={4}>
-              {/* <TextField
-                fullWidth
-                id="propertyID"
-                name="propertyID"
-                label="Property ID"
-                variant="outlined"
-                onChange={handleChangePropertyId}
-              /> */}
 
 
               <TextField
@@ -603,16 +509,6 @@ const ReverseTransactionForm = () => {
             </Grid>
 
             <Grid item lg={4} md={4} sm={4}>
-              {/* <TextField
-                fullWidth
-                id="ownerCnic"
-                name="ownerCnic"
-                label="Owner Cnic"
-                variant="outlined"
-                type="Number"
-                placeholder="3520200000000"
-                onChange={handleChangeOwnerCnic}
-              /> */}
 
               <TextField
                 fullWidth
@@ -629,18 +525,6 @@ const ReverseTransactionForm = () => {
               />
             </Grid>
             <Grid item lg={4} md={4} sm={4}>
-              {/* <TextField
-                fullWidth
-                id="sharesAmount"
-                name="sharesAmount"
-                label="Shares Amount"
-                variant="outlined"
-                type="number"
-                placeholder="0-100"
-                inputProps={{ min: 0, max: 100 }}
-                onChange={handleChangeSharesAmmount}
-
-              /> */}
 
               <TextField
                 fullWidth
@@ -657,16 +541,7 @@ const ReverseTransactionForm = () => {
               />
             </Grid>
             <Grid item lg={4} md={4} sm={4}>
-              {/* <TextField
-                fullWidth
-                id="otherApplicantCNIC"
-                name="otherApplicantCNIC"
-                label="Other Applicant Cnic"
-                variant="outlined"
-                type="Number"
-                placeholder="3520200000000"
-                onChange={handleChangeOtherApplicatant}
-              /> */}
+              
 
               <TextField
                 fullWidth
@@ -683,15 +558,6 @@ const ReverseTransactionForm = () => {
               />
             </Grid>
             <Grid item lg={4} md={4} sm={4}>
-              {/* <TextField
-                fullWidth
-                id="caseNumber"
-                name="caseNumber"
-                label="Case Number"
-                variant="outlined"
-                type="Number"
-                onChange={handleChangeCaseNum}
-              /> */}
               <TextField
                 fullWidth
                 required
@@ -707,19 +573,6 @@ const ReverseTransactionForm = () => {
               />
 
             </Grid>
-            {/* <Grid item lg={4} md={4} sm={4}>
-              <TextField
-                fullWidth
-                id="OTPCode"
-                name="OTPCode"
-                label="OTP Code"
-                variant="outlined"
-                type="Number"
-                inputProps={{ minLength: 8, }}
-                placeholder="Minimum 8 Digits Code"
-                onChange={handleChangeOtpCode}
-              />
-            </Grid> */}
           </Grid>
           <Box textAlign="center">
             <Button
@@ -733,8 +586,6 @@ const ReverseTransactionForm = () => {
           </Box>
           {alert.status ? <Alert severity={alert.type} sx={{ mt: 3 }}>{alert.msg}</Alert> : ''}
           {etherScanAlert.status ? <><Alert severity={etherScanAlert.type} sx={{ mt: 3 }}>{etherScanAlert.msg}<a href={etherScanAlert.url} target="_blank" > Click Me</a> </Alert>  </> : ''}
-
-
         </Box>
       </Box>
     </Box>

@@ -69,35 +69,7 @@ const HeroSection = () => {
             flexWrap={{ xs: "wrap", sm: "wrap", md: "nowrap", lg: "nowrap" }}
             alignItems="center"
           >
-            {/* <Box padding={2} borderRadius={5} sx={glassMorphismStyle}>
-              <Stack spacing={2}>
-                <Typography variant="h2" fontWeight={500}>
-                  Digitalizing Real Estate
-                </Typography>
-                <Typography>
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea
-                  eos magnam amet quod laudantium nihil molestias accusamus
-                  quisquam quasi fugit voluptas cum consequatur eveniet libero
-                  hic eius, sunt maiores dolorem!
-                </Typography>
-                <Stack direction="row" spacing={3}>
-                  <Button
-                    variant="contained"
-                    sx={{
-                      backgroundImage:
-                        "linear-gradient(to right , #AE69B3 , #4868DB)",
-                    }}
-                  >
-                    <Typography fontWeight="bold">Connect Wallet</Typography>
-                  </Button>
-                  <Button variant="outlined">Explore Properties</Button>
-                </Stack>
-              </Stack>
-            </Box> */}
-
-            {/* <Box>
-              <img src="/images/main.png" width="100%" />
-            </Box> */}
+           
           </Box>
         </Box>
       </Container>

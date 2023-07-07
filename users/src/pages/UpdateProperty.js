@@ -181,17 +181,6 @@ const UpdateProperty = () => {
                                         </Select>
                                     </FormControl>
                                 </Grid>
-
-                                {/* <Grid item sm={6} md={6} lg={4} xs={12}>
-            <TextField
-              margin="normal"
-              fullWidth
-              required
-              id="hereType"
-              name="hereType"
-              label="Title"
-            />
-          </Grid> */}
                                 <Grid item sm={12} md={12} lg={12} xs={12}>
                                     <Box>
                                         <h3>Property Details</h3>

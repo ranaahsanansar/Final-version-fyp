@@ -62,7 +62,7 @@ const ApproveTransaction = () => {
     if (formData.buyerCnic == "") {
       errors.shares = "Shares is required";
       valid = false;
-    } 
+    }
 
     if (formData.reqNum == "") {
       errors.reqNum = "Field is required";
@@ -126,11 +126,6 @@ const ApproveTransaction = () => {
       valid = false;
     }
 
-    // if (!formData.agree) {
-    //   errors.agree = "You must agree to the terms and conditions";
-    //   valid = false;
-    // }
-
     setFormErrors(errors);
 
     return valid;
@@ -146,8 +141,6 @@ const ApproveTransaction = () => {
     }));
   };
 
-
-  // ----------------------------------------------------------
   const [etherScanAlert, setEtherScanAlert] = useState({
     status: false,
     msg: "",
@@ -208,9 +201,8 @@ const ApproveTransaction = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // const data = new FormData(e.currentTarget);
 
-    if(!validateForm()){
+    if (!validateForm()) {
       return
     }
     const actualData = {
@@ -278,11 +270,7 @@ const ApproveTransaction = () => {
 
     const fetchData = async () => {
       let url = getAllDistricURL + event.target.value;
-      // console.log("URL")
-      // console.log(url)
       const data = await fetch(url);
-      // console.log("Data")
-      // console.log(data);
 
 
       const json = await data.json();
@@ -299,13 +287,7 @@ const ApproveTransaction = () => {
 
     const fetchData = async () => {
       let url = getSocietyURL + event.target.value;
-      // console.log("URL")
-      // console.log(url)
       const data = await fetch(url);
-      // console.log("Data")
-      // console.log(data);
-
-
       const json = await data.json();
       setSocietyOptions(json)
     }
@@ -317,13 +299,7 @@ const ApproveTransaction = () => {
     setSociety(event.target.value);
     const fetchData = async () => {
       let url = getAreaURL + event.target.value;
-      // console.log("URL")
-      // console.log(url)
       const data = await fetch(url);
-      // console.log("Data")
-      // console.log(data);
-
-
       const json = await data.json();
       setAreaOptions(json)
     }
@@ -335,29 +311,18 @@ const ApproveTransaction = () => {
     setBlock(event.target.value);
     const fetchData = async () => {
       let url = getAreaNameURL + event.target.value;
-      // console.log("URL")
-      // console.log(url)
       const data = await fetch(url);
       const json = await data.json();
-      // console.log("Data")
-      // console.log(json.name);
       let _name = json.name;
-      // console.log(_name)
       setAreaName(_name)
-      // console.log("Area Name: ");
-      // console.log(areaName)
     }
     fetchData();
 
     const fetchContracts = async () => {
       let url = getContractURL + event.target.value;
-      // console.log("URL")
-      // console.log(url)
       const data = await fetch(url);
 
       const json = await data.json();
-      // console.log("Data")
-      // console.log(json.name);
       let _landInspector = json[0].landInspector
       let _areaContractAddress = json[0].areaContract
 
@@ -365,23 +330,14 @@ const ApproveTransaction = () => {
       console.log("Land")
       console.log(_landInspector)
       setLockContractAddress(_landInspector);
-      // setAreaName(_name)
-      // console.log("Area Name: ");
-      // console.log(areaName)
     }
     fetchContracts();
-
-
-    // setAreaName(event.target.value);
-
-    // setLockContractAddress(landInspectorContractAddress);
 
   };
 
 
   useEffect(() => {
 
-    // provinceOptions.push({id: "2" , name: "Ahsan"})
     var array;
 
     const fetchData = async () => {
@@ -392,10 +348,6 @@ const ApproveTransaction = () => {
       setPropvinceOptions(json)
     }
     fetchData()
-    // console.log(array);
-    // setPropvinceOptions(array)
-    // console.log(provinceOptions)
-
   }, [])
 
 
@@ -445,10 +397,6 @@ const ApproveTransaction = () => {
 
                     })
                   }
-                  {/* <MenuItem value="punjab">punjab</MenuItem>
-                  <MenuItem value="sindh">Karachi</MenuItem>
-                  <MenuItem value="balochistan">Sialkot</MenuItem>
-                  <MenuItem value="KPK">KPK</MenuItem> */}
                 </Select>
               </FormControl>
             </Grid>
@@ -476,10 +424,6 @@ const ApproveTransaction = () => {
 
                     })
                   }
-
-                  {/* <MenuItem value="lahore">Lahore</MenuItem>
-                  <MenuItem value="karachi">Karachi</MenuItem>
-                  <MenuItem value="sialkot">Sialkot</MenuItem> */}
                 </Select>
               </FormControl>
             </Grid>
@@ -505,11 +449,6 @@ const ApproveTransaction = () => {
 
                     })
                   }
-
-                  {/* <MenuItem value="park-view">Park View</MenuItem>
-                  <MenuItem value="bahria">Bahria</MenuItem>
-                  <MenuItem value="rehman-garden">Rehman Garden</MenuItem>
-                  <MenuItem value="iqbal-town">Iqbal Town</MenuItem> */}
                 </Select>
               </FormControl>
             </Grid>
@@ -535,23 +474,12 @@ const ApproveTransaction = () => {
 
                     })
                   }
-                  {/* <MenuItem value="bahria-1-A">A Block</MenuItem>
-                  <MenuItem value="bahria">B Block</MenuItem>
-                  <MenuItem value="rehman-garden">X Block</MenuItem>
-                  <MenuItem value="iqbal-town">Y Block</MenuItem> */}
                 </Select>
               </FormControl>
             </Grid>
 
 
-
-            {/* <Grid item lg={4} md={4} sm={4} >
-              <TextField fullWidth id="propertyTitle" name="propertyTitle" label="Property Title" variant="outlined" />
-
-            </Grid> */}
-
             <Grid item lg={4} md={4} sm={4} >
-              {/* <TextField fullWidth id="propertyId" onChange={handleChangeId} type="number" name="propertyId" label="Property ID" variant="outlined" /> */}
               <TextField
                 fullWidth
                 required
@@ -569,7 +497,6 @@ const ApproveTransaction = () => {
             </Grid>
 
             <Grid item lg={4} md={4} sm={4} >
-              {/* <TextField fullWidth id="sellerCnic" onChange={handleChangeSellerCnic} type="number" name="sellerCnic" label="Seller CNIC" variant="outlined" /> */}
               <TextField
                 fullWidth
                 required
@@ -583,48 +510,40 @@ const ApproveTransaction = () => {
                 error={Boolean(formErrors.ownerCNIC)}
                 helperText={formErrors.ownerCNIC}
               />
-
-
             </Grid>
-
             <Grid item lg={4} md={4} sm={4} >
-              {/* <TextField fullWidth id="buyerCNIC" onChange={handleChangeBuyerCnic} type="number" name="buyerCNIC" label="Buyer CNIC" variant="outlined" /> */}
 
               <TextField
-  fullWidth
-  required
-  id="buyerCnic"
-  name="buyerCnic"
-  label="BuyerCnic ID"
-  type="number"
-  value={formData.buyerCnic}
-  onChange={handleChange}
-  inputProps={{ min: 0 }}
-  error={Boolean(formErrors.buyerCnic)}
-  helperText={formErrors.buyerCnic}
-/>
-
+                fullWidth
+                required
+                id="buyerCnic"
+                name="buyerCnic"
+                label="BuyerCnic ID"
+                type="number"
+                value={formData.buyerCnic}
+                onChange={handleChange}
+                inputProps={{ min: 0 }}
+                error={Boolean(formErrors.buyerCnic)}
+                helperText={formErrors.buyerCnic}
+              />
             </Grid>
-
             <Grid item lg={4} md={4} sm={4} >
-              {/* <TextField fullWidth id="requestNum" onChange={handleChangeReqNum} type="number" name="requestNum" label="Request Number" variant="outlined" /> */}
 
               <TextField
-  fullWidth
-  required
-  id="reqNum"
-  name="reqNum"
-  label="Request Number"
-  type="number"
-  value={formData.reqNum}
-  onChange={handleChange}
-  inputProps={{ min: 0 }}
-  error={Boolean(formErrors.reqNum)}
-  helperText={formErrors.reqNum}
-/>
+                fullWidth
+                required
+                id="reqNum"
+                name="reqNum"
+                label="Request Number"
+                type="number"
+                value={formData.reqNum}
+                onChange={handleChange}
+                inputProps={{ min: 0 }}
+                error={Boolean(formErrors.reqNum)}
+                helperText={formErrors.reqNum}
+              />
 
             </Grid>
-
           </Grid>
           <Box textAlign="center">
             <Button
@@ -638,9 +557,6 @@ const ApproveTransaction = () => {
           </Box>
           {alert.status ? <Alert severity={alert.type} sx={{ mt: 3 }}>{alert.msg}</Alert> : ''}
           {etherScanAlert.status ? <><Alert severity={etherScanAlert.type} sx={{ mt: 3 }}>{etherScanAlert.msg}<a href={etherScanAlert.url} target="_blank" > Click Me</a> </Alert>  </> : ''}
-
-
-
         </Box>
       </Box>
     </Box>

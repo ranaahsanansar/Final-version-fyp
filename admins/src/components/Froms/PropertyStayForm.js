@@ -21,8 +21,6 @@ import { ethers } from "ethers";
 
 import nodeProviderUrl, { getAllDistricURL, getAllProvienceURL, getAreaNameURL, getAreaURL, getContractURL, getSocietyURL, landInspectorContractAddress, govermentAuthorityContractAddress } from "../../dataVariables";
 
-
-
 const PropertyStayForm = () => {
 
 
@@ -91,11 +89,6 @@ const PropertyStayForm = () => {
       valid = false;
     }
 
-    // if (!formData.agree) {
-    //   errors.agree = "You must agree to the terms and conditions";
-    //   valid = false;
-    // }
-
     setFormErrors(errors);
 
     return valid;
@@ -111,9 +104,6 @@ const PropertyStayForm = () => {
   };
 
 
-
-
-  // ----------------------------------------------------------------------
   const [distric, setDistric] = useState('none');
   const [province, setProvince] = useState('none');
   const [society, setSociety] = useState('none');
@@ -282,33 +272,12 @@ const PropertyStayForm = () => {
 
   }
 
-  // const handleChangeProvience = (event) => {
-  //   setProvince(event.target.value);
-  // };
-  // const handleChangeDistric = (event) => {
-  //   setDistric(event.target.value);
-  // };
-  // const handleChangeSociety = (event) => {
-  //   setSociety(event.target.value);
-  // };
-  // const handleChangeBlock = (event) => {
-  //   setBlock(event.target.value);
-  //   setLockContractAddress(HighCourtAddress);
-  //   setAreaContractAddress(ownerShipAddress);
-  // };
-
-
   const handleChangeProvience = (event) => {
     setProvince(event.target.value);
 
     const fetchData = async () => {
       let url = getAllDistricURL + event.target.value;
-      // console.log("URL")
-      // console.log(url)
       const data = await fetch(url);
-      // console.log("Data")
-      // console.log(data);
-
 
       const json = await data.json();
       setDistricOptions(json)
@@ -323,13 +292,7 @@ const PropertyStayForm = () => {
 
     const fetchData = async () => {
       let url = getSocietyURL + event.target.value;
-      // console.log("URL")
-      // console.log(url)
       const data = await fetch(url);
-      // console.log("Data")
-      // console.log(data);
-
-
       const json = await data.json();
       setSocietyOptions(json)
     }
@@ -340,12 +303,7 @@ const PropertyStayForm = () => {
     setSociety(event.target.value);
     const fetchData = async () => {
       let url = getAreaURL + event.target.value;
-      // console.log("URL")
-      // console.log(url)
       const data = await fetch(url);
-      // console.log("Data")
-      // console.log(data);
-
 
       const json = await data.json();
       setAreaOptions(json)
@@ -357,29 +315,18 @@ const PropertyStayForm = () => {
     setBlock(event.target.value);
     const fetchData = async () => {
       let url = getAreaNameURL + event.target.value;
-      // console.log("URL")
-      // console.log(url)
       const data = await fetch(url);
       const json = await data.json();
-      // console.log("Data")
-      // console.log(json.name);
       let _name = json.name;
-      // console.log(_name)
       setAreaName(_name)
-      // console.log("Area Name: ");
-      // console.log(areaName)
     }
     fetchData();
 
     const fetchContracts = async () => {
       let url = getContractURL + event.target.value;
-      // console.log("URL")
-      // console.log(url)
       const data = await fetch(url);
 
       const json = await data.json();
-      // console.log("Data")
-      // console.log(json.name);
       let _landInspector = json[0].govermentAuthority
       console.log("Land")
       console.log(_landInspector)
@@ -387,22 +334,13 @@ const PropertyStayForm = () => {
 
       setAreaContractAddress(_areaContractAddress)
       setLockContractAddress(_landInspector);
-      // setAreaName(_name)
-      // console.log("Area Name: ");
-      // console.log(areaName)
     }
     fetchContracts();
 
 
-    // setAreaName(event.target.value);
-
-    // setLockContractAddress(landInspectorContractAddress);
-
   };
 
   useEffect(() => {
-
-    // provinceOptions.push({id: "2" , name: "Ahsan"})
     var array;
 
     const fetchData = async () => {
@@ -413,9 +351,6 @@ const PropertyStayForm = () => {
       setPropvinceOptions(json)
     }
     fetchData()
-    // console.log(array);
-    // setPropvinceOptions(array)
-    // console.log(provinceOptions)
 
   }, [])
 
@@ -456,10 +391,6 @@ const PropertyStayForm = () => {
 
                     })
                   }
-                  {/* <MenuItem value="punjab">punjab</MenuItem>
-                  <MenuItem value="sindh">Karachi</MenuItem>
-                  <MenuItem value="balochistan">Sialkot</MenuItem>
-                  <MenuItem value="KPK">KPK</MenuItem> */}
                 </Select>
               </FormControl>
             </Grid>
@@ -488,9 +419,6 @@ const PropertyStayForm = () => {
                     })
                   }
 
-                  {/* <MenuItem value="lahore">Lahore</MenuItem>
-                  <MenuItem value="karachi">Karachi</MenuItem>
-                  <MenuItem value="sialkot">Sialkot</MenuItem> */}
                 </Select>
               </FormControl>
             </Grid>
@@ -516,11 +444,6 @@ const PropertyStayForm = () => {
 
                     })
                   }
-
-                  {/* <MenuItem value="park-view">Park View</MenuItem>
-                  <MenuItem value="bahria">Bahria</MenuItem>
-                  <MenuItem value="rehman-garden">Rehman Garden</MenuItem>
-                  <MenuItem value="iqbal-town">Iqbal Town</MenuItem> */}
                 </Select>
               </FormControl>
             </Grid>
@@ -546,23 +469,12 @@ const PropertyStayForm = () => {
 
                     })
                   }
-                  {/* <MenuItem value="bahria-1-A">A Block</MenuItem>
-                  <MenuItem value="bahria">B Block</MenuItem>
-                  <MenuItem value="rehman-garden">X Block</MenuItem>
-                  <MenuItem value="iqbal-town">Y Block</MenuItem> */}
                 </Select>
               </FormControl>
             </Grid>
 
 
-
-            {/* <Grid item lg={4} md={4} sm={4} > 
-              <TextField fullWidth id="propertyTitle" name="propertyTitle" label="Property Title" variant="outlined" />
-                
-                 </Grid> */}
-
             <Grid item lg={4} md={4} sm={4} >
-              {/* <TextField fullWidth id="propertyId" onChange={handleChangePropertyId} name="propertyId" label="Property ID" variant="outlined" /> */}
 
               <TextField
                 fullWidth

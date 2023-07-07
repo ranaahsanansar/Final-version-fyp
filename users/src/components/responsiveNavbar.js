@@ -17,7 +17,6 @@ function ResponsiveNavbar() {
 
   return (
     <header>
-      {/* <h3 >Real Estate</h3> */}
       <Typography color="#060606" fontWeight='bold' fontSize='20px' >Land Ledger</Typography>
       <nav ref={navRef}>
         <Button
@@ -42,9 +41,6 @@ function ResponsiveNavbar() {
         >
           Explore
         </Button>
-        {/* <a href="/#">My work</a>
-        <a href="/#">Blog</a>
-        <a href="/#">About me</a> */}
 		{token ? (
               <Button
                 component={NavLink}

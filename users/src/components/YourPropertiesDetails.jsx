@@ -70,12 +70,6 @@ const YourPropertiesDetails = () => {
             errors.ownerCNIC = "Cnicn Must be Valid";
             valid = false;
         }
-
-        // if (!formData.agree) {
-        //   errors.agree = "You must agree to the terms and conditions";
-        //   valid = false;
-        // }
-
         setFormErrors(errors);
 
         return valid;
@@ -259,42 +253,7 @@ const YourPropertiesDetails = () => {
             ownerShipContract.abi,
             nodeProvider
         )
-        // const filtr = getContractData.filters.SellNewPropertyLog()
-        // // const filtr = getContractData.filters.SellNewPropertyLog( parseInt(actualData.id) )
-        // const dataResult = await getContractData.queryFilter(filtr)
-        // // console.log(dataResult)
-
-        // newPropertyTableRows.map((i) => {
-        //     newPropertyTableRows.pop()
-        // })
-
-        // newPropertyTableRows.splice(0, newPropertyTableRows.length);
-
-        // dataResult.map((item) => {
-        //     let hexaId = item.args[0]
-        //     console.log(hexaId.toString())
-        //     let hexaCnic = item.args[1]
-        //     let hexaShares = item.args[2]
-        //     let remaining = parseInt(hexaShares.toString()) - 100;
-        //     console.log("Shares")
-        //     console.log(hexaShares);
-        //     console.log("Remaining ")
-
-        //     console.log(remaining);
-        //     setPercentage(parseInt(hexaShares.toString()));
-        //     if (remaining < 0) {
-        //         remaining = remaining * -1;
-        //     }
-
-        //     setRemaining(remaining)
-
-        //     newPropertyTableRows.push(createNewPropertyData(hexaId.toString(), hexaCnic.toString(), hexaShares.toString()))
-        // })
-
-        // console.log(newPropertyTableRows);
-        // setFlagNewProTable(true);
-        // setFlagChart(true);
-
+        
         // ------------------------------------------------------
 
         setFlagReqTable(false);
@@ -327,28 +286,7 @@ const YourPropertiesDetails = () => {
 
         // ------------------------------------------------
 
-        // setFlagOwnerTransaction(false);
-
-        // const filterOwnerTnx = getContractData.filters.TransactionRecordLogs(actualData.id, null, null)
-
-        // const ownerTnxResult = await getContractData.queryFilter(filterOwnerTnx);
-        // console.log("Ahsan")
-        // console.log(ownerTnxResult)
-
-        // ownerTnxRows.splice(0, ownerTnxRows.length);
-
-        // ownerTnxResult.map((item) => {
-        //     let id = item.args[0].toString();
-        //     let ownerCnic = item.args[1].toString();
-        //     let buyerCnic = item.args[2].toString();
-        //     let shares = item.args[3].toString();
-        //     let prize = item.args[4].toString();
-
-        //     // ownerTnxRows.push(createReqTableData(id, ownerCnic, buyerCnic, shares, prize));
-
-        // })
-
-        // setFlagOwnerTransaction(true);
+       
     }
 
     useEffect(() => {
@@ -364,10 +302,7 @@ const YourPropertiesDetails = () => {
             setPropvinceOptions(json)
         }
         fetchData()
-        // console.log(array);
-        // setPropvinceOptions(array)
-        // console.log(provinceOptions)
-
+       
     }, [])
 
     return (
@@ -408,10 +343,7 @@ const YourPropertiesDetails = () => {
 
                                     })
                                 }
-                                {/* <MenuItem value="punjab">punjab</MenuItem>
-                  <MenuItem value="sindh">Karachi</MenuItem>
-                  <MenuItem value="balochistan">Sialkot</MenuItem>
-                  <MenuItem value="KPK">KPK</MenuItem> */}
+                                
                             </Select>
                         </FormControl>
                     </Grid>
@@ -440,9 +372,6 @@ const YourPropertiesDetails = () => {
                                     })
                                 }
 
-                                {/* <MenuItem value="lahore">Lahore</MenuItem>
-                  <MenuItem value="karachi">Karachi</MenuItem>
-                  <MenuItem value="sialkot">Sialkot</MenuItem> */}
                             </Select>
                         </FormControl>
                     </Grid>
@@ -469,10 +398,6 @@ const YourPropertiesDetails = () => {
                                     })
                                 }
 
-                                {/* <MenuItem value="park-view">Park View</MenuItem>
-                  <MenuItem value="bahria">Bahria</MenuItem>
-                  <MenuItem value="rehman-garden">Rehman Garden</MenuItem>
-                  <MenuItem value="iqbal-town">Iqbal Town</MenuItem> */}
                             </Select>
                         </FormControl>
                     </Grid>
@@ -498,31 +423,10 @@ const YourPropertiesDetails = () => {
 
                                     })
                                 }
-                                {/* <MenuItem value="bahria-1-A">A Block</MenuItem>
-                  <MenuItem value="bahria">B Block</MenuItem>
-                  <MenuItem value="rehman-garden">X Block</MenuItem>
-                  <MenuItem value="iqbal-town">Y Block</MenuItem> */}
                             </Select>
                         </FormControl>
                     </Grid>
 
-                    {/* <Grid item sm={12} xs={12} md={6} lg={6}>
-
-                        <TextField
-                            margin="normal"
-                            fullWidth
-                            required
-                            id="propertyId"
-                            name="propertyId"
-                            label="Property ID"
-                            type="number"
-                            value={formData.propertyId}
-                            onChange={handleChange}
-                            inputProps={{ min: 0 }}
-                            error={Boolean(formErrors.propertyId)}
-                            helperText={formErrors.propertyId}
-                        />
-                    </Grid> */}
                     <Grid item sm={12} xs={12} md={6} lg={6}>
 
                         <TextField
@@ -554,19 +458,7 @@ const YourPropertiesDetails = () => {
                     </Button>
                 </Box>
                 {/* ---------------------------------------------------------------------- */}
-                {/* {
-                    flagChart ? (<Box bgcolor='white'  >
-                        <Typography fontSize='18px' fontWeight='bold' mb={3} >Shares Sold</Typography>
-                        <Chart percent={percentage} remaning={remainig} />
-                    </Box>) : ""
-                }
-                <Typography>Sold: {percentage}% <Box sx={{ backgroundColor: "#0088FE", borderRadius: '5px' }} width="20px" height="10px" ></Box></Typography>
-                <Typography>Remaning: {remainig}% <Box sx={{ backgroundColor: "#00C49F", borderRadius: '5px' }} width="20px" height="10px" ></Box></Typography>
-
-                {
-                    flagNewProTable ? (<><Typography fontSize='18px' mt={2} fontWeight='bold' >Inital Transactions of Property </Typography>
-                        <TableComponents key="Property Shares" columsArray={newPropertyTableColumns} rowsArray={newPropertyTableRows} /></>) : ""
-                } */}
+               
                 {
                     flagReqTable ? (
                         <>
@@ -575,14 +467,7 @@ const YourPropertiesDetails = () => {
                         </>
                     ) : ""
                 }
-                {/* {
-                    flagOwnerTransaction ? (
-                        <>
-                            <Typography fontSize='18px' fontWeight='bold' mt={2} >Ownership Transactions (You Bought)</Typography>
-                            <TableComponents key="request" columsArray={reqTableColums} rowsArray={ownerTnxRows} />
-                        </>
-                    ) : ""
-                } */}
+               
             </Box>
         </Box>
 
@@ -590,4 +475,3 @@ const YourPropertiesDetails = () => {
 }
 
 export default YourPropertiesDetails
-

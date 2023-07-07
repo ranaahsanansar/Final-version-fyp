@@ -7,7 +7,7 @@ import {
   TextareaAutosize,
   Typography,
 } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 
 
 
@@ -15,6 +15,8 @@ const RPC = process.env.NODE_PROVIDER_RPC;
 
 
 const CitizenRequestSol = () => {
+
+
   return (
     <div>
       <Container>
@@ -36,6 +38,7 @@ const CitizenRequestSol = () => {
                   label="CNIC"
                   type="number"
                 />
+
               </Grid>
 
               <Grid item sm={6} xs={12} md={4} lg={3}>
@@ -103,19 +106,19 @@ const CitizenRequestSol = () => {
                   type="file"
                 />
               </Grid>
-            
-              
+
+
             </Grid>
 
             <Box textAlign="center">
-                <Button
-                  type="submit"
-                  variant="contained"
-                  sx={{ mt: 3, mb: 2, px: 5 }}
-                >
-                  Apply
-                </Button>
-              </Box>
+              <Button
+                type="submit"
+                variant="contained"
+                sx={{ mt: 3, mb: 2, px: 5 }}
+              >
+                Apply
+              </Button>
+            </Box>
           </Box>
         </Box>
       </Container>

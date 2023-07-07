@@ -1,0 +1,171 @@
+{
+	"info": {
+		"_postman_id": "040a65a9-d61c-47b5-bc68-02a185e96556",
+		"name": "BookingApp API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "27578430",
+		"_collection_link": "https://warped-water-831957.postman.co/workspace/Team-Workspace~8b4beed6-22ff-43e9-8e04-84727cc53d0d/collection/27578430-040a65a9-d61c-47b5-bc68-02a185e96556?action=share&creator=27578430&source=collection_link"
+	},
+	"item": [
+		{
+			"name": "New Request",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"ashan@gmail.com\",\n    \"password\": \"123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8000/api/user/login"
+			},
+			"response": []
+		},
+		{
+			"name": "getPropertiesOfUser",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2NDZmN2Y2MDhjYWE0MWQ0YmRlZjM5NGIiLCJpYXQiOjE2ODY0NjQ4OTIsImV4cCI6MTY4NjU1MTI5Mn0.ck8LM29GzX4N_HBvCfXk6Cui-xMwEF2oCTPw8Em_GDk",
+						"type": "text"
+					}
+				],
+				"url": "http://localhost:8000/api/dashboard/property/myProperties"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8000/api/dashboard/property/allProperties",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8000/api/dashboard/property/allProperties"
+			},
+			"response": []
+		},
+		{
+			"name": "/getProperty/6492b11638a913f37e273148",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8000/api/dashboard/property/getProperty/6492b11638a913f37e273148"
+			},
+			"response": []
+		},
+		{
+			"name": "filterProperty/none/none",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8000/api/dashboard/property/filterProperty/none/none"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8000/api/dashboard/property/send-message",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"sellerMail\":\"m.talal.cs@gmail.com\",\n    \"clientMail\":\"ahsan@gmail.com\",\n    \"ClientPhone\":\"+93218461677\",\n    \"propertyID\":\"9999999999999\",\n    \"propertyTitle\":\"2 Marla Plot at Bahria\",\n    \"clientMessage\":\"Talal Pro\"\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8000/api/dashboard/property/send-message"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8000/api/dashboard/property/approval",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {}
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2NDZmN2Y2MDhjYWE0MWQ0YmRlZjM5NGIiLCJpYXQiOjE2ODg1NTUwMDksImV4cCI6MTY4OTQxOTAwOX0.zkq90QFyDZVsAhQNzzf4F0DiVexGEMkI1Y3VdP-6o_Q",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "front",
+							"type": "file",
+							"src": "/home/vaival/Pictures/Screenshot from 2023-06-12 17-32-58.png"
+						},
+						{
+							"key": "back",
+							"type": "file",
+							"src": "/home/vaival/Pictures/Screenshot from 2023-06-03 14-30-03.png"
+						},
+						{
+							"key": "passport-pic",
+							"type": "file",
+							"src": "/home/vaival/Pictures/Screenshot from 2023-05-19 15-43-26.png"
+						},
+						{
+							"key": "name",
+							"value": "Rana Ahsan",
+							"type": "text"
+						},
+						{
+							"key": "cnic",
+							"value": "35202",
+							"type": "text"
+						},
+						{
+							"key": "fatherName",
+							"value": "Ansar Latif",
+							"type": "text"
+						},
+						{
+							"key": "phone",
+							"value": "0309",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "asn.cs21@gmail.com",
+							"type": "text"
+						}
+					]
+				},
+				"url": "http://localhost:8000/api/dashboard/property/approval"
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8000/api/dashboard/property/get-user-approval/35202",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "localhost:8000/api/dashboard/property/get-user-approval/35202"
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8000/api/dashboard/property/send-approval-mail",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": "localhost:8000/api/dashboard/property/send-approval-mail"
+			},
+			"response": []
+		}
+	]
+}

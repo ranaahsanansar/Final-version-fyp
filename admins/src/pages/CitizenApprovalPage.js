@@ -46,7 +46,7 @@ const CitizenApprovalPage = () => {
     front: "asn.cs21@gmail.com-1688557330521-Screenshot from 2023-06-12 17-32-58.png",
     back: "asn.cs21@gmail.com-1688557330529-Screenshot from 2023-06-03 14-30-03.png",
     picture: "asn.cs21@gmail.com-1688557330536-Screenshot from 2023-05-19 15-43-26.png",
-    path: "public/uploads/approvalRequests",
+    path: "public/uploads/approvalRequests/",
   })
 
   const handleFetch = async (e) => {

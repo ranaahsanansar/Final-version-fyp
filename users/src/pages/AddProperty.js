@@ -389,7 +389,7 @@ const AddProperty = () => {
 
           <Grid item sm={12} md={12} lg={12} xs={12}>
             <p>Images</p>
-            <input type="file" name="propertyImage" multiple />
+            <input type="file" name="propertyImage" multiple accept="image/png, image/gif, image/jpeg" />
           </Grid>
         </Grid>
 

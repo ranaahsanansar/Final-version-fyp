@@ -1,4 +1,5 @@
-
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import {
     Alert,
     Box,
@@ -16,63 +17,172 @@ import {
     Typography,
 } from "@mui/material";
 import BuyingRecords from "../components/BuyingRecords";
-
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
-
-
-
-import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import citizenContract from "../artifacts/contracts/Citizens.sol/Citizens.json";
 import { ethers } from "ethers";
 import { citizenContractAddress } from "../dataVariables";
-
-
-const validationSchema = Yup.object({
-    citizenName: Yup.string().required('Full Name is required'),
-    citizenCNIC: Yup.number().required('CNIC is required'),
-    fatherName: Yup.string().required("Father's Name is required"),
-    phone: Yup.number().required('Phone number is required'),
-    email: Yup.string().email('Invalid email').required('Email is required'),
-    agree: Yup.boolean().oneOf([true], 'You must agree to the terms and conditions'),
-  });
-  
-
-
 const ApprovalRequestForm = () => {
+
+    const { token } = useSelector(state => state.auth)
+
     const [alert, setAlert] = useState({
         status: false,
         msg: "",
-        type: ""
+        type: "",
     });
 
     const [etherScanAlert, setEtherScanAlert] = useState({
         status: false,
         msg: "",
         url: "",
-        type: ""
+        type: "",
     });
+
+    const [formValues, setFormValues] = useState({
+        citizenName: "",
+        citizenCNIC: "",
+        fatherName: "",
+        phone: "",
+        email: "",
+        CNICFront: null,
+        CNICBack: null,
+        picture: null,
+        agree: false,
+    });
+
+    const [formErrors, setFormErrors] = useState({
+        citizenName: "",
+        citizenCNIC: "",
+        fatherName: "",
+        phone: "",
+        email: "",
+        CNICFront: "",
+        CNICBack: "",
+        picture: "",
+        agree: "",
+    });
+
+    const handleInputChange = (event) => {
+        const { name, value } = event.target;
+        setFormValues((prevValues) => ({
+            ...prevValues,
+            [name]: value,
+        }));
+    };
+
+    const handleFileChange = (event) => {
+        const { name, files } = event.target;
+        setFormValues((prevValues) => ({
+            ...prevValues,
+            [name]: files[0],
+        }));
+    };
     const { ethereum } = window;
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const data = new FormData(e.currentTarget);
-       
-        const actualData = {
-            citzenName: data.get('citizenName'),
-            cnic: data.get('citizenCNIC'),
-            fatherName: data.get('fatherName'),
-            phone: data.get('phone'),
-            email: data.get('email'),
-            agree: data.get('agree')
+
+        // Perform form validation
+        let isValid = true;
+        const errors = {
+            citizenName: "",
+            citizenCNIC: "",
+            fatherName: "",
+            phone: "",
+            email: "",
+            CNICFront: "",
+            CNICBack: "",
+            picture: "",
+            agree: "",
+        };
+
+        if (!formValues.citizenName.trim()) {
+            errors.citizenName = "Please enter your full name";
+            isValid = false;
+        }else if (String(formValues.citizenName).length < 3 ) {
+            errors.citizenName = "Name must be at least 3 characters";
+            isValid = false;
         }
 
-        if (actualData.citzenName && actualData.cnic && actualData.fatherName && actualData.phone && actualData.email && actualData.agree) {
+        if (!formValues.citizenCNIC.trim()) {
+            errors.citizenCNIC = "Please enter your CNIC";
+            isValid = false;
+        } else if (formValues.citizenCNIC < 1) {
+            errors.citizenCNIC = "Value must not be less then 1";
+            isValid = false;
+        }
 
+        let checkValidCnic = formValues.citizenCNIC.toString();
+        if(checkValidCnic.length != 13 ){
+            errors.citizenCNIC = "Cnicn Must be Valid";
+            isValid = false;
+        }
 
+        if (!formValues.fatherName.trim()) {
+            errors.fatherName = "Please enter your father's name";
+            isValid = false;
+        }else if (String(formValues.fatherName).length < 3 ) {
+            errors.fatherName = "Name must be at least 3 characters";
+            isValid = false;
+        }
+
+        if (!formValues.phone.trim()) {
+            errors.phone = "Please enter your phone number";
+            isValid = false;
+        }else if (String(formValues.phone).length != 11 ){
+            errors.phone = "Phone should be a number";
+            isValid = false;
+        }
+
+        const emailPattern = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+
+        const isValidEmail = (email) => {
+            return emailPattern.test(email);
+          };
+          
+
+        if (!formValues.email.trim()) {
+            errors.email = "Please enter your email";
+            isValid = false;
+        }else if (!isValidEmail(formValues.email)) {
+            errors.email = "Email is not valid";
+            isValid = false;
+        }
+
+        if (!formValues.CNICFront) {
+            errors.CNICFront = "Please upload your CNIC front image";
+            isValid = false;
+        }
+
+        if (!formValues.CNICBack) {
+            errors.CNICBack = "Please upload your CNIC back image";
+            isValid = false;
+        }
+
+        if (!formValues.picture) {
+            errors.picture = "Please upload your passport size picture";
+            isValid = false;
+        }
+
+        if (!formValues.agree) {
+            errors.agree = "Please agree to the terms and conditions";
+            isValid = false;
+            setAlert({
+                status: true,
+                msg: "Please agree to the terms and conditions",
+                type: "error",
+            });
+        }
+
+        setFormErrors(errors);
+
+        if (!isValid) {
+            return;
+        }
+
+        try {
             const contractAddress = citizenContractAddress
             console.log(contractAddress);
-
             let providerUrl = "https://eth-sepolia.g.alchemy.com/v2/g5_IZehi2__Fi9Jj5Pgs53cy_Shg9umf";
 
             const nodeProvider = new ethers.providers.JsonRpcProvider(
@@ -84,23 +194,13 @@ const ApprovalRequestForm = () => {
             )
 
             const signer = walletProvider.getSigner();
-
-            // console.log(nodeProvider , walletProvider)
-
-            const getContractData = new ethers.Contract(
-                contractAddress,
-                citizenContract.abi,
-                nodeProvider
-            )
-
             const sendTx = new ethers.Contract(
                 contractAddress,
                 citizenContract.abi,
                 signer
             )
-            console.log("Ok ha")
 
-            const dataResult = await sendTx.newCitizenRequest(actualData.cnic);
+            const dataResult = await sendTx.newCitizenRequest(formValues.citizenCNIC);
 
             let txHash = dataResult.hash
             let scanUrl = "https://sepolia.etherscan.io/tx/" + txHash;
@@ -113,72 +213,101 @@ const ApprovalRequestForm = () => {
                     type: "success"
                 }
             )
-            setAlert({
-                status: true,
-                msg: "Your Request is now generated! Contact to the land Inspector",
-                type: "success"
-            });
 
-        } else {
-            // setError({ status: true, msg: "All Fields are Required", type: 'error' })
+        } catch (err) {
             setAlert({
                 status: true,
-                msg: "All Fields are required!",
-                type: "error"
+                msg: "Please connect Metamask wallet",
+                type: "error",
             });
+            return
         }
 
+
+        // Create form data to send to the API
+        const formData = new FormData();
+        formData.append("name", formValues.citizenName);
+        formData.append("cnic", formValues.citizenCNIC);
+        formData.append("fatherName", formValues.fatherName);
+        formData.append("phone", formValues.phone);
+        formData.append("email", formValues.email);
+        formData.append("front", formValues.CNICFront);
+        formData.append("back", formValues.CNICBack);
+        formData.append("passport-pic", formValues.picture);
+
+        try {
+            // Make a POST request to the API endpoint
+            const response = await axios.post(
+                "http://localhost:8000/api/dashboard/property/approval",
+                formData,
+                {
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                        'Authorization': `Bearer ${token}`
+                    },
+                }
+            );
+
+            // Handle successful response
+            setAlert({
+                status: true,
+                msg: "Form submitted successfully",
+                type: "success",
+            });
+
+            // Reset the form values
+            setFormValues({
+                citizenName: "",
+                citizenCNIC: "",
+                fatherName: "",
+                phone: "",
+                email: "",
+                CNICFront: null,
+                CNICBack: null,
+                picture: null,
+                agree: false,
+            });
+
+            // Clear the form errors
+            setFormErrors({
+                citizenName: "",
+                citizenCNIC: "",
+                fatherName: "",
+                phone: "",
+                email: "",
+                CNICFront: "",
+                CNICBack: "",
+                picture: "",
+                agree: "",
+            });
+        } catch (error) {
+            // Handle error
+            console.error(error);
+            setAlert({
+                status: true,
+                msg: "Failed to submit form",
+                type: "error",
+            });
+        }
     };
-
-    const [distric, setDistric] = useState("");
-    const [province, setProvince] = useState('punjab');
-    const [society, setSociety] = useState('none');
-    const [block, setBlock] = useState('park-view');
-
 
     useEffect(() => {
         if (alert.status === true) {
             setTimeout(() => {
-
                 setAlert({
                     status: false,
                     msg: "",
-                    type: ""
+                    type: "",
                 });
-
             }, 5000);
-
-
         }
-
-    })
-
-
-    const handleChangeProvience = (event) => {
-        setProvince(event.target.value);
-    };
-    const handleChangeDistric = (event) => {
-        setDistric(event.target.value);
-    };
-    const handleChangeSociety = (event) => {
-        setSociety(event.target.value);
-    };
-    const handleChangeBlock = (event) => {
-        setBlock(event.target.value);
-    };
-
-    const glassMorphismStyle = {
-        background: "rgba(255, 255, 255, 0.2)",
-        boxShadow: " 0 4px 30px rgba(0, 0, 0, 0.1)",
-        backdropFilter: "blur(5px)",
-        border: "1px solid rgba(255, 255, 255, 0.3)",
-    };
-
-
-    const [checked, setChecked] = useState(false);
+    }, [alert.status]);
 
     const handleCheck = (event) => {
-        setChecked(event.target.checked);
+        setFormValues((prevValues) => ({
+            ...prevValues,
+            agree: event.target.checked,
+        }));
     };
 
     return (
@@ -186,17 +315,25 @@ const ApprovalRequestForm = () => {
             <Container>
                 <Box mt={2}>
                     <Stack spacing={2}>
-                        {/* Heading Buying Property  */}
                         <Box>
                             <Stack spacing={2}>
-                                <Box sx={[ { borderRadius: 2, padding: 2 , backgroundColor: 'white' }]} >
-                                    <Typography variant="h3">Send Request for Citizen Approval</Typography>
+                                <Box
+                                    sx={{
+                                        borderRadius: 2,
+                                        padding: 2,
+                                        backgroundColor: "white",
+                                    }}
+                                >
+                                    <Typography variant="h3">
+                                        Send Request for Citizen Approval
+                                    </Typography>
                                 </Box>
-
                             </Stack>
                         </Box>
-                        {/* Form to Buy Property  */}
-                        <Box sx={{ backgroundColor: 'white', borderRadius: 2, padding: 2 }} >
+
+                        <Box
+                            sx={{ backgroundColor: "white", borderRadius: 2, padding: 2 }}
+                        >
                             <Box
                                 component="form"
                                 noValidate
@@ -205,51 +342,6 @@ const ApprovalRequestForm = () => {
                                 onSubmit={handleSubmit}
                             >
                                 <Grid container spacing={2}>
-
-                                    {/* 
-                                    <Grid item sm={12} xs={12} md={6} lg={6}>
-                                        <FormControl fullWidth>
-                                            <InputLabel id="province-label">Province</InputLabel>
-
-                                            <Select
-                                                fullWidth
-                                                required
-                                                labelId="province-label"
-                                                id="province"
-                                                value={province}
-                                                label="province"
-                                                name="province"
-                                                onChange={handleChangeProvience}
-                                            >
-                                                <MenuItem value="punjab">punjab</MenuItem>
-                                                <MenuItem value="sindh">Karachi</MenuItem>
-                                                <MenuItem value="balochistan">Sialkot</MenuItem>
-                                                <MenuItem value="KPK">KPK</MenuItem>
-                                            </Select>
-                                        </FormControl>
-                                    </Grid> */}
-
-                                    {/* <Grid item sm={12} xs={12} md={6} lg={6}>
-                                        <FormControl fullWidth>
-                                            <InputLabel id="distric-label">Distric</InputLabel>
-
-                                            <Select
-                                                fullWidth
-                                                required
-                                                labelId="distric-label"
-                                                id="distric"
-                                                value={distric}
-                                                label="Distric"
-                                                name="distric"
-                                                onChange={handleChangeDistric}
-                                            >
-                                                <MenuItem value="0x6D775f5A4008BaAEF0FdadC09dAEe96149aB301c">Lahore</MenuItem>
-                                                <MenuItem value="karachi">Karachi</MenuItem>
-                                                <MenuItem value="sialkot">Sialkot</MenuItem>
-                                            </Select>
-                                        </FormControl>
-                                    </Grid> */}
-
                                     <Grid item sm={12} xs={12} md={6} lg={6}>
                                         <TextField
                                             margin="normal"
@@ -258,6 +350,10 @@ const ApprovalRequestForm = () => {
                                             id="citizenName"
                                             name="citizenName"
                                             label="Your Full Name"
+                                            value={formValues.citizenName}
+                                            onChange={handleInputChange}
+                                            error={!!formErrors.citizenName}
+                                            helperText={formErrors.citizenName}
                                         />
                                     </Grid>
                                     <Grid item sm={12} xs={12} md={6} lg={6}>
@@ -269,6 +365,10 @@ const ApprovalRequestForm = () => {
                                             name="citizenCNIC"
                                             label="CNIC"
                                             type="number"
+                                            value={formValues.citizenCNIC}
+                                            onChange={handleInputChange}
+                                            error={!!formErrors.citizenCNIC}
+                                            helperText={formErrors.citizenCNIC}
                                         />
                                     </Grid>
 
@@ -280,6 +380,10 @@ const ApprovalRequestForm = () => {
                                             id="fatherName"
                                             name="fatherName"
                                             label="Father Name"
+                                            value={formValues.fatherName}
+                                            onChange={handleInputChange}
+                                            error={!!formErrors.fatherName}
+                                            helperText={formErrors.fatherName}
                                         />
                                     </Grid>
 
@@ -292,6 +396,10 @@ const ApprovalRequestForm = () => {
                                             name="phone"
                                             label="Phone"
                                             type="number"
+                                            value={formValues.phone}
+                                            onChange={handleInputChange}
+                                            error={!!formErrors.phone}
+                                            helperText={formErrors.phone}
                                         />
                                     </Grid>
 
@@ -304,54 +412,93 @@ const ApprovalRequestForm = () => {
                                             name="email"
                                             label="Email"
                                             type="email"
+                                            value={formValues.email}
+                                            onChange={handleInputChange}
+                                            error={!!formErrors.email}
+                                            helperText={formErrors.email}
                                         />
                                     </Grid>
 
                                     <Grid item sm={12} md={12} lg={12} xs={12}>
                                         <p>CNIC Front</p>
-                                        <input type='file' name="CNICFront" multiple />
+                                        <input
+                                            type="file"
+                                            name="CNICFront"
+                                            onChange={handleFileChange}
+                                            error={!!formErrors.CNICFront}
+                                            accept="image/png, image/gif, image/jpeg"
+                                        />
+                                        <div>{formErrors.CNICFront}</div>
                                     </Grid>
                                     <Grid item sm={12} md={12} lg={12} xs={12}>
                                         <p>CNIC Back</p>
-                                        <input type='file' name="CNICBack" multiple />
+                                        <input
+                                            type="file"
+                                            name="CNICBack"
+                                            onChange={handleFileChange}
+                                            error={!!formErrors.CNICBack}
+                                            accept="image/png, image/gif, image/jpeg"
+                                        />
+                                        <div>{formErrors.CNICBack}</div>
                                     </Grid>
                                     <Grid item sm={12} md={12} lg={12} xs={12}>
                                         <p>Passport Size Pic</p>
-                                        <input type='file' name="picture" multiple />
+                                        <input
+                                            type="file"
+                                            name="picture"
+                                            onChange={handleFileChange}
+                                            error={!!formErrors.picture}
+                                            accept="image/png, image/gif, image/jpeg"
+                                        />
+                                        <div>{formErrors.picture}</div>
                                     </Grid>
 
                                     <Grid item sm={12} xs={12} md={6} lg={6}>
                                         <FormControlLabel
                                             control={
                                                 <Checkbox
-                                                    checked={checked}
+                                                    checked={formValues.agree}
                                                     onChange={handleCheck}
                                                     name="agree"
                                                     color="primary"
                                                 />
                                             }
                                             label="I Agree to term and Conditions"
+                                            error={!!formErrors.agree}
+                                            helperText={formErrors.agree}
                                         />
                                     </Grid>
-
-
                                 </Grid>
-                                {/* Submit Button  */}
                                 <Box textAlign="center">
                                     <Button
                                         type="submit"
                                         variant="contained"
                                         sx={{ mt: 3, mb: 2, px: 5 }}
-                                        onSubmit={handleSubmit}
                                     >
                                         Submit
                                     </Button>
                                 </Box>
-                                {alert.status ? <Alert severity={alert.type} sx={{ mt: 3 }}>{alert.msg}</Alert> : ''}
-                                {etherScanAlert.status ? <><Alert severity={etherScanAlert.type} sx={{ mt: 3 }}>{etherScanAlert.msg}<a href={etherScanAlert.url} target="_blank" > Click Me</a> </Alert>  </> : ''}
+                                {alert.status ? (
+                                    <Alert severity={alert.type} sx={{ mt: 3 }}>
+                                        {alert.msg}
+                                    </Alert>
+                                ) : (
+                                    ""
+                                )}
+                                {etherScanAlert.status ? (
+                                    <>
+                                        <Alert severity={etherScanAlert.type} sx={{ mt: 3 }}>
+                                            {etherScanAlert.msg}
+                                            <a href={etherScanAlert.url} target="_blank">
+                                                Click Me
+                                            </a>{" "}
+                                        </Alert>{" "}
+                                    </>
+                                ) : (
+                                    ""
+                                )}
                             </Box>
                         </Box>
-
                     </Stack>
                 </Box>
             </Container>

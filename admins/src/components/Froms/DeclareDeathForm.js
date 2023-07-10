@@ -169,7 +169,7 @@ const DeclareDeathForm = () => {
 
       let contractAddress = lockContractAddress;
       let _citizenContractAddress = citizenAddress;
-      let _id = cnic;
+      let _id = formData.ownerCNIC;
 
       const walletProvider = new ethers.providers.Web3Provider(
         ethereum

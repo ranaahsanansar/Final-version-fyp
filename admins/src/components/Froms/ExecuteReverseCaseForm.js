@@ -193,8 +193,8 @@ const ExecuteReverseCaseForm = () => {
       const { ethereum } = window;
       let contractAddress = lockContractAddress;
       let _areaContractAddress = areaContractAddress;
-      let _propertyId = propertyId;
-      let _caseNumber = caseNumber;
+      let _propertyId = formData.propertyId;
+      let _caseNumber = formData.caseNum ;
       let _otpVerify = otpVerify;
 
       const walletProvider = new ethers.providers.Web3Provider(

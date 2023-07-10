@@ -206,10 +206,10 @@ const ApproveTransaction = () => {
       return
     }
     const actualData = {
-      id: propertyId,
-      sellerCnic: selletCnic,
-      buyerCnic: buyerCnic,
-      requestNumber: requestNum
+      id: formData.propertyId,
+      sellerCnic: formData.ownerCNIC ,
+      buyerCnic: formData.buyerCnic,
+      requestNumber: formData.reqNum
     }
 
     let confirm = window.confirm("Are you sure want to Submit?");

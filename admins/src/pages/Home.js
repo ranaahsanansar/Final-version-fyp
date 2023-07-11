@@ -24,6 +24,19 @@ import TableComponents from "../components/TableComponents";
 
 const Home = () => {
 
+    const ownersTableColums = [
+        {id: 'id'  , label: 'Sr.' , minWidth: 170},
+        {id: 'owner'  , label: 'CNIC' , minWidth: 250}
+    ]
+
+    function createOwnerTableRow(id , owner){
+        return {id , owner}
+    }
+
+    const [ownerTableRows , setOwnerTableRows] = useState([]);
+
+    const [listOfOwner , setListOfOwner] = useState([]);
+
     const [formData, setFormData] = useState({
 
         propertyId: ""
@@ -219,6 +232,7 @@ const Home = () => {
     const [flagMintTable, setFlagMintTable] = useState(false);
 
     const [flagOwnerTransaction, setFlagOwnerTransaction] = useState(false);
+    const [flagOwnerTable, setFlagOwnerTable] = useState(false);
 
 
     const handleSubmit = async (event) => {
@@ -226,7 +240,7 @@ const Home = () => {
         if(!validateForm()){
             return;
         }
-        setFlagNewProTable(false)
+        // setFlagNewProTable(false)
 
         const actualData = {
             id: formData.propertyId,
@@ -247,53 +261,55 @@ const Home = () => {
             nodeProvider
         )
 
-        const filtr = getContractData.filters.SellNewPropertyLog(actualData.id)
-        const dataResult = await getContractData.queryFilter(filtr)
+        // const filtr = getContractData.filters.SellNewPropertyLog(actualData.id)
+        // const dataResult = await getContractData.queryFilter(filtr)
+
+        // console.log(dataResult)
 
 
-        newPropertyTableRows.map((i) => {
-            newPropertyTableRows.pop()
-        })
+        // newPropertyTableRows.map((i) => {
+        //     newPropertyTableRows.pop()
+        // })
 
-        newPropertyTableRows.splice(0, newPropertyTableRows.length);
+        // newPropertyTableRows.splice(0, newPropertyTableRows.length);
 
-        dataResult.map((item) => {
-            let hexaId = item.args[0]
-            console.log(hexaId.toString())
-            let hexaCnic = item.args[1]
-            let hexaShares = item.args[2]
+        // dataResult.map((item) => {
+        //     let hexaId = item.args[0]
+        //     console.log(hexaId.toString())
+        //     let hexaCnic = item.args[1]
+        //     let hexaShares = item.args[2]
 
-            newPropertyTableRows.push(createNewPropertyData(hexaId.toString(), hexaCnic.toString(), hexaShares.toString()))
-        })
+        //     newPropertyTableRows.push(createNewPropertyData(hexaId.toString(), hexaCnic.toString(), hexaShares.toString()))
+        // })
 
-        console.log(newPropertyTableRows);
-        setFlagNewProTable(true);
+        // console.log(newPropertyTableRows);
+        // setFlagNewProTable(true);
 
-        setFlagReqTable(false);
+        // setFlagReqTable(false);
 
-        const filterReq = getContractData.filters.TransactionRequestLogs(actualData.id)
+        // const filterReq = getContractData.filters.TransactionRequestLogs(actualData.id)
 
-        const reqResult = await getContractData.queryFilter(filterReq);
-
-
-
-        reqTableRows.splice(0, reqTableRows.length);
+        // const reqResult = await getContractData.queryFilter(filterReq);
 
 
-        reqResult.map((item) => {
-            let id = item.args[0].toString();
-            let ownerCnic = item.args[1].toString();
-            let buyerCnic = item.args[2].toString();
-            let shares = item.args[3].toString();
-            let prize = item.args[4].toString();
 
-            reqTableRows.push(createReqTableData(id, ownerCnic, buyerCnic, shares, prize));
-
-        })
-
-        setFlagReqTable(true)
+        // reqTableRows.splice(0, reqTableRows.length);
 
 
+        // reqResult.map((item) => {
+        //     let id = item.args[0].toString();
+        //     let ownerCnic = item.args[1].toString();
+        //     let buyerCnic = item.args[2].toString();
+        //     let shares = item.args[3].toString();
+        //     let prize = item.args[4].toString();
+
+        //     reqTableRows.push(createReqTableData(id, ownerCnic, buyerCnic, shares, prize));
+
+        // })
+
+        // setFlagReqTable(true)
+
+// --------------------------------------------------
         setFlagOwnerTransaction(false);
 
         const filterOwnerTnx = getContractData.filters.TransactionRecordLogs(actualData.id)
@@ -326,13 +342,43 @@ const Home = () => {
         filterMintResult.map((item) => {
             let id = item.args[0].toString();
             let inspector = item.args[1].toString();
+            // console.log(createMintTableData(id, inspector))
 
             mintedPropRows.push(createMintTableData(id, inspector))
         })
 
         setFlagMintTable(true);
 
+        // ----------------------------------------------------------------
 
+        setFlagOwnerTable(false)
+        const result = await getContractData.getDetailsOfShares( formData.propertyId , 3520204614157 )
+        
+        let arrayOfOwners = result.shareHoldersArray
+        // arrayOfOwners.map((item)=>{ console.log( String(item) ) })
+        // listOfOwner = []
+        setOwnerTnxRows([])
+        ownerTableRows.splice(0, ownerTableRows.length )
+
+        arrayOfOwners.map((item , i )=>{ 
+            let itemData = String(item);
+            listOfOwner.push( itemData ) 
+            // console.log(createOwnerTableRow(i , String(item) ))
+            ownerTableRows.push(createOwnerTableRow( i +1 , String(item) ))
+            // console.log(i);
+            // console.log(String(itemData));
+        })
+        setFlagOwnerTable(true)
+
+        // console.log("Ahsan")
+        // listOfOwner.map((item , i )=>{
+        //     console.log(i)
+        //     console.log(item)
+        //     reqTableRows.push(createOwnerTableRow(item))
+        // })
+        // console.log(listOfOwner)
+        // console.log(ownersTableColums)
+        // console.log(ownerTableRows)
     }
     return (
         <Box
@@ -482,11 +528,14 @@ const Home = () => {
                         Fetch
                     </Button>
                 </Box>
-                
-                {
+
+                { flagOwnerTable && ( <><Typography fontSize='18px' mt={2} fontWeight='bold' >List of Currect Owners </Typography><TableComponents key="owners" columsArray={ownersTableColums} rowsArray={ownerTableRows} /></>  )}
+
+
+                {/* {
                     flagNewProTable ? (<><Typography fontSize='18px' mt={2} fontWeight='bold' >Inital Transactions of Property </Typography>
                         <TableComponents key="Property Shares" columsArray={newPropertyTableColumns} rowsArray={newPropertyTableRows} /></>) : ""
-                }
+                } */}
                
                 {
                     flagOwnerTransaction ? (

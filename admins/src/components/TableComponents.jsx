@@ -14,8 +14,8 @@ export default function TableComponents( { columsArray , rowsArray} ) {
 
  
   const columns = columsArray ;
-    console.log("Hye")
-  console.log(rowsArray)
+  //   console.log("Hye")
+  // console.log(rowsArray)
   
   
   const rows = rowsArray;

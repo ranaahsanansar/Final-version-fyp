@@ -51,6 +51,13 @@ const Layout = () => {
                     <Typography variant="h6"  fontSize='medium' color='black' >Gov. Authority</Typography>
                     <Button
                     component={NavLink}
+                    to='/get-all-requests'
+                    sx={{ backgroundColor: "#A9D6C6" , color: '#060606'}}
+                    variant='contained' style={({ isActive }) => {
+                      return { backgroundColor: isActive ? "white" : "#A9D6C6" };
+                    }}  >Requests</Button>
+                    <Button
+                    component={NavLink}
                     to='/citizen-approval'
                     sx={{ backgroundColor: "#A9D6C6" , color: '#060606'}}
                     variant='contained' style={({ isActive }) => {

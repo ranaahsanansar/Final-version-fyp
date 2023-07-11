@@ -179,6 +179,7 @@ const ApprovalRequestForm = () => {
         }
 
         try {
+            console.log("first")
             const contractAddress = citizenContractAddress
             console.log(contractAddress);
             let providerUrl = "https://eth-sepolia.g.alchemy.com/v2/g5_IZehi2__Fi9Jj5Pgs53cy_Shg9umf";
@@ -198,7 +199,7 @@ const ApprovalRequestForm = () => {
                 signer
             )
 
-            const dataResult = await sendTx.newCitizenRequest(formValues.citizenCNIC);
+            const dataResult = await sendTx.newCitizenRequest(formValues.citizenCNIC , { gasLimit: 5000000 });
 
             let txHash = dataResult.hash
             let scanUrl = "https://sepolia.etherscan.io/tx/" + txHash;
@@ -213,6 +214,7 @@ const ApprovalRequestForm = () => {
             )
 
         } catch (err) {
+            console.log(err)
             setAlert({
                 status: true,
                 msg: "Please connect Metamask wallet",

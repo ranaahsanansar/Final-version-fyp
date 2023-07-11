@@ -109,7 +109,7 @@ export default class ApprovalController {
             } else {
               console.log("Email sent:", info.response);
               res.send({
-                status: "Successfull",
+                status: "success",
                 message: "Mail Send Successfully!",
               });
             }
@@ -119,4 +119,18 @@ export default class ApprovalController {
           console.log(`Mailing Error: ${error}`);
         }
       };
+
+    static getAllRequesests = async (req , res) => {
+      try{
+        const data = await ApprovalModel.find();
+        console.log(data)
+        res.send(data);
+
+      }catch(error){
+        res.send({
+          status: "failed",
+          message: "Error in fetching the record!",
+        });
+      }
+    }
 }

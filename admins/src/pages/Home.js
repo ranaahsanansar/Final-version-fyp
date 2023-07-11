@@ -38,7 +38,6 @@ const Home = () => {
     const [listOfOwner , setListOfOwner] = useState([]);
 
     const [formData, setFormData] = useState({
-
         propertyId: ""
     });
 

@@ -27,12 +27,29 @@ import { useEffect } from "react";
 
 const GetPropertyLogs = () => {
 
+    const ownersTableColums = [
+        { id: 'id', label: 'Sr.', minWidth: 170 },
+        { id: 'owner', label: 'CNIC', minWidth: 250 }
+    ]
+
+    function createOwnerTableRow(id, owner) {
+        return { id, owner }
+    }
+
+    const [ownerTableRows, setOwnerTableRows] = useState([]);
+    const [flagOwnerTable, setFlagOwnerTable] = useState(false);
+
+    const [sharesOwn, setSharesOwn] = useState("none");
+
+
     const [formData, setFormData] = useState({
         propertyId: "",
+        cnic: ""
     });
 
     const [formErrors, setFormErrors] = useState({
         propertyId: "",
+        cnic: ""
     });
 
     const validateForm = () => {
@@ -47,11 +64,24 @@ const GetPropertyLogs = () => {
             valid = false;
         }
 
+        if (formData.cnic == "") {
+            formData.cnic = 0;
+        }
+
         let checkValidID = formData.propertyId.toString();
         if (checkValidID.length != 12) {
             errors.propertyId = "ID must be valid 12 digits Uniqe Identification number";
             valid = false;
         }
+
+        let checkCnic = formData.cnic.toString();
+        if(formData.cnic != 0 ){
+            if (checkCnic.length != 13 ) {
+            errors.cnic = "CNIC must be a valid"
+            valid = false;
+        }
+        }
+        
 
         setFormErrors(errors);
 
@@ -89,8 +119,13 @@ const GetPropertyLogs = () => {
         { id: "buyer", label: "Buyer", minWidth: 100 },
         { id: "shares", label: "Shares", minWidth: 100 },
         { id: "price", label: "Price", minWidth: 100 },
-        { id: "reqNum", label: "Request Number", minWidth: 100 },
     ];
+
+    function createTransactionRows(id, seller, buyer, shares, price) {
+        return { id, seller, buyer, shares, price };
+    }
+
+
 
     const [newPropertyTableRows, setNewPropertyTableRows] = useState([])
     const [reqTableRows, setReqTableRows] = useState([])
@@ -184,13 +219,12 @@ const GetPropertyLogs = () => {
         setPropertyId(event.target.value)
     }
 
-    function createNewPropertyData(id, cnic, shares) {
-        return { id, cnic, shares };
-    }
+
 
     function createReqTableData(id, seller, buyer, shares, price, reqNum) {
         return { id, seller, buyer, shares, price, reqNum }
     }
+
 
 
 
@@ -206,7 +240,7 @@ const GetPropertyLogs = () => {
         setFlagNewProTable(false)
         setFlagChart(false)
 
-        
+
 
         if (validateForm() != true) {
             return
@@ -230,42 +264,42 @@ const GetPropertyLogs = () => {
         )
 
 
-        const filtr = getContractData.filters.SellNewPropertyLog(formData.propertyId)
-        console.log(filtr)
+        // const filtr = getContractData.filters.SellNewPropertyLog(formData.propertyId)
+        // console.log(filtr)
 
-        const dataResult = await getContractData.queryFilter(filtr)
+        // const dataResult = await getContractData.queryFilter(filtr)
 
 
-        newPropertyTableRows.map((i) => {
-            newPropertyTableRows.pop()
-        })
+        // newPropertyTableRows.map((i) => {
+        //     newPropertyTableRows.pop()
+        // })
 
-        newPropertyTableRows.splice(0, newPropertyTableRows.length);
+        // newPropertyTableRows.splice(0, newPropertyTableRows.length);
 
-        dataResult.map((item) => {
-            let hexaId = item.args[0]
-            console.log(hexaId.toString())
-            let hexaCnic = item.args[1]
-            let hexaShares = item.args[2]
-            let remaining = parseInt(hexaShares.toString()) - 100;
-            console.log("Shares")
-            console.log(hexaShares);
-            console.log("Remaining ")
+        // dataResult.map((item) => {
+        //     let hexaId = item.args[0]
+        //     console.log(hexaId.toString())
+        //     let hexaCnic = item.args[1]
+        //     let hexaShares = item.args[2]
+        //     let remaining = parseInt(hexaShares.toString()) - 100;
+        //     console.log("Shares")
+        //     console.log(hexaShares);
+        //     console.log("Remaining ")
 
-            console.log(remaining);
-            setPercentage(parseInt(hexaShares.toString()));
-            if (remaining < 0) {
-                remaining = remaining * -1;
-            }
+        //     console.log(remaining);
+        //     setPercentage(parseInt(hexaShares.toString()));
+        //     if (remaining < 0) {
+        //         remaining = remaining * -1;
+        //     }
 
-            setRemaining(remaining)
+        //     setRemaining(remaining)
 
-            newPropertyTableRows.push(createNewPropertyData(hexaId.toString(), hexaCnic.toString(), hexaShares.toString()))
-        })
+        //     newPropertyTableRows.push(createNewPropertyData(hexaId.toString(), hexaCnic.toString(), hexaShares.toString()))
+        // })
 
-        console.log(newPropertyTableRows);
-        setFlagNewProTable(true);
-        setFlagChart(true);
+        // console.log(newPropertyTableRows);
+        // setFlagNewProTable(true);
+        // setFlagChart(true);
 
 
         // ------------------------------------------------
@@ -285,11 +319,42 @@ const GetPropertyLogs = () => {
             let ownerCnic = item.args[1].toString();
             let buyerCnic = item.args[2].toString();
             let shares = item.args[3].toString();
-            let prize = item.args[4].toString();
-
+            let price = item.args[4].toString();
+            console.log("1")
+            console.log(id)
+            ownerTnxRows.push(createTransactionRows(id, ownerCnic, buyerCnic, shares, price))
         })
 
         setFlagOwnerTransaction(true);
+
+        // -------------------------------------------
+        setSharesOwn("none")
+        setFlagOwnerTable(false)
+        const result = await getContractData.getDetailsOfShares(formData.propertyId, formData.cnic)
+        console.log(String(result.sharesOfThisPerson))
+        if (formData.cnic == 0) {
+            setSharesOwn('none')
+        } else {
+            setSharesOwn(String(result.sharesOfThisPerson))
+        }
+
+        let arrayOfOwners = result.shareHoldersArray
+        // arrayOfOwners.map((item)=>{ console.log( String(item) ) })
+        // listOfOwner = []
+        // setOwnerTnxRows([])
+        ownerTableRows.splice(0, ownerTableRows.length)
+
+        arrayOfOwners.map((item, i) => {
+            let itemData = String(item);
+            // console.log(createOwnerTableRow(i , String(item) ))
+            ownerTableRows.push(createOwnerTableRow(i + 1, String(item)))
+            // console.log(i);
+            // console.log(String(itemData));
+
+        })
+        setFlagOwnerTable(true)
+
+
     }
 
     useEffect(() => {
@@ -308,7 +373,7 @@ const GetPropertyLogs = () => {
 
     return (
         <Box
-            sx={{ backgroundColor: 'white', padding: 2, borderRadius: 2 , m: 2 }}
+            sx={{ backgroundColor: 'white', padding: 2, borderRadius: 2, m: 2 }}
 
         >
             <Box
@@ -319,7 +384,7 @@ const GetPropertyLogs = () => {
             >
                 <Typography variant="h6"
                     fontWeight="bold"
-                    fontSize="large" mb={2} >Get Property Transaction History</Typography>
+                    fontSize="large" mb={2} >Get Property Info</Typography>
                 <Grid container spacing={2}>
 
 
@@ -443,6 +508,22 @@ const GetPropertyLogs = () => {
                         />
                     </Grid>
 
+                    <Grid item sm={12} xs={12} md={6} lg={6}>
+                        <TextField
+                            margin="normal"
+                            fullWidth
+                            id="cnic"
+                            name="cnic"
+                            label="CNIC (Optional)"
+                            type="number"
+                            value={formData.cnic}
+                            onChange={handleChange}
+                            inputProps={{ min: 0 }}
+                            error={Boolean(formErrors.cnic)}
+                            helperText={formErrors.cnic}
+                        />
+                    </Grid>
+
                 </Grid>
                 {/* Submit Button  */}
                 <Box textAlign="center">
@@ -455,14 +536,20 @@ const GetPropertyLogs = () => {
                         Fetch
                     </Button>
                 </Box>
-                
 
-                
-                {
+
+
+                {/* {
                     flagNewProTable ? (<><Typography fontSize='18px' mt={2} fontWeight='bold' >Inital Transactions of Property </Typography>
                         <TableComponents key="Property Shares" columsArray={newPropertyTableColumns} rowsArray={newPropertyTableRows} /></>) : "Noting to Show"
+                } */}
+
+                {
+                    sharesOwn == "none" ? "" : (<Typography fontSize='18px' mt={2} fontWeight='bold' >Shares Own by selected CNIC = {sharesOwn} </Typography>)
                 }
-                
+
+                {flagOwnerTable && (<><Typography fontSize='18px' mt={2} fontWeight='bold'  >List of Currect Owners </Typography><TableComponents key="owners" columsArray={ownersTableColums} rowsArray={ownerTableRows} /></>)}
+
                 {
                     flagOwnerTransaction ? (
                         <>

@@ -15,12 +15,14 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import nodeProviderUrl, { govermentAuthorityContractAddress, webUrl } from "../dataVariables";
+import nodeProviderUrl, { citizenContractAddress, govermentAuthorityContractAddress, webUrl } from "../dataVariables";
 import { ethers } from "ethers";
 import axios from "axios";
 
 
 import govAuthorityContract from "../artifacts/contracts/govermenAuthority.sol/GovermentAuthority.json";
+import citizenContract from "../artifacts/contracts/Citizens.sol/Citizens.json";
+
 
 const CitizenApprovalPage = () => {
   const [citizen, setCitizen] = useState(false);
@@ -49,9 +51,13 @@ const CitizenApprovalPage = () => {
     path: "public/uploads/approvalRequests/",
   })
 
+
+  const [approvalStatus , setApprovalStatus] = useState(false);
+
   const handleFetch = async (e) => {
     e.preventDefault();
-    if(etherScanAlert.status === true ){
+    setApprovalStatus(false)
+    if (etherScanAlert.status === true) {
       setEtherScanAlert(
         {
           status: false,
@@ -98,7 +104,6 @@ const CitizenApprovalPage = () => {
         console.log(test)
 
 
-
       } else if (response.data.status == "failed") {
         setError({
           status: true,
@@ -120,6 +125,32 @@ const CitizenApprovalPage = () => {
 
     setLockContractAddress(govermentAuthorityContractAddress);
     setLockCnic(cnic);
+    try{
+
+      const nodeProvider = new ethers.providers.JsonRpcProvider(
+      nodeProviderUrl
+    )
+
+    const getContractData = new ethers.Contract(
+      citizenContractAddress,
+      citizenContract.abi,
+      nodeProvider
+    )
+
+    const result = await getContractData.getCitizenIsApproved(cnic)
+
+    setApprovalStatus(result)
+
+
+    }catch(err){
+      console.log(err)
+      setError({
+        status: true,
+        msg: "Can't get Data From blockchain",
+        type: "error"
+      })
+    }
+    
 
   };
 
@@ -155,7 +186,7 @@ const CitizenApprovalPage = () => {
     )
 
     try {
-      const dataResult = await sendTx.approveCitizen(applicantCnic, "0xa543CBa1E566DB08d3d0fe2D888bC1797E5226F6", "only", { gasLimit: 5000000 });
+      const dataResult = await sendTx.approveCitizen(applicantCnic, citizenContractAddress, "only", { gasLimit: 5000000 });
       let txHash = dataResult.hash
       let scanUrl = "https://sepolia.etherscan.io/tx/" + txHash;
 
@@ -275,7 +306,7 @@ const CitizenApprovalPage = () => {
 
       }, 5000);
     }
-    
+
   })
 
   return (
@@ -334,6 +365,8 @@ const CitizenApprovalPage = () => {
                 <Grid itme lg={8} md={8} sm={8}>
                   <Stack spacing={2}>
                     <Box>
+                      
+                        { approvalStatus ? (<Box sx={{ backgroundColor: 'lightgreen' , marginY: 2 , borderRadius: '10px' , marginRight: 2 , padding: 2 }}>Already Approved in blockchain</Box>) : (<Box sx={{ backgroundColor: 'lightpink' , marginY: 2 , borderRadius: '10px' , marginRight: 2 , padding: 2 }}>Not Approved</Box>) }
                       <Typography fontWeight="bold" color="gray" fontSize="16px">
                         Name
                       </Typography>

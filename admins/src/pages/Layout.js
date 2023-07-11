@@ -8,7 +8,7 @@ const Layout = () => {
     <Navbar />
     <Box>
       <Grid container sx={{height: '90vh'}} >
-        <Grid item lg={2} md={2} sm={2} sx={{ height: '100%' , backgroundColor: '#F3E5AB' , overflow: 'scroll' , '&::-webkit-scrollbar': {
+        <Grid item lg={2} md={2} sm={2} sx={{ height: '100%' , backgroundColor: '#F3E5AB' , overflow: 'scroll' , display: { xs: "none", sm: "none", md: "block" }, '&::-webkit-scrollbar': {
           display: "none"
       },
       '&::-webkit-scrollbar-thumb': {
@@ -94,7 +94,7 @@ const Layout = () => {
             </Box>
           </Box>
         </Grid>
-        <Grid item lg={10} md={10} sm={10} sx={{ height: '100%' , overflowY: 'scroll' , backgroundColor:'#A9D6C6' , '&::-webkit-scrollbar': {
+        <Grid item lg={10} md={10} sm={12} xs={12} sx={{ height: '100%' , overflowY: 'scroll' , backgroundColor:'#A9D6C6' , '&::-webkit-scrollbar': {
           display: "none"
       } }}>
           <Outlet /> 

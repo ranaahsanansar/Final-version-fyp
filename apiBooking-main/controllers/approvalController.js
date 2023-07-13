@@ -19,6 +19,10 @@ export default class ApprovalController {
       }
     } catch (err) {
       console.log("User Deleteion Failed")
+      res.status(404).send({
+        status: "failed",
+        message: "Error in fetching Request",
+      })
       return
     }
 

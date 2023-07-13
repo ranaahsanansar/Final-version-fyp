@@ -2,7 +2,6 @@ import UserModel from "../models/User.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import transporter from "../config/emailConfig.js";
- 
 class UserController { 
   static userRegistration = async (req, res) => {
     const { name, email, password, password_confirmation, tc } = req.body;
@@ -125,7 +124,7 @@ class UserController {
         const token = jwt.sign({ userID: user._id }, secret, {
           expiresIn: "3m",
         });
-        const link = `http://127.0.0.1:8000/api/user/reset/${user._id}/${token}`;
+        const link = `http://127.0.0.1:3000/api/user/reset/${user._id}/${token}`;
         console.log(link);
         // Send Email
         let info = await transporter.sendMail({

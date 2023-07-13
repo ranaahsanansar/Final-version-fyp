@@ -136,7 +136,6 @@ contract GovermentAuthority {
         return obj.singnatureToReverseCase(_propertyId, _caseNumber, _verficationOTPCode);
     }
 
-
     // ---------------------------------
     // Citizen Contracts Functions
     // ---------------------------------------

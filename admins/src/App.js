@@ -8,6 +8,7 @@ import ManageCitizen from "./pages/ManageCitizen";
 import ManageSocietyPage from "./pages/ManageSocietyPage";
 import ManagePropertiesPage from "./pages/ManagePropertiesPage";
 import UsersApprovalsList from "./pages/UsersApprovalsList";
+import MintedProperties from "./pages/MintedProperties";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
             <Route path="manage-society" element={<ManageSocietyPage />} />
             <Route path="manage-properties" element={<ManagePropertiesPage />} />
             <Route path="get-all-requests" element={<UsersApprovalsList />} />
+            <Route path="minted-properties" element={<MintedProperties />} />
             
           </Route>
           <Route path="*" element={<h1>ASN 404 Page Not Found</h1>} />
@@ -33,4 +35,3 @@ function App() {
 }
 
 export default App;
-

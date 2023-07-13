@@ -22,20 +22,21 @@ import nodeProviderUrl, { getAllDistricURL, getAllProvienceURL, getAreaNameURL, 
 import { ethers } from "ethers";
 import TableComponents from "../components/TableComponents";
 
-const Home = () => {
+const MintedProperties = () => {
 
     const ownersTableColums = [
-        {id: 'id'  , label: 'Sr.' , minWidth: 170},
-        {id: 'owner'  , label: 'CNIC' , minWidth: 250}
+        { id: 'id', label: 'Property ID', minWidth: 170 },
+        { id: 'inspector', label: 'Inspector', minWidth: 250 },
+        { id: 'time', label: 'Time', minWidth: 250 },
     ]
 
-    function createOwnerTableRow(id , owner){
-        return {id , owner}
+    function createOwnerTableRow(id, inspector, time) {
+        return { id, inspector, time }
     }
 
-    const [ownerTableRows , setOwnerTableRows] = useState([]);
+    const [ownerTableRows, setOwnerTableRows] = useState([]);
 
-    const [listOfOwner , setListOfOwner] = useState([]);
+    const [listOfOwner, setListOfOwner] = useState([]);
 
     const [formData, setFormData] = useState({
         propertyId: ""
@@ -136,8 +137,6 @@ const Home = () => {
 
     };
 
-
-
     const handleChangeDistric = (event) => {
 
         setDistric(event.target.value);
@@ -150,8 +149,6 @@ const Home = () => {
         }
         fetchData();
     };
-
-
 
     const handleChangeSociety = (event) => {
         setSociety(event.target.value);
@@ -236,9 +233,9 @@ const Home = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        if(!validateForm()){
-            return;
-        }
+        // if(!validateForm()){
+        //     return;
+        // }
         // setFlagNewProTable(false)
 
         const actualData = {
@@ -259,6 +256,40 @@ const Home = () => {
             ownerShipContract.abi,
             nodeProvider
         )
+
+        setFlagOwnerTable(false);
+
+        const filterOwnerTnx = getContractData.filters.AddNewPropertyLog();
+
+        const ownerTnxResult = await getContractData.queryFilter(filterOwnerTnx);
+        console.log(ownerTnxResult)
+        ownerTableRows.splice(0, ownerTableRows.length);
+
+        ownerTnxResult.map((item) => {
+            let id = item.args[0].toString();
+            let inspector = item.args[1].toString();
+            let time = item.args[2].toString();
+
+            console.log(id, inspector, time);
+            
+            const date = new Date(time * 1000);
+
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0'); 
+            const day = String(date.getDate()).padStart(2, '0');
+            const hours = String(date.getHours()).padStart(2, '0');
+            const minutes = String(date.getMinutes()).padStart(2, '0');
+            const seconds = String(date.getSeconds()).padStart(2, '0');
+
+            const formattedDate = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+
+            ownerTableRows.push(createOwnerTableRow(id, inspector, formattedDate))
+
+            // ownerTnxRows.push(createReqTableData(id, ownerCnic, buyerCnic, shares, prize));
+
+        })
+
+        setFlagOwnerTable(true);
 
         // const filtr = getContractData.filters.SellNewPropertyLog(actualData.id)
         // const dataResult = await getContractData.queryFilter(filtr)
@@ -308,66 +339,67 @@ const Home = () => {
 
         // setFlagReqTable(true)
 
-// --------------------------------------------------
-        setFlagOwnerTransaction(false);
+        // --------------------------------------------------
+        // setFlagOwnerTransaction(false);
 
-        const filterOwnerTnx = getContractData.filters.TransactionRecordLogs(actualData.id)
+        // const filterOwnerTnx = getContractData.filters.TransactionRecordLogs(actualData.id)
 
-        const ownerTnxResult = await getContractData.queryFilter(filterOwnerTnx);
+        // const ownerTnxResult = await getContractData.queryFilter(filterOwnerTnx);
 
-        ownerTnxRows.splice(0, ownerTnxRows.length);
+        // ownerTnxRows.splice(0, ownerTnxRows.length);
 
-        ownerTnxResult.map((item) => {
-            let id = item.args[0].toString();
-            let ownerCnic = item.args[1].toString();
-            let buyerCnic = item.args[2].toString();
-            let shares = item.args[3].toString();
-            let prize = item.args[4].toString();
+        // ownerTnxResult.map((item) => {
+        //     let id = item.args[0].toString();
+        //     let ownerCnic = item.args[1].toString();
+        //     let buyerCnic = item.args[2].toString();
+        //     let shares = item.args[3].toString();
+        //     let prize = item.args[4].toString();
 
-            ownerTnxRows.push(createReqTableData(id, ownerCnic, buyerCnic, shares, prize));
+        //     ownerTnxRows.push(createReqTableData(id, ownerCnic, buyerCnic, shares, prize));
 
-        })
+        // })
 
-        setFlagOwnerTransaction(true);
+        // setFlagOwnerTransaction(true);
+        // ----------------------------------------------
 
-        setFlagMintTable(false);
+        // setFlagMintTable(false);
 
-        const filterMintTnx = getContractData.filters.AddNewPropertyLog()
+        // const filterMintTnx = getContractData.filters.AddNewPropertyLog()
 
-        const filterMintResult = await getContractData.queryFilter(filterMintTnx);
+        // const filterMintResult = await getContractData.queryFilter(filterMintTnx);
 
-        mintedPropRows.splice(0, mintedPropRows.length);
+        // mintedPropRows.splice(0, mintedPropRows.length);
 
-        filterMintResult.map((item) => {
-            let id = item.args[0].toString();
-            let inspector = item.args[1].toString();
-            // console.log(createMintTableData(id, inspector))
+        // filterMintResult.map((item) => {
+        //     let id = item.args[0].toString();
+        //     let inspector = item.args[1].toString();
+        //     // console.log(createMintTableData(id, inspector))
 
-            mintedPropRows.push(createMintTableData(id, inspector))
-        })
+        //     mintedPropRows.push(createMintTableData(id, inspector))
+        // })
 
-        setFlagMintTable(true);
+        // setFlagMintTable(true);
 
         // ----------------------------------------------------------------
 
-        setFlagOwnerTable(false)
-        const result = await getContractData.getDetailsOfShares( formData.propertyId , 3520204614157 )
-        
-        let arrayOfOwners = result.shareHoldersArray
-        // arrayOfOwners.map((item)=>{ console.log( String(item) ) })
-        // listOfOwner = []
-        setOwnerTnxRows([])
-        ownerTableRows.splice(0, ownerTableRows.length )
+        // setFlagOwnerTable(false)
+        // const result = await getContractData.getDetailsOfShares( formData.propertyId , 3520204614157 )
 
-        arrayOfOwners.map((item , i )=>{ 
-            let itemData = String(item);
-            listOfOwner.push( itemData ) 
-            // console.log(createOwnerTableRow(i , String(item) ))
-            ownerTableRows.push(createOwnerTableRow( i +1 , String(item) ))
-            // console.log(i);
-            // console.log(String(itemData));
-        })
-        setFlagOwnerTable(true)
+        // let arrayOfOwners = result.shareHoldersArray
+        // // arrayOfOwners.map((item)=>{ console.log( String(item) ) })
+        // // listOfOwner = []
+        // setOwnerTnxRows([])
+        // ownerTableRows.splice(0, ownerTableRows.length )
+
+        // arrayOfOwners.map((item , i )=>{ 
+        //     let itemData = String(item);
+        //     listOfOwner.push( itemData ) 
+        //     // console.log(createOwnerTableRow(i , String(item) ))
+        //     ownerTableRows.push(createOwnerTableRow( i +1 , String(item) ))
+        //     // console.log(i);
+        //     // console.log(String(itemData));
+        // })
+        // setFlagOwnerTable(true)
 
         // console.log("Ahsan")
         // listOfOwner.map((item , i )=>{
@@ -498,7 +530,7 @@ const Home = () => {
                         </FormControl>
                     </Grid>
 
-                    <Grid item sm={12} xs={12} md={6} lg={6}>
+                    {/* <Grid item sm={12} xs={12} md={6} lg={6}>
 
                         <TextField
                             fullWidth
@@ -513,7 +545,7 @@ const Home = () => {
                             error={Boolean(formErrors.propertyId)}
                             helperText={formErrors.propertyId}
                         />
-                    </Grid>
+                    </Grid> */}
 
                 </Grid>
                 <Box textAlign="center">
@@ -527,26 +559,25 @@ const Home = () => {
                     </Button>
                 </Box>
 
-                { flagOwnerTable && ( <><Typography fontSize='18px' mt={2} fontWeight='bold' >List of Currect Owners </Typography><TableComponents key="owners" columsArray={ownersTableColums} rowsArray={ownerTableRows} /></>  )}
-
+                {flagOwnerTable && (<><Typography fontSize='18px' mt={2} fontWeight='bold' >List of all minted propertie in this area</Typography><TableComponents key="owners" columsArray={ownersTableColums} rowsArray={ownerTableRows} /></>)}
 
                 {/* {
                     flagNewProTable ? (<><Typography fontSize='18px' mt={2} fontWeight='bold' >Inital Transactions of Property </Typography>
                         <TableComponents key="Property Shares" columsArray={newPropertyTableColumns} rowsArray={newPropertyTableRows} /></>) : ""
                 } */}
-               
-                {
+
+                {/* {
                     flagOwnerTransaction ? (
                         <>
                             <Typography fontSize='18px' fontWeight='bold' mt={2} >Approved Transactions</Typography>
                             <TableComponents key="request" columsArray={reqTableColums} rowsArray={ownerTnxRows} />
                         </>
                     ) : ""
-                }
+                } */}
             </Box>
         </Box>
 
     )
 }
 
-export default Home
+export default MintedProperties

@@ -30,6 +30,13 @@ const Layout = () => {
                     variant='contained' style={({ isActive }) => {
                       return { backgroundColor: isActive ? "white" : "#A9D6C6" };
                     }} >Property Details</Button>
+                    <Button
+                    component={NavLink} 
+                    to='/minted-properties'
+                    sx={{ backgroundColor: "#A9D6C6" , color: '#060606'}}
+                    variant='contained' style={({ isActive }) => {
+                      return { backgroundColor: isActive ? "white" : "#A9D6C6" };
+                    }} >Minted Properties</Button>
                   <Typography variant="h6"  fontSize='medium' color='black' >LandInspector</Typography>
                     <Button
                     component={NavLink} 

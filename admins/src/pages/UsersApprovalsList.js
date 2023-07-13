@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import TableComponents from '../components/TableComponents';
-import { Alert, Box } from '@mui/material';
+import { Alert, Box, Typography } from '@mui/material';
 const UsersApprovalsList = () => {
 
   const [alert, setAlert] = useState({
@@ -79,6 +79,7 @@ const UsersApprovalsList = () => {
   return (
     <Box margin={2} >
       {alert.status ? <Alert style={{ marginBottom: "10px" }} severity={alert.type} sx={{ mt: 3 }}>{alert.msg}</Alert> : ''}
+      <Typography variant="h4" fontSize='25px' fontWeight='bold' color='#060606' mb={2} >Citizen Approval Request</Typography>
 
       <TableComponents key="request" columsArray={tableColumns} rowsArray={tableRows} />
     </Box>

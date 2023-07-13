@@ -196,11 +196,8 @@ console.log(validateForm())
       );
 
 
-
-
       let txHash = dataResult.hash
       let scanUrl = "https://sepolia.etherscan.io/tx/" + txHash;
-
 
 
       setEtherScanAlert(
@@ -211,14 +208,14 @@ console.log(validateForm())
           type: "success"
         }
       )
-      const transactionReceipt = await provider.getTransactionReceipt(dataResult.hash);
+      // const transactionReceipt = await provider.getTransactionReceipt(dataResult.hash);
 
 
-      const returnValue = ethers.utils.defaultAbiCoder.decode(['uint256'], dataResult);
+      // const returnValue = ethers.utils.defaultAbiCoder.decode(['uint256'], dataResult);
 
 
-      console.log("1: " + returnValue);
-      console.log("2: " + dataResult);
+      // console.log("1: " + returnValue);
+      // console.log("2: " + dataResult);
 
       // await dataResult.wait();
 
@@ -336,13 +333,12 @@ console.log(validateForm())
       const data = await fetch(url);
 
       const json = await data.json();
-      let _landInspector = json[0].landInspector
+      let _landInspector = json[0].areaContract
       console.log("Land")
       console.log(_landInspector)
       setLockContractAddress(_landInspector);
     }
     fetchContracts();
-
 
   };
 

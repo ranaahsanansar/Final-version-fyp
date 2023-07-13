@@ -24,8 +24,17 @@ import TableComponents from "../components/TableComponents";
 
 import { getAllDistricURL, getAllProvienceURL, getAreaNameURL, getAreaURL, getContractURL, getSocietyURL, landInspectorContractAddress, govermentAuthorityContractAddress } from "../dataVariables";
 import { useEffect } from "react";
+import PieChartComponent from "../components/PieChartComponent";
+
+// const data = [
+//     { name: 'A', value: 50 },
+//     { name: 'B', value: 30 },
+// ];
+
 
 const GetPropertyLogs = () => {
+
+    const [data , setData ] = useState([]);
 
     const ownersTableColums = [
         { id: 'id', label: 'Sr.', minWidth: 170 },
@@ -75,13 +84,13 @@ const GetPropertyLogs = () => {
         }
 
         let checkCnic = formData.cnic.toString();
-        if(formData.cnic != 0 ){
-            if (checkCnic.length != 13 ) {
-            errors.cnic = "CNIC must be a valid"
-            valid = false;
+        if (formData.cnic != 0) {
+            if (checkCnic.length != 13) {
+                errors.cnic = "CNIC must be a valid"
+                valid = false;
+            }
         }
-        }
-        
+
 
         setFormErrors(errors);
 
@@ -207,32 +216,25 @@ const GetPropertyLogs = () => {
 
             const json = await data.json();
             let _landInspector = json[0].areaContract
-            console.log("Land")
-            console.log(_landInspector)
+            // console.log("Land")
+            // console.log(_landInspector)
             setContractAddress(_landInspector);
         }
         fetchContracts();
     };
 
-
     const hadnleChangeId = (event) => {
         setPropertyId(event.target.value)
     }
-
-
 
     function createReqTableData(id, seller, buyer, shares, price, reqNum) {
         return { id, seller, buyer, shares, price, reqNum }
     }
 
-
-
-
     const [flagNewProTable, setFlagNewProTable] = useState(false)
     const [flagReqTable, setFlagReqTable] = useState(false);
 
     const [flagOwnerTransaction, setFlagOwnerTransaction] = useState(false);
-
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -309,8 +311,8 @@ const GetPropertyLogs = () => {
         const filterOwnerTnx = getContractData.filters.TransactionRecordLogs(formData.propertyId, null, null)
 
         const ownerTnxResult = await getContractData.queryFilter(filterOwnerTnx);
-        console.log("Ahsan")
-        console.log(ownerTnxResult)
+        // console.log("Ahsan")
+        // console.log(ownerTnxResult)
 
         ownerTnxRows.splice(0, ownerTnxRows.length);
 
@@ -320,8 +322,8 @@ const GetPropertyLogs = () => {
             let buyerCnic = item.args[2].toString();
             let shares = item.args[3].toString();
             let price = item.args[4].toString();
-            console.log("1")
-            console.log(id)
+            // console.log("1")
+            // console.log(id)
             ownerTnxRows.push(createTransactionRows(id, ownerCnic, buyerCnic, shares, price))
         })
 
@@ -331,11 +333,16 @@ const GetPropertyLogs = () => {
         setSharesOwn("none")
         setFlagOwnerTable(false)
         const result = await getContractData.getDetailsOfShares(formData.propertyId, formData.cnic)
-        console.log(String(result.sharesOfThisPerson))
+        // console.log(String(result.sharesOfThisPerson))
         if (formData.cnic == 0) {
             setSharesOwn('none')
         } else {
             setSharesOwn(String(result.sharesOfThisPerson))
+            // console.log(sharesOwn)
+            // setData([
+            //     { name: 'A', value: parseInt(sharesOwn) },
+            //     { name: 'B', value:  100 - sharesOwn },
+            // ])
         }
 
         let arrayOfOwners = result.shareHoldersArray
@@ -537,16 +544,24 @@ const GetPropertyLogs = () => {
                     </Button>
                 </Box>
 
-
-
                 {/* {
                     flagNewProTable ? (<><Typography fontSize='18px' mt={2} fontWeight='bold' >Inital Transactions of Property </Typography>
                         <TableComponents key="Property Shares" columsArray={newPropertyTableColumns} rowsArray={newPropertyTableRows} /></>) : "Noting to Show"
                 } */}
 
                 {
-                    sharesOwn == "none" ? "" : (<Typography fontSize='18px' mt={2} fontWeight='bold' >Shares Own by selected CNIC = {sharesOwn} </Typography>)
-                }
+                    sharesOwn == "none" ? "" : (<> <PieChartComponent ownPercentage={parseInt(sharesOwn) } freePercentage={100 - parseInt(sharesOwn)} />
+                    <Typography display='flex' sx={{ alignItems: 'center' , justifyContent: 'center' }} > <div style={{ height: '10px' , width: '10px' , backgroundColor: '#02d9bc' , marginRight: '2px' }} ></div> color representing shares own by this cnic</Typography>
+                    <Typography display='flex' sx={{ alignItems: 'center' , justifyContent: 'center' }} > <div style={{ height: '10px' , width: '10px' , backgroundColor: '#38008c' , marginRight: '2px' }} ></div> color representing shares own by others</Typography>
+                    </>)
+                } 
+
+                {/* {
+                     (<> <PieChartComponent ownPercentage={parseInt(parseInt(sharesOwn)) } freePercentage={100 - parseInt(sharesOwn)} />
+                     <Typography display='flex' sx={{ alignItems: 'center' , justifyContent: 'center' }} > <div style={{ height: '10px' , width: '10px' , backgroundColor: '#02d9bc' , marginRight: '2px' }} ></div> color representing shares own by this cnic</Typography>
+                     <Typography display='flex' sx={{ alignItems: 'center' , justifyContent: 'center' }} > <div style={{ height: '10px' , width: '10px' , backgroundColor: '#38008c' , marginRight: '2px' }} ></div> color representing shares own by others</Typography>
+                     </>)
+                } */}
 
                 {flagOwnerTable && (<><Typography fontSize='18px' mt={2} fontWeight='bold'  >List of Currect Owners </Typography><TableComponents key="owners" columsArray={ownersTableColums} rowsArray={ownerTableRows} /></>)}
 
@@ -565,4 +580,3 @@ const GetPropertyLogs = () => {
 }
 
 export default GetPropertyLogs
-

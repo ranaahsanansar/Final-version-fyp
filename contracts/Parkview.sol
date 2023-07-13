@@ -80,4 +80,3 @@ function addNewProperty(uint _propertyId , address _inspector) external {
         emit AddNewPropertyLog(_propertyId , _inspector , block.timestamp);
 }
 }
-

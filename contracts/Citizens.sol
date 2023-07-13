@@ -65,7 +65,7 @@ contract Citizens{
         require (citizensArray[_CNIC].reTry , "There is no request for that Person");
         require(citizensArray[_CNIC].isAlive == false , "Citizen is alredy approved");
         require(citizensArray[_CNIC].isApproved == false , "Citizen is alredy approved");
-        require (citizensArray[_CNIC].walletAddress == _walletAddress , "Wrong wallet Address");
+        // require (citizensArray[_CNIC].walletAddress == _walletAddress , "Wrong wallet Address");
         citizensArray[_CNIC].isAlive = true;
         citizensArray[_CNIC].isApproved = true;
     }

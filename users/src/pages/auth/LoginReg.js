@@ -23,14 +23,16 @@ const LoginReg = () => {
     setValue(newValue);
   }
   return <>
-    <Grid container sx={{ height: 'auto' }}>
+    <Grid container sx={{ height: '100vh' , overflow: 'scroll' , '&::-webkit-scrollbar': {
+              display: "none"
+            },  }}>
       <Grid item lg={7} sm={5} sx={{
         backgroundImage: `url(${Pic1})`,
         backgroundRepeat: 'no-repeat',
-        backgroundSize: 'cover',
+        // backgroundSize: 'cover',
         backgroundPosition: 'center',
         display: { xs: 'none', sm: 'block' }
-      }}> 
+      }}>
       </Grid>
       <Grid item lg={5} sm={7} xs={12}>
         <Card sx={{ width: '100%', height: '100%' }}>

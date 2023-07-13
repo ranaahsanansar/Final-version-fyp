@@ -137,6 +137,8 @@ const CitizenApprovalPage = () => {
       nodeProvider
     )
 
+    console.log(citizenContractAddress)
+
     const result = await getContractData.getCitizenIsApproved(cnic)
 
     setApprovalStatus(result)

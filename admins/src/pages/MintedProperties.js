@@ -66,8 +66,6 @@ const MintedProperties = () => {
             errors.propertyId = "ID must be valid 12 digits Uniqe Identification number";
             valid = false;
         }
-
-
         setFormErrors(errors);
 
         return valid;
@@ -424,7 +422,7 @@ const MintedProperties = () => {
             >
                 <Typography variant="h6"
                     fontWeight="bold"
-                    fontSize="large" mb={2} >Get Property Details</Typography>
+                    fontSize="large" mb={2} >Trace minted properties</Typography>
                 <Grid container spacing={2}>
 
                     <Grid item sm={12} xs={12} md={6} lg={6}>

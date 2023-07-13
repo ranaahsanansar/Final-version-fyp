@@ -7,7 +7,7 @@ import ApprovalController from "../controllers/approvalController.js";
 const router = express.Router();
 // /api/dashboard/property
 // Midware to Authentic user 
-router.use('/list-new-property' , checkUserAuth ,uploadFile.fields([{ name: 'propertyImage' , maxCount: 10 }]))
+router.use('/list-new-property' , checkUserAuth ,uploadFile.fields([{ name: 'propertyImage' , maxCount: 20 }]))
 
 router.use('/myProperties' , checkUserAuth)
 

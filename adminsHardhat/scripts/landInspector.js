@@ -14,7 +14,7 @@ async function main() {
 
   const Lock = await hre.ethers.getContractFactory("LandInspector");
 //   govermentAuthority Contract Address 
-  const lock = await Lock.deploy("0x6AAe87ab6f2857c8b9dA2808c17d74E601bb098B");
+  const lock = await Lock.deploy("0xa3B346B764f66016dbA48570a616F398038a9076");
 
   await lock.deployed();
 
@@ -40,3 +40,22 @@ main().catch((error) => {
 
 
 // OnwerShip =  0x2604e9292a4cF4C622B806480cF41279920F56A3
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// -----------------------------------------
+
+// 0x4A580f114dA8eB64A3751BEEE18CC6A5a1C0d350

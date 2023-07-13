@@ -13,8 +13,11 @@ async function main() {
   // const lockedAmount = hre.ethers.utils.parseEther("0.001");
 
   const Lock = await hre.ethers.getContractFactory("OwnerShip");
-//   _goverment , _highcourt,_landInspectorContract, _citizenContract  Contract Address 
-  const lock = await Lock.deploy("0x6AAe87ab6f2857c8b9dA2808c17d74E601bb098B"  , "0x56a5676ed8A278EA811c379E127e6FE52704eEEC" , "0xc657D9aee8eBa95dFaa3c6D3AD1CB82D97Ee8A0A" , "0xC7d127cE7faD614Af410ac21546a2DbCa5f08419");
+
+//   _goverment , _highcourt, _landInspectorContract, _citizenContract  Contract Address 
+
+
+  const lock = await Lock.deploy("0xa3B346B764f66016dbA48570a616F398038a9076"  , "0x9cE57A75ff7f72C09A3C867e112098700Bc5087f" , "0x4A580f114dA8eB64A3751BEEE18CC6A5a1C0d350" , "0x8f45fd1F7E09591864406F1d2ba60224b00C240d");
 
   await lock.deployed();
 
@@ -40,3 +43,23 @@ main().catch((error) => {
 
 
 // OnwerShip =  0x2604e9292a4cF4C622B806480cF41279920F56A3
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ----------------------------
+
+// 0x7905053c08A8382a4797d357c97FF7e24a8F3B6d
+// Gold-Block

@@ -26,16 +26,18 @@ contract Highcourt {
         uint256 _caseNumber,
         uint256 _cutFrom,
         uint256 _addTo,
-        uint256 _amountOfShares
-    ) external isAdmin returns (uint256 _otp) {
+        uint256 _amountOfShares,
+        uint256 OTPCode
+    ) external isAdmin {
         OwnerShip obj;
         obj = OwnerShip(_soceityBlockAddress);
-        return obj.generateReverseCase(
+        obj.generateReverseCase(
             _propertyId,
             _caseNumber,
             _cutFrom,
             _addTo,
-            _amountOfShares
+            _amountOfShares,
+            OTPCode
         );
     }
 
@@ -45,24 +47,5 @@ contract Highcourt {
         OwnerShip obj;
         obj = OwnerShip(_societyBlockAddress);
         obj.stayOnProperty(_propertyId);
-    }
-
-    function removeStayOnProperty(address _societyBlockAddress, uint256 _propertyId)
-        external
-    {
-        OwnerShip obj;
-        obj = OwnerShip(_societyBlockAddress);
-        obj.removeStayOnProperty(_propertyId);
-    }
-
-    function stayOnCitizen(address _citizenContractAddress , uint _cnic , bool _status) external isAdmin {
-        Citizens obj ;
-        obj = Citizens(_citizenContractAddress);
-        if(_status){
-            obj.stayOnCitizen(_cnic);
-        }else{
-            obj.RemoveStayOnCitizen(_cnic);
-        }
-        
     }
 }

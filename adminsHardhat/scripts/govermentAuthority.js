@@ -1,3 +1,9 @@
+// We require the Hardhat Runtime Environment explicitly here. This is optional
+// but useful for running the script in a standalone fashion through `node <script>`.
+//
+// You can also run a script with `npx hardhat run <script>`. If you do that, Hardhat
+// will compile your contracts, add the Hardhat Runtime Environment's members to the
+// global scope, and execute the script.
 const hre = require("hardhat");
 
 async function main() {
@@ -6,13 +12,14 @@ async function main() {
 
   // const lockedAmount = hre.ethers.utils.parseEther("0.001");
 
-  const Lock = await hre.ethers.getContractFactory("Highcourt");
+  const Lock = await hre.ethers.getContractFactory("GovermentAuthority");
+//   govermentAuthority , Highcourt Contract Address 
   const lock = await Lock.deploy("0xcc22DF0c635cFa950113dd108eE5A2DAa4fFF039");
 
   await lock.deployed();
 
   console.log(
-    "HighCourt Address is : " + lock.address
+    "Citizen Address is : " + lock.address
   );
 }
 
@@ -23,32 +30,16 @@ main().catch((error) => {
   process.exitCode = 1;
 }); 
 
+ 
 
 // Goverment Property = 0x4ACCaDaa8AbFB3061A4a5844f8307d42D97FfF9c 
-// 0x6AAe87ab6f2857c8b9dA2808c17d74E601bb098B
-
-
 // High Court = 0x720c8D43353236Fa47fE2eb32dba3B9dbD9eE9D7 
-// 0x56a5676ed8A278EA811c379E127e6FE52704eEEC
-
-
-
 // LandInspector = 0xb8B7050CdaC5154E9d56680Db23286eaf536BE37 
-// 0xc657D9aee8eBa95dFaa3c6D3AD1CB82D97Ee8A0A
-
-
-
-
 
 // Citizens = 0x6D775f5A4008BaAEF0FdadC09dAEe96149aB301c 
-// 0xC7d127cE7faD614Af410ac21546a2DbCa5f08419
-
-
-
 
 
 // OnwerShip =  0x2604e9292a4cF4C622B806480cF41279920F56A3
-// 0x70fefc19b5B632996377904f1Ba21897a3d7F0f3
 
 
 
@@ -60,10 +51,6 @@ main().catch((error) => {
 
 
 
+// ---------------------
 
-
-
-
-// ------------------------------------------
-
-// 0x9cE57A75ff7f72C09A3C867e112098700Bc5087f
+// 0xa3B346B764f66016dbA48570a616F398038a9076

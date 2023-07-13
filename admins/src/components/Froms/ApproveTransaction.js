@@ -231,6 +231,14 @@ const ApproveTransaction = () => {
         landInspectorContract.abi,
         signer
       )
+      let landInspertorWalletAddress = await signer.getAddress();
+
+
+      // console.log( areaContract,
+      //   actualData.id,
+      //   actualData.requestNumber,
+      //   actualData.sellerCnic,
+      //   actualData.buyerCnic,)
 
       const dataResult = await sendTx.approveTransferRequest(
         areaContract,
@@ -238,8 +246,11 @@ const ApproveTransaction = () => {
         actualData.requestNumber,
         actualData.sellerCnic,
         actualData.buyerCnic,
+        landInspertorWalletAddress,
         { gasLimit: 5000000 }
       );
+
+
 
       let txHash = dataResult.hash
       let scanUrl = "https://sepolia.etherscan.io/tx/" + txHash;

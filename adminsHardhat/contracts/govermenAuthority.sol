@@ -130,11 +130,13 @@ contract GovermentAuthority {
 
     function signatureToReverse( address _SocietyBlockAddress ,  uint256 _propertyId,
         uint256 _caseNumber,
-        uint256 _verficationOTPCode) public isAdmin returns (uint _newOtp)  {
+        uint256 _verficationOTPCode,
+        uint256 _newOTPCode) public isAdmin  {
         OwnerShip obj;
         obj = OwnerShip(_SocietyBlockAddress);
-        return obj.singnatureToReverseCase(_propertyId, _caseNumber, _verficationOTPCode);
+        obj.singnatureToReverseCase(_propertyId, _caseNumber, _verficationOTPCode, _newOTPCode);
     }
+
 
     // ---------------------------------
     // Citizen Contracts Functions
@@ -224,7 +226,5 @@ contract GovermentAuthority {
         obj = Citizens(_cityContract);
         obj.declareDeath(_CNIC);
     }
-
-    
 
 }

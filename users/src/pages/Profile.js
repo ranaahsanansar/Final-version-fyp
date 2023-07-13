@@ -34,7 +34,7 @@ const Profile = () => {
   const { ethereum } = window;
   const dispatch = useDispatch();
   const { token } = useSelector(state => state.auth)
-  const [userName , setUserName]  = useState("Rana Ahsan Ansar");
+  const [userName , setUserName]  = useState("");
 
 
   const fetchUser = async () => {

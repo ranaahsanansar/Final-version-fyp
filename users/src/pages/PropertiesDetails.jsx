@@ -196,10 +196,7 @@ const PropertiesDetails = () => {
 
     setImagesData(imagesArray);
 
-
-
     setPropertyDetils(compeletData)
-
   }
 
   useEffect(async () => {
@@ -367,6 +364,9 @@ const PropertiesDetails = () => {
             </Typography>
             <Typography>
               <span style={{ fontWeight: 'bold' }} >City: </span>{propertyDetails.city}
+            </Typography>
+            <Typography>
+              <span style={{ fontWeight: 'bold' }} >Property ID: </span>{propertyDetails.id}
             </Typography>
           </Stack>
         </Box>

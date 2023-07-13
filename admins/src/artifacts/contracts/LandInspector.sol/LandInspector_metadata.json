@@ -1,0 +1,327 @@
+{
+	"compiler": {
+		"version": "0.8.18+commit.87f61d96"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_govermentAuthority",
+						"type": "address"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "constructor"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "LandInspectorWallet",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "uint256",
+						"name": "ID",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "time",
+						"type": "uint256"
+					}
+				],
+				"name": "addLandInspectorLogs",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "ContractAddress",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "string",
+						"name": "Name",
+						"type": "string"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "time",
+						"type": "uint256"
+					}
+				],
+				"name": "addSocietyBlockLogs",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "LandInspectorWallet",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "uint256",
+						"name": "ID",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "time",
+						"type": "uint256"
+					}
+				],
+				"name": "removeLandInspectorLogs",
+				"type": "event"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_landInspectorWallet",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_id",
+						"type": "uint256"
+					}
+				],
+				"name": "addLandInspector",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_propertyId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "_societyName",
+						"type": "string"
+					}
+				],
+				"name": "addNewProperty",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_contractAddress",
+						"type": "address"
+					},
+					{
+						"internalType": "string",
+						"name": "_name",
+						"type": "string"
+					}
+				],
+				"name": "addSocietyBlock",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_societyBlockAddress",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_propertyId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_requestNumber",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_ownerCnic",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_buyerCnic",
+						"type": "uint256"
+					},
+					{
+						"internalType": "address",
+						"name": "_landinspectorWallet",
+						"type": "address"
+					}
+				],
+				"name": "approveTransferRequest",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_societyBlockAddress",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_propertyId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_caseNumber",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_verficationOTPCode",
+						"type": "uint256"
+					}
+				],
+				"name": "executeReverseCase",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_landInspectorWallet",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_id",
+						"type": "uint256"
+					}
+				],
+				"name": "removeLandInspector",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_propertyId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_cnic",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_sharesPercentage",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_propertyTokensAmount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "_areaName",
+						"type": "string"
+					}
+				],
+				"name": "transferNewProperty",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"contracts/LandInspector.sol": "LandInspector"
+		},
+		"evmVersion": "paris",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"contracts/Citizens.sol": {
+			"keccak256": "0x89b312fe6753432383c2d0cd8453d5922004a56a63cd5805fa61cde2989a250f",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://2ade05a16eeace9e39af40ff9564d29b73493bd45105109f971b68fed9a1943b",
+				"dweb:/ipfs/QmT3cG31px1exY1KsN3y6PNVKzdHFXmNsNXyJ2fjaPreNW"
+			]
+		},
+		"contracts/LandInspector.sol": {
+			"keccak256": "0x23c953ffbe66b8c284d7942aa47bed25408b440b540c9448b83943c9395fd2ef",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://b58c2c8ed3c3b275809d15e7abd7597688fa15c2629a4ba444166dbe42f16619",
+				"dweb:/ipfs/QmUC8GgDnFZjY9peANu6vBhGm7zRpx4CnpzhpPmdwLFZDh"
+			]
+		},
+		"contracts/OwnerShip.sol": {
+			"keccak256": "0xb2f6c094dbd8322ff926fca3f9d6e58cc2d442bec7ab9cf32f25d2ef2be4ac2f",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://662d2147ae6bc15361f5d09bcd3cd987660477d01d54c7aa9c3f1785a560ca85",
+				"dweb:/ipfs/QmZvkUNzPHGVE8vmSvzYcEDpJMmB9aP5RSWE3Z6bMAE8qQ"
+			]
+		},
+		"contracts/Parkview.sol": {
+			"keccak256": "0x5b71ad79445e2e55ad1dd5c5bda82f99ad5482930942931175128c3984ec53d4",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://9016c281f694231092c1fb732afca3c8049adc50271606906e29f72274ef172e",
+				"dweb:/ipfs/QmbQJ2QKwEQhYvUzqHnFeRSMi7At7egQvTaupE5azhf9BX"
+			]
+		}
+	},
+	"version": 1
+}

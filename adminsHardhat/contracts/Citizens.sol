@@ -3,7 +3,7 @@ pragma solidity ^0.8.0;
 
 // import "contracts/Parkview.sol";
 
-contract Citizens{ 
+contract Citizens{
 
     address private govAuthority;
     address private highCourt;
@@ -22,6 +22,8 @@ contract Citizens{
         bool stay;
     }
     mapping (uint => CitizenStructure) private citizensArray;
+
+    mapping (address => uint256) private citizensCnic;
 
     // struct Successor {
     //     address successorWallet;
@@ -54,6 +56,9 @@ contract Citizens{
         return citizensArray[_cnic].walletAddress;
     }
 
+    function getCitienCnic(address _address) public  view returns (uint _cnic){
+        return citizensCnic[_address];
+    }
 
     function newCitizenRequest(uint _CNIC ) public {
         require(citizensArray[_CNIC].isApproved == false , "You are already exists.");
@@ -67,9 +72,11 @@ contract Citizens{
         require (citizensArray[_CNIC].reTry , "There is no request for that Person");
         require(citizensArray[_CNIC].isAlive == false , "Citizen is alredy approved");
         require(citizensArray[_CNIC].isApproved == false , "Citizen is alredy approved");
-        require (citizensArray[_CNIC].walletAddress == _walletAddress , "Wrong wallet Address");
+        // require (citizensArray[_CNIC].walletAddress == _walletAddress , "Wrong wallet Address");
         citizensArray[_CNIC].isAlive = true;
         citizensArray[_CNIC].isApproved = true;
+
+        citizensCnic[_walletAddress] = _CNIC;
     }
     // Incomplete without XiSys Contract -----------------
     function rejectCititzenRequest(uint _CNIC) public isGovermentAuthority{
@@ -84,17 +91,9 @@ contract Citizens{
         citizensArray[_CNIC].isAlive = false ;
     }
 
-
-    event StayOnCitizenLogs(uint Cnic , bool Status);
-    function RemoveStayOnCitizen(uint _CNIC) external isHighCourt {
-        citizensArray[_CNIC].stay = false ;
-        emit StayOnCitizenLogs(_CNIC, false);
-    }
-
     function stayOnCitizen(uint _CNIC) external isHighCourt {
         citizensArray[_CNIC].stay = true ;
-        emit StayOnCitizenLogs(_CNIC, true);
-
     }
 
+   
 }

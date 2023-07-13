@@ -330,23 +330,23 @@ const Home = () => {
 
         setFlagOwnerTransaction(true);
 
-        setFlagMintTable(false);
+        // setFlagMintTable(false);
 
-        const filterMintTnx = getContractData.filters.AddNewPropertyLog()
+        // const filterMintTnx = getContractData.filters.AddNewPropertyLog()
 
-        const filterMintResult = await getContractData.queryFilter(filterMintTnx);
+        // const filterMintResult = await getContractData.queryFilter(filterMintTnx);
 
-        mintedPropRows.splice(0, mintedPropRows.length);
+        // mintedPropRows.splice(0, mintedPropRows.length);
 
-        filterMintResult.map((item) => {
-            let id = item.args[0].toString();
-            let inspector = item.args[1].toString();
-            // console.log(createMintTableData(id, inspector))
+        // filterMintResult.map((item) => {
+        //     let id = item.args[0].toString();
+        //     let inspector = item.args[1].toString();
+        //     // console.log(createMintTableData(id, inspector))
 
-            mintedPropRows.push(createMintTableData(id, inspector))
-        })
+        //     mintedPropRows.push(createMintTableData(id, inspector))
+        // })
 
-        setFlagMintTable(true);
+        // setFlagMintTable(true);
 
         // ----------------------------------------------------------------
 
@@ -356,7 +356,7 @@ const Home = () => {
         let arrayOfOwners = result.shareHoldersArray
         // arrayOfOwners.map((item)=>{ console.log( String(item) ) })
         // listOfOwner = []
-        setOwnerTnxRows([])
+        // setOwnerTnxRows([])
         ownerTableRows.splice(0, ownerTableRows.length )
 
         arrayOfOwners.map((item , i )=>{ 

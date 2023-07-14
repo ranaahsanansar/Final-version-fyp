@@ -260,7 +260,7 @@ const CitizenApprovalPage = () => {
 
       const response = await axios.post('http://localhost:8000/api/dashboard/property/send-approval-mail', {
         "email": fetchedUser.email,
-        "msg": "Rejected",
+        "msg": "Rejected send your documents again",
         "url": `${scanUrl}`
       })
 

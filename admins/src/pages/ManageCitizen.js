@@ -17,7 +17,7 @@ const ManageCitizen = () => {
                     <DeclareDeathForm />
                 </Box>
                 <Box mt={2} >
-                    <SingToReverse />
+                    {/* <SingToReverse /> */}
 
                 </Box>
             </Container>

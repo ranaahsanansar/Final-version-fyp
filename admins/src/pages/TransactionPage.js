@@ -8,7 +8,6 @@ import ExecuteReverseCaseForm from '../components/Froms/ExecuteReverseCaseForm'
 const TransactionPage = () => {
     return (
         <>
-    
             <Container>
                 <Box mt={2} textAlign='center' >
                     <Typography variant='h3' fontSize='35px' fontWeight='bold' color='#060606'>LandInspector Only</Typography>
@@ -17,7 +16,7 @@ const TransactionPage = () => {
                     <ApproveTransaction />
                 </Box>
                 <Box mt={2} >
-                    <ExecuteReverseCaseForm />
+                    {/* <ExecuteReverseCaseForm /> */}
                 </Box>
 
 

@@ -18,7 +18,7 @@ const ManagePropertiesPage = () => {
                     <PropertyStayForm />
                 </Box>
                 <Box mt={2} >
-                    <ReverseTransactionForm />
+                    {/* <ReverseTransactionForm /> */}
                 </Box>
                 
             </Container>
